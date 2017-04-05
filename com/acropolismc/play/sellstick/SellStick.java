@@ -10,6 +10,7 @@ import com.acropolismc.play.sellstick.Configs.StickConfig;
 
 import net.milkbowl.vault.economy.Economy;
 
+// @author shmkane
 public class SellStick extends JavaPlugin{
 
 	private static Economy econ = null;
@@ -34,9 +35,11 @@ public class SellStick extends JavaPlugin{
 	}
 	
 	public Economy getEcon() {
+		//Return instance of economy.
 		return SellStick.econ;
 	}
 	
+	//Setup Vault
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -48,9 +51,5 @@ public class SellStick extends JavaPlugin{
         econ = rsp.getProvider();
         return econ != null;
     }
-
-	public void handleConfig(){
-
-	}
 
 }

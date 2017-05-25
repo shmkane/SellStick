@@ -1,12 +1,10 @@
 package com.acropolismc.play.sellstick.Configs;
 
 import java.io.File;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class PriceConfig {
-
 	public static PriceConfig instance = new PriceConfig();
 	public File conf;
 
@@ -14,13 +12,22 @@ public class PriceConfig {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		
 		this.conf = new File(dir + File.separator + "prices.yml");
 		if (!this.conf.exists()) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
-			config.set("prices.EXAMPLE", 0);
-			config.set("prices.STONE", 0);
-			config.set("prices.IRON_INGOT", 0);
+
+			config.set("prices.DIRT:0", 2);
+
+			config.set("prices.DIRT:1", 1);
+
+			config.set("prices.DIRT:2", 2);
+
+			config.set("prices.1", 3);
+			
+			config.set("prices.1:1", 3);
+
+
+
 			try {
 				config.save(this.conf);
 			} catch (Exception e) {
@@ -29,24 +36,22 @@ public class PriceConfig {
 		}
 	}
 
-	public FileConfiguration getConfig(){
+	public FileConfiguration getConfig() {
 		FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
 		return config;
 	}
 
-	public void write(File dir, String loc, Object obj){
+	public void write(File dir, String loc, Object obj) {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		this.conf = new File(dir + File.separator + "prices.yml");
 
 		getConfig().set(loc, obj);
-
 		try {
 			getConfig().save(this.conf);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-
 }

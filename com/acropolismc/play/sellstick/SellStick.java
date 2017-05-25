@@ -22,8 +22,9 @@ public class SellStick extends JavaPlugin{
 		this.getCommand("sellstick").setExecutor(new SellStickCommand(this));	
 		//Listeners
 		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
-		//HandleConfig
+		//Safe the default config
         this.saveDefaultConfig();
+        //Setup the other configs.
 		StickConfig.instance.setup(getDataFolder());
 		PriceConfig.instance.setup(getDataFolder());
 		//Vault
@@ -51,5 +52,4 @@ public class SellStick extends JavaPlugin{
         econ = rsp.getProvider();
         return econ != null;
     }
-
 }

@@ -1,6 +1,8 @@
 package com.acropolismc.play.sellstick;
 import java.util.Random;
 
+import org.bukkit.ChatColor;
+
 public class RandomString {
 
 	private static final char[] symbols;
@@ -9,10 +11,9 @@ public class RandomString {
 		StringBuilder tmp = new StringBuilder();
 		for (char ch = '0'; ch <= '9'; ++ch)
 			tmp.append(ch);
-		for (char ch = 'a'; ch <= 'z'; ++ch)
+		for (char ch = 'a'; ch <= 'f'; ++ch)
 			tmp.append(ch);
-		for(char ch = 'A'; ch < 'Z'; ++ch)
-			tmp.append(ch);
+		
 		symbols = tmp.toString().toCharArray();
 	}
 
@@ -29,6 +30,16 @@ public class RandomString {
 	public String nextString() {
 		for (int idx = 0; idx < buf.length; ++idx)
 			buf[idx] = symbols[random.nextInt(symbols.length)];
-		return new String(buf);
+		return makeInvis(new String(buf));
+	}
+	
+	
+	public String makeInvis(String original) {
+		char[] letters = original.toCharArray();
+		String newLetters = "";
+		for(int i = 0; i < original.length(); i ++) {
+			newLetters += "§" + letters[i] + "";
+		}
+		return newLetters;
 	}
 }

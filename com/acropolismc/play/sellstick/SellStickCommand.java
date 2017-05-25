@@ -14,9 +14,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.acropolismc.play.sellstick.Configs.StickConfig;
 
+import net.minecraft.server.v1_8_R3.CommandException;
+
 public class SellStickCommand implements CommandExecutor {
 
 	private SellStick plugin;
+	//Saving which line the uses is on here
+	public static int index = 0;
 
 	// Pass instance of main class to 'plugin'
 	public SellStickCommand(SellStick plugin) {
@@ -32,7 +36,7 @@ public class SellStickCommand implements CommandExecutor {
 					StickConfig.instance.prefix + ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
 			// If the sender has perms to give a stick, show the help message
 			if (sender.hasPermission("sellstick.give")) {
-				sender.sendMessage(StickConfig.instance.prefix + ChatColor.GREEN + "/SellStick give <player> <amount>");
+				sender.sendMessage(StickConfig.instance.prefix + ChatColor.GREEN + "/SellStick give <player> <amount> <<uses>/infinite>");
 			}
 			return true;
 
@@ -51,7 +55,7 @@ public class SellStickCommand implements CommandExecutor {
 				return true;
 			}
 			// Args length is 3
-		} else if (args.length == 3) {
+		} else if (args.length == 4) {
 			// If they're trying to give a stick...
 			if (args[0].equalsIgnoreCase("give")) {
 				// And has permission...
@@ -66,6 +70,8 @@ public class SellStickCommand implements CommandExecutor {
 							 * This assigns a random string to the item meta so
 							 * that the item cannot be stacked
 							 */
+							//int uses = Integer.parseInt(args[3]);
+							//TODO: HIDE RANDOM STRING
 							RandomString random = new RandomString(10);
 							String UUID = random.nextString();
 
@@ -73,15 +79,25 @@ public class SellStickCommand implements CommandExecutor {
 							ItemMeta im = is.getItemMeta();
 							List<String> lores = new ArrayList<String>();
 
-							im.setDisplayName(StickConfig.instance.itemName);
-							lores.add(StickConfig.instance.itemLore);
-							// Ignore the uses if "Infinite Uses" is enabled
-							if (StickConfig.instance.infiniteUses) {
-								lores.add("Infinite Uses");
-							} else {
-								lores.add(StickConfig.instance.uses + " uses remaining");
+							im.setDisplayName(StickConfig.instance.name);
+
+							//Load values from config onto the stick lores array
+							for(int z = 0; z < StickConfig.instance.lore.size() ; z ++){
+								lores.add(StickConfig.instance.lore.get(z).replace("&", "§"));
 							}
-							lores.add(ChatColor.MAGIC + UUID);
+
+							lores.add(1, "%usesLore%");
+
+							if (args[3].equalsIgnoreCase("infinite") || args[3].equalsIgnoreCase("i")) {
+								lores.set(1, lores.get(1).replace("%usesLore%", StickConfig.instance.infiniteLore));
+							} else {
+								int uses = Integer.parseInt(args[3]);
+								//otherwise replace it with the remaining uses
+								lores.set(1, lores.get(1).replace("%usesLore%", StickConfig.instance.usesLore.replace("%remaining%", uses + "")));
+							}
+
+							//assign the meta to the stick
+							lores.add(UUID);
 							im.setLore(lores);
 							is.setItemMeta(im);
 							// Give the item
@@ -90,7 +106,7 @@ public class SellStickCommand implements CommandExecutor {
 						// Send target and sender a message.
 						target.sendMessage(
 								StickConfig.instance.prefix + "You've been given " + Integer.parseInt(args[2])
-										+ " sell " + ((Integer.parseInt(args[2]) > 1) ? "sticks!" : "stick!"));
+								+ " sell " + ((Integer.parseInt(args[2]) > 1) ? "sticks!" : "stick!"));
 						sender.sendMessage(StickConfig.instance.prefix + "Given " + target.getName() + " "
 								+ Integer.parseInt(args[2]) + " sell "
 								+ ((Integer.parseInt(args[2]) > 1) ? "sticks!" : "stick!"));
@@ -103,10 +119,10 @@ public class SellStickCommand implements CommandExecutor {
 					}
 					// If the sender didn't have permission
 				} else {
-					sender.sendMessage(StickConfig.instance.prefix + StickConfig.instance.noPermission);
+					sender.sendMessage(StickConfig.instance.prefix + StickConfig.instance.noPerm);
 				}
 			}
-			// Invalid number of args. > 3
+			// Invalid number of args.
 		} else {
 			sender.sendMessage(ChatColor.RED + "Invalid command. Type /Sellstick for help");
 		}

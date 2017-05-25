@@ -16,15 +16,17 @@ public class PriceConfig {
 		if (!this.conf.exists()) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
 
-			config.set("prices.DIRT:0", 2);
-
-			config.set("prices.DIRT:1", 1);
-
-			config.set("prices.DIRT:2", 2);
-
-			config.set("prices.1", 3);
-			
-			config.set("prices.1:1", 3);
+			config.set("prices.SULPHUR", 1.02);
+			config.set("prices.RED_ROSE", 0.76);
+			config.set("prices.LEATHER", 2.13);
+			config.set("prices.COOKED_BEEF", 0.01);
+			config.set("prices.BONE", 5.00);
+			config.set("prices.1", 0.42);
+			config.set("prices.STONE:2", 0.22);
+			config.set("prices.STONE:3", 0.02);
+			config.set("prices.1:4", 0.01);
+			config.set("prices.1:5", 0.07);
+			config.set("prices.46", 1.08);
 
 
 

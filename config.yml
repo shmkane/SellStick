@@ -1,0 +1,56 @@
+####Sell Stick by shmkane###
+#
+#The name of the item - displayname
+DisplayName: '&cSellStick'
+#-----------------------------------------
+#For any Materials, use https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html as a reference
+#YES IT MATTERS HOW YOU TYPE IT IN
+#PLEASE GO TO THAT LINK
+#-----------------------------------------
+#Use the above link to change this item from a stick to anything else
+ItemType: STICK
+#FACTIONS ONLY - Ignore if you dont use factions
+#Do you only want people to be able to use the sellstick
+#In their faction territory and wilderness?
+#If true, only their territory and wilderness
+#If false, they will be allowed to use it everywhere(Including safezone/warzone)
+Only_In_Own_Territory: true
+#The lore on the stick
+#When they hover over it, what do they see
+#Line 2 will always be the Finite or Infinite Lore
+StickLore:
+- '&c&lLeft&c click on a chest to sell items inside!' #line 1
+#The Finite or Infinite lore will go here.
+- '&cSellStick by &oshmkane'
+#- '&cAdd more lines'
+#- '&aLike this'
+
+#If they have a Finite stick(non-infinite)
+#Please try not to include any other numbers
+#in this lore
+FiniteLore: '&c%remaining% &fremaining uses'
+#If they have an infinite stick, the lore
+#This will be the 2nd line
+InfiniteLore: '&4Infinite &cuses!'
+#Messages sent to the palyer will be prefixed with this
+MessagePrefix: '&6[&eSellStick&6] &e'
+#When they sell the items what message should be displayed
+#Use %price% for how much they gained
+#use %balance% to show new balance
+SellMessage: '&cYou sold items for &f%price% &cand now have &f%balance%'
+#If they don't have permission to do something
+NoPermissionMessage: '&cSorry, you don''t have permission for this!'
+#If they try using the stick in an invalid territory. FACTIONS ONLY
+InvalidTerritoryMessage: '&cYou can''t use sell stick outside your territory!'
+#If the chest chest didnt have anything they could sell
+#Meaning, if the items in the chest didnt appear in the Price.yml
+NotWorthMessage: '&cNothing worth selling inside'
+#What message is sent if they run out of uses?
+BrokenStick: '&cYour sellstick broke!(Ran out of uses)'
+#That's it! If you have questions, ask on Spigot or GitHub.
+#I typically respond faster on GitHub
+#https://github.com/shmkane/SellStick
+#https://www.spigotmc.org/resources/sell-stick.38119/
+#You can also email me, shmkane@gmail.com
+#just let me know in the subject it's regarding
+#Sellstick or I may not repond :P

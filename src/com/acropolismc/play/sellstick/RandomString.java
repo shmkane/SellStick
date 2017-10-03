@@ -1,8 +1,6 @@
 package com.acropolismc.play.sellstick;
 import java.util.Random;
 
-import org.bukkit.ChatColor;
-
 public class RandomString {
 
 	private static final char[] symbols;

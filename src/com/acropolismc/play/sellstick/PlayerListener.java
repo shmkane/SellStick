@@ -23,10 +23,13 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.factions.entity.FactionColl;
 import com.massivecraft.factions.entity.MPlayer;
 import com.massivecraft.massivecore.ps.PS;
 
 import net.milkbowl.vault.economy.EconomyResponse;
+import net.redstoneore.legacyfactions.Factions;
+import net.redstoneore.legacyfactions.entity.FPlayerColl;
 
 public class PlayerListener implements Listener {
 	private SellStick plugin;
@@ -36,6 +39,7 @@ public class PlayerListener implements Listener {
 		this.plugin = plugin;
 	}
 
+	@SuppressWarnings("unused")
 	public static boolean isNumeric(String str) {
 		try {
 			double d = Double.parseDouble(str);
@@ -139,13 +143,13 @@ public class PlayerListener implements Listener {
 							return;
 						}
 
+						Location location = e.getClickedBlock().getLocation();
 
 						if (StickConfig.instance.onlyOwn) {
 
 							if(plugin.mcore){ //If the server runs MCore Factions
 								com.massivecraft.factions.entity.Faction faction = null;
 								MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
-								Location location = e.getClickedBlock().getLocation();
 								faction =  BoardColl.get().getFactionAt(PS.valueOf(location));
 
 								// Not in own and not in wilderness
@@ -156,16 +160,28 @@ public class PlayerListener implements Listener {
 								}
 
 
-							}else{ //if it's UUID
+							}
+							if(plugin.facs){ //if it's UUID
 								Faction faction = null;
 								FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
-								Location location = e.getClickedBlock().getLocation();
 								FLocation fLoc = new FLocation(location);
 								faction = Board.getInstance().getFactionAt(fLoc);
 
 								// Check to see if the location the block is at is
 								// their/wilderness territory
 								// Not in own and not in wilderness
+								if (!fplayer.isInOwnTerritory() && !faction.getTag().contains("Wilderness")) {
+									p.sendMessage(StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+							}
+							
+							if(plugin.legacy) {
+								net.redstoneore.legacyfactions.entity.Faction faction = null;
+								net.redstoneore.legacyfactions.entity.FPlayer fplayer = FPlayerColl.get(p);
+								net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(location);
+								faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
 								if (!fplayer.isInOwnTerritory() && !faction.getTag().contains("Wilderness")) {
 									p.sendMessage(StickConfig.instance.territoryMessage);
 									e.setCancelled(true);
@@ -213,15 +229,13 @@ public class PlayerListener implements Listener {
 										name = (key.split(":"))[0];
 										data = Integer.parseInt(key.split(":")[1]);
 									}
+									//p.sendMessage(name + ", " + data);
 
 									// If the item matches(whether its numeric
 									// or string)
 									// in the config, and the data value
 									// matches,
-									if ((contents[i].getType().toString().equalsIgnoreCase(name) || (isNumeric(name)
-											&& contents[i].getType().getId() == Integer.parseInt(name)))
-											&& contents[i].getDurability() == data) {
-
+									if ((contents[i].getType().toString().equalsIgnoreCase(name) || (isNumeric(name) && contents[i].getType().getId() == Integer.parseInt(name))) && contents[i].getDurability() == data) {
 										// Get the price listed for that item
 										double price = Double.parseDouble(
 												PriceConfig.instance.getConfig().getString("prices." + key));
@@ -234,19 +248,25 @@ public class PlayerListener implements Listener {
 										slotPrice = price * amount;
 										// If it was more than 0,
 										if (slotPrice > 0) {
-											ItemStack sell;
+											ItemStack sell = contents[i]; //UPDATE: Fixed bug where renamed items weren't sold
 											// Sell it
-											if (isNumeric(name)) {
-												sell = new ItemStack(Integer.parseInt(name), amount, (short) data);
-											} else {
-												sell = new ItemStack(Material.getMaterial(name.toUpperCase()), amount,
-														(short) data);
-											}
+											
+											//UPDATE: Realized that this is unneeded
+//											if (isNumeric(name)) {
+//												//sell = new ItemStack(Integer.parseInt(name), amount, (short) data);
+//											} else {																		
+//												//sell = new ItemStack(Material.getMaterial(name.toUpperCase()), amount,
+//														//(short) data);
+//											}
+											
 											// Then remove the item from the
 											// chest
-											if (c.getInventory().contains(sell)) {
+											
+											//UPDATE: Commented out these since it's in the chest, don't have to recheck.
+											//if (c.getInventory().contains(sell)) {
 												c.getInventory().remove(sell);
-											}
+												e.getClickedBlock().getState().update();
+											//}
 										}
 									}
 								}

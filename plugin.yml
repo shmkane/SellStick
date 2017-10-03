@@ -1,10 +1,10 @@
 name: SellStick
 main: com.acropolismc.play.sellstick.SellStick
-version: 7.1beta
+version: 7.2.2
 author: shmkane
 website: http://acropolismc.com
 depend: [Vault]
-softdepend: [Factions, Essentials, MassiveCore]
+softdepend: [Factions, Essentials, MassiveCore, LegacyFactions]
 commands:
    sellstick:
       description: Sell all items in a chest easily!

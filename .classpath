@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/SellStick.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/Vault.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/askyblock.jar"/>
+	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/Factions.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/Taco.jar"/>
+	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/EssentialsX-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/LegacyFactions.jar"/>
+	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/Vault.jar"/>
 	<classpathentry kind="lib" path="E:/Test Server/MassiveCore.jar"/>
 	<classpathentry kind="lib" path="E:/Test Server/MCoreFactions.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/Factions.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/LegacyFactions.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/askyblock.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/EssentialsX-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

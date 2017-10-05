@@ -20,6 +20,7 @@ public class SellStick extends JavaPlugin {
 	public boolean mcore = false;
 	public boolean legacy = false;
 	public boolean facs = false;
+	public boolean skyblock = false;
 
 	public void onEnable() {
 		// Commands
@@ -41,7 +42,13 @@ public class SellStick extends JavaPlugin {
 		Plugin factions = getServer().getPluginManager().getPlugin("Factions");
 		Plugin mcore = getServer().getPluginManager().getPlugin("MassiveCore");
 		Plugin legacy = getServer().getPluginManager().getPlugin("LegacyFactions");
+		
+		Plugin skyblock = getServer().getPluginManager().getPlugin("ASkyBlock");
 
+		if(skyblock != null && skyblock.isEnabled()) {
+			this.skyblock = true;
+			log.info("[Sellstick] ASkyBlock Factions found! Hooking into ASkyBlock");
+		}
 		if (mcore != null && mcore.isEnabled()) {
 			this.mcore = true;
 			log.info("[Sellstick] MCore Factions found! Hooking into MCore");
@@ -60,19 +67,7 @@ public class SellStick extends JavaPlugin {
 			log.warning("bugs when not using. I highly suggest using");
 			log.warning("Factions UUID / Legacy Factions / MassiveCore Factions");
 
-
 		}
-		// if(factions.isEnabled()) {
-		// if(mcore != null){
-		// this.mcore = true;
-		// System.out.println("[Sellstick] Factions Massive Core found");
-		//
-		// }else{
-		// this.mcore = false;
-		// System.out.println("[Sellstick] FactionsUUID or similar found");
-		//
-		// }
-		// }
 
 	}
 

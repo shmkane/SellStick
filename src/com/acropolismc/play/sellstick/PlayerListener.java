@@ -26,6 +26,11 @@ import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.FactionColl;
 import com.massivecraft.factions.entity.MPlayer;
 import com.massivecraft.massivecore.ps.PS;
+import com.wasteofplastic.askyblock.ASkyBlock;
+import com.wasteofplastic.askyblock.ASkyBlockAPI;
+import com.wasteofplastic.askyblock.GridManager;
+import com.wasteofplastic.askyblock.Island;
+import com.wasteofplastic.askyblock.listeners.IslandGuard;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.redstoneore.legacyfactions.Factions;
@@ -186,6 +191,15 @@ public class PlayerListener implements Listener {
 									p.sendMessage(StickConfig.instance.territoryMessage);
 									e.setCancelled(true);
 									return;
+								}
+							}
+							if(plugin.skyblock) {
+								Island island = null;
+								island = ASkyBlockAPI.getInstance().getIslandAt(location);
+								
+								if(!island.getMembers().contains(p.getUniqueId())) {
+									p.sendMessage(StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
 								}
 							}
 						}

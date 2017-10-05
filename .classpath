@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="E:/Test Server/MCoreFactions.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/Factions.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/LegacyFactions.jar"/>
+	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/askyblock.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

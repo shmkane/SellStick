@@ -1,5 +1,6 @@
 package com.acropolismc.play.sellstick;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +24,14 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.entity.BoardColl;
-import com.massivecraft.factions.entity.FactionColl;
 import com.massivecraft.factions.entity.MPlayer;
 import com.massivecraft.massivecore.ps.PS;
-import com.wasteofplastic.askyblock.ASkyBlock;
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
-import com.wasteofplastic.askyblock.GridManager;
 import com.wasteofplastic.askyblock.Island;
-import com.wasteofplastic.askyblock.listeners.IslandGuard;
 
 import net.milkbowl.vault.economy.EconomyResponse;
-import net.redstoneore.legacyfactions.Factions;
 import net.redstoneore.legacyfactions.entity.FPlayerColl;
+import net.redstoneore.legacyfactions.integration.essentials.EssentialsIntegration;
 
 public class PlayerListener implements Listener {
 	private SellStick plugin;
@@ -81,21 +78,21 @@ public class PlayerListener implements Listener {
 		for (int i = 0; i < lores.get(1).length(); i++) {
 			if (Character.isDigit(lores.get(1).charAt(i))) {
 				// Increment "found" string
-				//Make sure it wasnt a number from a color code
+				// Make sure it wasnt a number from a color code
 
-				//If it ISNT the first index
-				if(i != 0){
-					//Check to see if the index before is the & sign (If its a color code)
-					if(lores.get(1).charAt(i-1) != ChatColor.COLOR_CHAR){
-						//And if it isnt, keep track of it
+				// If it ISNT the first index
+				if (i != 0) {
+					// Check to see if the index before is the & sign (If its a color code)
+					if (lores.get(1).charAt(i - 1) != ChatColor.COLOR_CHAR) {
+						// And if it isnt, keep track of it
 						found += lores.get(1).charAt(i);
-					}else{
-						//If it IS a color code, simply ignore it
+					} else {
+						// If it IS a color code, simply ignore it
 						found += "-";
 					}
-					//But if it's index == 0
-				}else{
-					//There can't be a & before it, so keep track of it
+					// But if it's index == 0
+				} else {
+					// There can't be a & before it, so keep track of it
 					found += lores.get(1).charAt(i);
 				}
 			} else {
@@ -124,7 +121,7 @@ public class PlayerListener implements Listener {
 				min = hold.get(i);
 			}
 		}
-		//System.out.println(min);
+		// System.out.println(min);
 		return min;
 	}
 
@@ -138,7 +135,7 @@ public class PlayerListener implements Listener {
 		// as a sellstick
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			if (p.getItemInHand().getType() == sellItem) {
-				if (p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(StickConfig.instance.name)) {
+				if (p.getItemInHand().getItemMeta().getDisplayName() != null && p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(StickConfig.instance.name)) {
 					if (e.getClickedBlock().getType() == Material.CHEST
 							|| e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
 
@@ -152,10 +149,10 @@ public class PlayerListener implements Listener {
 
 						if (StickConfig.instance.onlyOwn) {
 
-							if(plugin.mcore){ //If the server runs MCore Factions
+							if (plugin.mcore) { // If the server runs MCore Factions
 								com.massivecraft.factions.entity.Faction faction = null;
 								MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
-								faction =  BoardColl.get().getFactionAt(PS.valueOf(location));
+								faction = BoardColl.get().getFactionAt(PS.valueOf(location));
 
 								// Not in own and not in wilderness
 								if (!mplayer.isInOwnTerritory() && !faction.getName().contains("Wilderness")) {
@@ -164,9 +161,8 @@ public class PlayerListener implements Listener {
 									return;
 								}
 
-
 							}
-							if(plugin.facs){ //if it's UUID
+							if (plugin.facs) { // if it's UUID
 								Faction faction = null;
 								FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
 								FLocation fLoc = new FLocation(location);
@@ -181,11 +177,12 @@ public class PlayerListener implements Listener {
 									return;
 								}
 							}
-							
-							if(plugin.legacy) {
+
+							if (plugin.legacy) {
 								net.redstoneore.legacyfactions.entity.Faction faction = null;
 								net.redstoneore.legacyfactions.entity.FPlayer fplayer = FPlayerColl.get(p);
-								net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(location);
+								net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(
+										location);
 								faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
 								if (!fplayer.isInOwnTerritory() && !faction.getTag().contains("Wilderness")) {
 									p.sendMessage(StickConfig.instance.territoryMessage);
@@ -193,11 +190,11 @@ public class PlayerListener implements Listener {
 									return;
 								}
 							}
-							if(plugin.skyblock) {
+							if (plugin.skyblock) {
 								Island island = null;
 								island = ASkyBlockAPI.getInstance().getIslandAt(location);
-								
-								if(!island.getMembers().contains(p.getUniqueId())) {
+
+								if (!island.getMembers().contains(p.getUniqueId())) {
 									p.sendMessage(StickConfig.instance.territoryMessage);
 									e.setCancelled(true);
 								}
@@ -206,7 +203,6 @@ public class PlayerListener implements Listener {
 
 						ItemStack is = p.getItemInHand();
 						ItemMeta im = is.getItemMeta();
-
 
 						// So here we go
 						List<String> lores = im.getLore();
@@ -220,76 +216,73 @@ public class PlayerListener implements Listener {
 						// Keep track of sold items price
 						double total = 0;
 						double slotPrice = 0;
+						double price = 0;
 						// Sell the items
 						for (int i = 0; i < c.getInventory().getSize(); i++) {
 							try {// Calculate the price of each item.
 								// TryCatch incase something goes wrong
 
 								// Loop through the config
-								for (String key : PriceConfig.instance.getConfig().getConfigurationSection("prices")
-										.getKeys(false)) {
+								if(!StickConfig.instance.useEssentialsWorth) {
+									for (String key : PriceConfig.instance.getConfig().getConfigurationSection("prices")
+											.getKeys(false)) {
 
-									// Pull put the item name and the data
-									int data;
-									String name;
+										// Pull put the item name and the data
+										int data;
+										String name;
 
-									if (!key.contains(":")) {
-										// If user didnt put a data value,
-										// assumt its 0
-										data = 0;
-										name = key;
-									} else {
-										// Split by the colon.
-										name = (key.split(":"))[0];
-										data = Integer.parseInt(key.split(":")[1]);
-									}
-									//p.sendMessage(name + ", " + data);
+										if (!key.contains(":")) {
+											// If user didnt put a data value,
+											// assumt its 0
+											data = 0;
+											name = key;
+										} else {
+											// Split by the colon.
+											name = (key.split(":"))[0];
+											data = Integer.parseInt(key.split(":")[1]);
+										}
+										// p.sendMessage(name + ", " + data);
 
-									// If the item matches(whether its numeric
-									// or string)
-									// in the config, and the data value
-									// matches,
-									if ((contents[i].getType().toString().equalsIgnoreCase(name) || (isNumeric(name) && contents[i].getType().getId() == Integer.parseInt(name))) && contents[i].getDurability() == data) {
-										// Get the price listed for that item
-										double price = Double.parseDouble(
-												PriceConfig.instance.getConfig().getString("prices." + key));
+										// If the item matches(whether its numeric
+										// or string)
+										// in the config, and the data value
+										// matches,
+										if ((contents[i].getType().toString().equalsIgnoreCase(name) || (isNumeric(name)
+												&& contents[i].getType().getId() == Integer.parseInt(name)))
+												&& contents[i].getDurability() == data) {
+											// Get the price listed for that item
+											price = Double.parseDouble(
+													PriceConfig.instance.getConfig().getString("prices." + key));
 
-										// Get the amount of that in the chest
-										int amount = (int) contents[i].getAmount();
+											// Get the amount of that in the chest
 
-										// Get the price for that one slot in
-										// the chest
-										slotPrice = price * amount;
-										// If it was more than 0,
-										if (slotPrice > 0) {
-											ItemStack sell = contents[i]; //UPDATE: Fixed bug where renamed items weren't sold
-											// Sell it
-											
-											//UPDATE: Realized that this is unneeded
-//											if (isNumeric(name)) {
-//												//sell = new ItemStack(Integer.parseInt(name), amount, (short) data);
-//											} else {																		
-//												//sell = new ItemStack(Material.getMaterial(name.toUpperCase()), amount,
-//														//(short) data);
-//											}
-											
-											// Then remove the item from the
-											// chest
-											
-											//UPDATE: Commented out these since it's in the chest, don't have to recheck.
-											//if (c.getInventory().contains(sell)) {
-												c.getInventory().remove(sell);
-												e.getClickedBlock().getState().update();
-											//}
 										}
 									}
+								}else {
+									//Essentials Worth
+									price = plugin.ess.getWorth().getPrice(contents[i]).doubleValue();
 								}
+								
+								int amount = (int) contents[i].getAmount();
+								
+								slotPrice = price * amount; //Price for slot i
+								// If it was more than 0,
+								if (slotPrice > 0) {
+									ItemStack sell = contents[i];
+
+									//remove from chest
+									c.getInventory().remove(sell);
+									e.getClickedBlock().getState().update();
+								}
+								
 							} catch (NullPointerException ex) {
+
 							}
 							// Increment total, reset slot price for
 							// next iteration
 							total += slotPrice;
 							slotPrice = 0;
+							price = 0;
 						}
 						// Give player money if the amount they sold was > 0
 						if (total > 0) {
@@ -304,9 +297,21 @@ public class PlayerListener implements Listener {
 							EconomyResponse r = plugin.getEcon().depositPlayer(p, total);
 							// Send the payment
 							if (r.transactionSuccess()) {
-								p.sendMessage(StickConfig.instance.sellMessage
-										.replace("%balance%", plugin.getEcon().format(r.balance))
-										.replace("%price%", plugin.getEcon().format(r.amount)));
+								if(StickConfig.instance.sellMessage.contains("\\n")) {
+									String[] send = StickConfig.instance.sellMessage.split("\\\\n");
+									for(String msg: send) {
+										p.sendMessage(msg
+												.replace("%balance%", plugin.getEcon().format(r.balance))
+												.replace("%price%", plugin.getEcon().format(r.amount)));
+									}
+								}else {
+									p.sendMessage(StickConfig.instance.sellMessage
+											.replace("%balance%", plugin.getEcon().format(r.balance))
+											.replace("%price%", plugin.getEcon().format(r.amount)));
+								}
+
+								//Add this to keep a log just incase.
+								System.out.println(p.getName() + " sold items via sellstick for " + r.amount + " and now has " + r.balance);
 							} else {
 								p.sendMessage(String.format("An error occured: %s", r.errorMessage));
 							}
@@ -321,7 +326,7 @@ public class PlayerListener implements Listener {
 
 						} else { // If the sold amount < 0
 							p.sendMessage(StickConfig.instance.nothingWorth);
-						}
+						}						
 					}
 				}
 			}

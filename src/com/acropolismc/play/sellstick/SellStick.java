@@ -33,6 +33,7 @@ public class SellStick extends JavaPlugin {
 			this.essentialsPlugin = (Essentials) essentialsPlugin;
 		}
 		
+		//Essentials
 		ess = (Essentials) essentialsPlugin;
 		
 		// Commands
@@ -51,6 +52,8 @@ public class SellStick extends JavaPlugin {
 			return;
 		}
 
+		//There's probably a better way for this, but this will do for now.
+		
 		Plugin factions = getServer().getPluginManager().getPlugin("Factions");
 		Plugin mcore = getServer().getPluginManager().getPlugin("MassiveCore");
 		Plugin legacy = getServer().getPluginManager().getPlugin("LegacyFactions");
@@ -82,10 +85,10 @@ public class SellStick extends JavaPlugin {
 			log.info("[Sellstick] UUID/Other Factions found! Hooking into Factions");
 		}
 		else {
-			log.warning("[SellStick] FACTIONS WAS NOT FOUND! SOME FEATURES MAY NOT WORK!");
+			log.warning("[SellStick] FACTIONS NOR SKYBLOCK WAS NOT FOUND! SOME FEATURES MAY NOT WORK!");
 			log.warning("SellStick is designed to work with factions so you may encounter");
 			log.warning("bugs when not using. I highly suggest using");
-			log.warning("Factions UUID / Legacy Factions / MassiveCore Factions");
+			log.warning("Factions UUID / Legacy Factions / MassiveCore Factions / ASkyBlock");
 
 		}
 

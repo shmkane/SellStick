@@ -68,8 +68,6 @@ public class SellStickCommand implements CommandExecutor {
 							 * This assigns a random string to the item meta so
 							 * that the item cannot be stacked
 							 */
-							//int uses = Integer.parseInt(args[3]);
-							//TODO: HIDE RANDOM STRING
 							RandomString random = new RandomString(10);
 							String UUID = random.nextString();
 

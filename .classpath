@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/askyblock.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/Factions.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/Taco.jar"/>
+	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/Taco.jar" sourcepath="C:/Users/shmka/Downloads/Spigot-API-master.zip"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/EssentialsX-2.0.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/LegacyFactions.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/Desktop/Clone/SERVER/plugins/Vault.jar"/>

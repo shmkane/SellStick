@@ -4,11 +4,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import com.massivecraft.factions.integration.Essentials;
 
 public class StickConfig {
 	public static StickConfig instance = new StickConfig();
@@ -76,6 +73,9 @@ public class StickConfig {
 		if (!this.conf.exists()) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
 
+			/*
+			 * Default config options
+			 */
 			config.set("DisplayName", "&cSellStick");
 			config.set("ItemType", "STICK");
 			config.set("Only_In_Own_Territory", true);

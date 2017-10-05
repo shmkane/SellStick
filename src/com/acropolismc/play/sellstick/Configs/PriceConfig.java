@@ -15,7 +15,9 @@ public class PriceConfig {
 		this.conf = new File(dir + File.separator + "prices.yml");
 		if (!this.conf.exists()) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
-
+			/*
+			 * Example config options
+			 */
 			config.set("prices.SULPHUR", 1.02);
 			config.set("prices.RED_ROSE", 0.76);
 			config.set("prices.LEATHER", 2.13);

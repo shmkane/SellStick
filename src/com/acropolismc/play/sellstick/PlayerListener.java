@@ -232,8 +232,8 @@ public class PlayerListener implements Listener {
 										String name;
 
 										if (!key.contains(":")) {
-											// If user didnt put a data value,
-											// assumt its 0
+											// If user didn't put a data value,
+											// assume its 0
 											data = 0;
 											name = key;
 										} else {
@@ -241,7 +241,6 @@ public class PlayerListener implements Listener {
 											name = (key.split(":"))[0];
 											data = Integer.parseInt(key.split(":")[1]);
 										}
-										// p.sendMessage(name + ", " + data);
 
 										// If the item matches(whether its numeric
 										// or string)

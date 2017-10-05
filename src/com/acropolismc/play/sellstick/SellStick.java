@@ -2,18 +2,22 @@ package com.acropolismc.play.sellstick;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
+import com.earth2me.essentials.Essentials;
 
 import net.milkbowl.vault.economy.Economy;
 
 // @author shmkane
 public class SellStick extends JavaPlugin {
 
+	public Plugin essentialsPlugin;
+	public Essentials ess;
 	private static Economy econ = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
 
@@ -23,6 +27,14 @@ public class SellStick extends JavaPlugin {
 	public boolean skyblock = false;
 
 	public void onEnable() {
+		//Hook into essentials.
+		essentialsPlugin = Bukkit.getPluginManager().getPlugin("Essentials");
+		if (essentialsPlugin.isEnabled() && (essentialsPlugin instanceof Essentials)) {
+			this.essentialsPlugin = (Essentials) essentialsPlugin;
+		}
+		
+		ess = (Essentials) essentialsPlugin;
+		
 		// Commands
 		this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
 		// Listeners
@@ -42,8 +54,16 @@ public class SellStick extends JavaPlugin {
 		Plugin factions = getServer().getPluginManager().getPlugin("Factions");
 		Plugin mcore = getServer().getPluginManager().getPlugin("MassiveCore");
 		Plugin legacy = getServer().getPluginManager().getPlugin("LegacyFactions");
-		
+
 		Plugin skyblock = getServer().getPluginManager().getPlugin("ASkyBlock");
+
+		if(StickConfig.instance.useEssentialsWorth) {
+			if(essentialsPlugin == null || !essentialsPlugin.isEnabled()) {
+				log.warning("[Sellstick] Trying to use essentials worth but essentials not found!");
+			}else {
+				log.info("[Sellstick] Essentials found, hooking into Worth");
+			}
+		}
 
 		if(skyblock != null && skyblock.isEnabled()) {
 			this.skyblock = true;

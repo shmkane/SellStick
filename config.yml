@@ -47,6 +47,10 @@ InvalidTerritoryMessage: '&cYou can''t use sell stick outside your territory!'
 NotWorthMessage: '&cNothing worth selling inside'
 #What message is sent if they run out of uses?
 BrokenStick: '&cYour sellstick broke!(Ran out of uses)'
+#Do you want to use essentials worth.yml for your prices
+#instead of my prices.yml?
+#if so, enable this
+UseEssentialsWorth: false
 #That's it! If you have questions, ask on Spigot or GitHub.
 #I typically respond faster on GitHub
 #https://github.com/shmkane/SellStick

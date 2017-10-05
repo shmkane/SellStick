@@ -1,6 +1,6 @@
 name: SellStick
 main: com.acropolismc.play.sellstick.SellStick
-version: 7.3beta
+version: 7.4beta
 author: shmkane
 website: http://acropolismc.com
 depend: [Vault]

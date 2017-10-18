@@ -197,6 +197,7 @@ public class PlayerListener implements Listener {
 								if (!island.getMembers().contains(p.getUniqueId())) {
 									p.sendMessage(StickConfig.instance.territoryMessage);
 									e.setCancelled(true);
+									return; //this one little guy!
 								}
 							}
 						}

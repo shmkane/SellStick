@@ -15,6 +15,7 @@ public class PriceConfig {
 		this.conf = new File(dir + File.separator + "prices.yml");
 		if (!this.conf.exists()) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
+			
 			/*
 			 * Example config options
 			 */
@@ -29,8 +30,6 @@ public class PriceConfig {
 			config.set("prices.1:4", 0.01);
 			config.set("prices.1:5", 0.07);
 			config.set("prices.46", 1.08);
-
-
 
 			try {
 				config.save(this.conf);

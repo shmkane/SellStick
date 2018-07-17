@@ -135,7 +135,8 @@ public class PlayerListener implements Listener {
 		// as a sellstick
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			if (p.getItemInHand().getType() == sellItem) {
-				if (p.getItemInHand().getItemMeta().getDisplayName() != null && p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(StickConfig.instance.name)) {
+				if (p.getItemInHand().getItemMeta().getDisplayName() != null && p.getItemInHand().getItemMeta()
+						.getDisplayName().equalsIgnoreCase(StickConfig.instance.name)) {
 					if (e.getClickedBlock().getType() == Material.CHEST
 							|| e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
 
@@ -147,60 +148,115 @@ public class PlayerListener implements Listener {
 
 						Location location = e.getClickedBlock().getLocation();
 
-						if (StickConfig.instance.onlyOwn) {
 
-							if (plugin.mcore) { // If the server runs MCore Factions
-								com.massivecraft.factions.entity.Faction faction = null;
-								MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
-								faction = BoardColl.get().getFactionAt(PS.valueOf(location));
+						if (StickConfig.instance.usingMCoreFactions) { // If the server runs MCore Factions
+							com.massivecraft.factions.entity.Faction faction = null;
+							MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
+							faction = BoardColl.get().getFactionAt(PS.valueOf(location));
 
-								// Not in own and not in wilderness
-								if (!mplayer.isInOwnTerritory() && !faction.getName().contains("Wilderness")) {
-									p.sendMessage(StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-
+							//Check own territory
+							if(mplayer.isInOwnTerritory() && StickConfig.instance.allowOwn) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
 							}
-							if (plugin.facs) { // if it's UUID
-								Faction faction = null;
-								FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
-								FLocation fLoc = new FLocation(location);
-								faction = Board.getInstance().getFactionAt(fLoc);
-
-								// Check to see if the location the block is at is
-								// their/wilderness territory
-								// Not in own and not in wilderness
-								if (!fplayer.isInOwnTerritory() && !faction.getTag().contains("Wilderness")) {
-									p.sendMessage(StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
+							//check Wilderness
+							else if(faction.getName().contains("Wilderness") && StickConfig.instance.allowWilderness) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+							//check warzone
+							else if(faction.getName().contains("Warzone") && StickConfig.instance.allowWarzone) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+							//check safezone
+							else if(faction.getName().contains("Safezone") && StickConfig.instance.allowSafezone) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
 							}
 
-							if (plugin.legacy) {
-								net.redstoneore.legacyfactions.entity.Faction faction = null;
-								net.redstoneore.legacyfactions.entity.FPlayer fplayer = FPlayerColl.get(p);
-								net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(
-										location);
-								faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
-								if (!fplayer.isInOwnTerritory() && !faction.getTag().contains("Wilderness")) {
-									p.sendMessage(StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
+
+						}
+
+						//SavageFactions or factionsuuid
+						if (StickConfig.instance.usingSavageFactions || StickConfig.instance.usingFactionsUUID) {
+							Faction faction = null;
+							FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
+							FLocation fLoc = new FLocation(location);
+							faction = Board.getInstance().getFactionAt(fLoc);
+
+
+							if(fplayer.isInOwnTerritory() && StickConfig.instance.allowOwn) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
 							}
-							if (plugin.skyblock) {
-								Island island = null;
+							else if(faction.getTag().contains("Wilderness") && StickConfig.instance.allowWilderness) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+							else if(faction.getTag().contains("Warzone") && StickConfig.instance.allowWarzone) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+							else if(faction.getTag().contains("Safezone") && StickConfig.instance.allowSafezone) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+
+						}
+
+						if (StickConfig.instance.usingLegacyFactions) { // Support for legacy factions
+							net.redstoneore.legacyfactions.entity.Faction faction = null;
+							net.redstoneore.legacyfactions.entity.FPlayer fplayer = FPlayerColl.get(p);
+							net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(
+									location);
+							faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
+
+							if(fplayer.isInOwnTerritory() && StickConfig.instance.allowOwn) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+							else if(faction.getTag().contains("Wilderness") && StickConfig.instance.allowWilderness) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+							else if(faction.getTag().contains("Warzone") && StickConfig.instance.allowWarzone) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+							else if(faction.getTag().contains("Safezone") && StickConfig.instance.allowSafezone) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+
+						}
+						if (StickConfig.instance.usingSkyblock) {
+							Island island = null;
+							try {
 								island = ASkyBlockAPI.getInstance().getIslandAt(location);
+							}catch(Exception ex) {
+								System.out.println(ex.getMessage());
+							}
 
-								if (!island.getMembers().contains(p.getUniqueId())) {
-									p.sendMessage(StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return; //this one little guy!
-								}
+							if (!island.getMembers().contains(p.getUniqueId())) {
+								p.sendMessage(StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
 							}
 						}
+
 
 						ItemStack is = p.getItemInHand();
 						ItemMeta im = is.getItemMeta();
@@ -224,7 +280,7 @@ public class PlayerListener implements Listener {
 								// TryCatch incase something goes wrong
 
 								// Loop through the config
-								if(!StickConfig.instance.useEssentialsWorth) {
+								if (!StickConfig.instance.useEssentialsWorth) {
 									for (String key : PriceConfig.instance.getConfig().getConfigurationSection("prices")
 											.getKeys(false)) {
 
@@ -258,23 +314,23 @@ public class PlayerListener implements Listener {
 
 										}
 									}
-								}else {
-									//Essentials Worth
+								} else {
+									// Essentials Worth
 									price = plugin.ess.getWorth().getPrice(contents[i]).doubleValue();
 								}
-								
+
 								int amount = (int) contents[i].getAmount();
-								
-								slotPrice = price * amount; //Price for slot i
+
+								slotPrice = price * amount; // Price for slot i
 								// If it was more than 0,
 								if (slotPrice > 0) {
 									ItemStack sell = contents[i];
 
-									//remove from chest
+									// remove from chest
 									c.getInventory().remove(sell);
 									e.getClickedBlock().getState().update();
 								}
-								
+
 							} catch (NullPointerException ex) {
 
 							}
@@ -297,21 +353,21 @@ public class PlayerListener implements Listener {
 							EconomyResponse r = plugin.getEcon().depositPlayer(p, total);
 							// Send the payment
 							if (r.transactionSuccess()) {
-								if(StickConfig.instance.sellMessage.contains("\\n")) {
+								if (StickConfig.instance.sellMessage.contains("\\n")) {
 									String[] send = StickConfig.instance.sellMessage.split("\\\\n");
-									for(String msg: send) {
-										p.sendMessage(msg
-												.replace("%balance%", plugin.getEcon().format(r.balance))
+									for (String msg : send) {
+										p.sendMessage(msg.replace("%balance%", plugin.getEcon().format(r.balance))
 												.replace("%price%", plugin.getEcon().format(r.amount)));
 									}
-								}else {
+								} else {
 									p.sendMessage(StickConfig.instance.sellMessage
 											.replace("%balance%", plugin.getEcon().format(r.balance))
 											.replace("%price%", plugin.getEcon().format(r.amount)));
 								}
 
-								//Add this to keep a log just incase.
-								System.out.println(p.getName() + " sold items via sellstick for " + r.amount + " and now has " + r.balance);
+								// Add this to keep a log just incase.
+								System.out.println(p.getName() + " sold items via sellstick for " + r.amount
+										+ " and now has " + r.balance);
 							} else {
 								p.sendMessage(String.format("An error occured: %s", r.errorMessage));
 							}
@@ -326,7 +382,7 @@ public class PlayerListener implements Listener {
 
 						} else { // If the sold amount < 0
 							p.sendMessage(StickConfig.instance.nothingWorth);
-						}						
+						}
 					}
 				}
 			}

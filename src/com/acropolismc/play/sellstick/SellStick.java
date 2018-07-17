@@ -21,21 +21,17 @@ public class SellStick extends JavaPlugin {
 	private static Economy econ = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
 
-	public boolean mcore = false;
-	public boolean legacy = false;
-	public boolean facs = false;
-	public boolean skyblock = false;
-
 	public void onEnable() {
-		//Hook into essentials.
+		// Hook into essentials.
 		essentialsPlugin = Bukkit.getPluginManager().getPlugin("Essentials");
 		if (essentialsPlugin.isEnabled() && (essentialsPlugin instanceof Essentials)) {
+			log.info("[Sellstick] Essentials found");
 			this.essentialsPlugin = (Essentials) essentialsPlugin;
 		}
-		
-		//Essentials
+
+		// Essentials
 		ess = (Essentials) essentialsPlugin;
-		
+
 		// Commands
 		this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
 		// Listeners
@@ -52,46 +48,61 @@ public class SellStick extends JavaPlugin {
 			return;
 		}
 
-		//There's probably a better way for this, but this will do for now.
-		
-		Plugin factions = getServer().getPluginManager().getPlugin("Factions");
-		Plugin mcore = getServer().getPluginManager().getPlugin("MassiveCore");
-		Plugin legacy = getServer().getPluginManager().getPlugin("LegacyFactions");
+		// There's probably a better way for this, but this will do for now.
 
-		Plugin skyblock = getServer().getPluginManager().getPlugin("ASkyBlock");
+		Plugin factions;
+		Plugin skyblock;
 
-		if(StickConfig.instance.useEssentialsWorth) {
-			if(essentialsPlugin == null || !essentialsPlugin.isEnabled()) {
-				log.warning("[Sellstick] Trying to use essentials worth but essentials not found!");
-			}else {
-				log.info("[Sellstick] Essentials found, hooking into Worth");
+		//Checks for FactionsUUID
+		if (StickConfig.instance.usingFactionsUUID || StickConfig.instance.usingSavageFactions) {
+			factions = getServer().getPluginManager().getPlugin("Factions");
+			if (factions != null && factions.isEnabled())
+				log.info("[Sellstick] Hooking into FactionsUUID/Savage");
+			else
+				log.warning("[Sellstick] Tried to hook into FactionsUUID/Savage but failed!");
+			
+			
+		//Check for Legacy Factions
+		} else if (StickConfig.instance.usingLegacyFactions) {
+			factions = getServer().getPluginManager().getPlugin("Factions");
+			if (factions != null && factions.isEnabled())
+				log.info("[Sellstick] Hooking into LegacyFactions");
+			else
+				log.warning("[Sellstick] Tried to hook into LegacyFactions but failed!");
+			
+			
+		//Check for MCoreFactions
+		} else if (StickConfig.instance.usingMCoreFactions) {
+			factions = getServer().getPluginManager().getPlugin("MassiveCore");
+			if (factions != null && factions.isEnabled())
+				log.info("[Sellstick] Hooking into MCoreFactions");
+			else
+				log.warning("[Sellstick] Tried to hook into McoreFactions but failed!");
+			
+			
+		//Check for SavageFactions
+		} else {//If no Factions plugin was set.
+			log.warning("[Sellstick] No factions plugin enabled in config! Factions features won't work!");
+			if(!StickConfig.instance.usingSkyblock) {
+				log.warning("[Sellstick] No SkyBlock plugin enabled in config! Plugin won't function normally!");
 			}
 		}
-
-		if(skyblock != null && skyblock.isEnabled()) {
-			this.skyblock = true;
-			log.info("[Sellstick] ASkyBlock Factions found! Hooking into ASkyBlock");
-		}
-		if (mcore != null && mcore.isEnabled()) {
-			this.mcore = true;
-			log.info("[Sellstick] MCore Factions found! Hooking into MCore");
-		}
-		else if (legacy != null && legacy.isEnabled()) {
-			this.legacy = true;
-			log.info("[Sellstick] Legacy Factions found! Hooking into Legacy");
-		}
-		else if (factions != null && factions.isEnabled()) {
-			this.facs = true;
-			log.info("[Sellstick] UUID/Other Factions found! Hooking into Factions");
-		}
-		else {
-			log.warning("[SellStick] FACTIONS NOR SKYBLOCK WAS NOT FOUND! SOME FEATURES MAY NOT WORK!");
-			log.warning("SellStick is designed to work with factions so you may encounter");
-			log.warning("bugs when not using. I highly suggest using");
-			log.warning("Factions UUID / Legacy Factions / MassiveCore Factions / ASkyBlock");
-
+		//Check for SkyBlock
+		if (StickConfig.instance.usingSkyblock) {
+			skyblock = getServer().getPluginManager().getPlugin("ASkyBlock");
+			if (skyblock != null && skyblock.isEnabled())
+				log.info("[Sellstick] Hooking into ASkyBlock");
+			else
+				log.warning("[Sellstick] Tried to hook into ASkyBlock but failed!");
 		}
 
+		if (StickConfig.instance.useEssentialsWorth) {
+			if (essentialsPlugin == null || !essentialsPlugin.isEnabled()) {
+				log.warning("[Sellstick] Trying to use essentials worth but essentials not found!");
+			} else {
+				log.info("[Sellstick] Hooked into Essentials Worth");
+			}
+		}
 	}
 
 	public Economy getEcon() {

@@ -55,9 +55,6 @@ public class StickConfig {
 		this.allowSafezone = config.getBoolean("AllowedInSafezoneClaim");
 		this.allowWarzone = config.getBoolean("AllowedInWarzoneClaim");
 		this.allowWilderness = config.getBoolean("AllowedInWildernessClaim");
-
-		this.allowSafezone = config.getBoolean("AllowSafeZoneUse");
-		this.allowWarzone = config.getBoolean("AllowWarzoneUse");
 		this.lore = config.getStringList("StickLore");
 		this.usesLore = config.getString("FiniteLore").replace("&", "§");
 		this.infiniteLore = config.getString("InfiniteLore").replace("&", "§");

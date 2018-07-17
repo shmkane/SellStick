@@ -187,21 +187,31 @@ public class PlayerListener implements Listener {
 							
 							if((fplayer.hasFaction() && fplayer.isInOwnTerritory()) && !StickConfig.instance.allowOwn) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
+								System.out.println(1);
 								e.setCancelled(true);
 								return;
 							}
 							else if(faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
+								System.out.println(2);
+
 								e.setCancelled(true);
 								return;
 							}
 							else if(faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
+								
 								p.sendMessage(StickConfig.instance.territoryMessage);
+								System.out.println(faction.getTag().contains("Warzone"));
+								System.out.println(StickConfig.instance.allowWarzone);
+
+
 								e.setCancelled(true);
 								return;
 							}
 							else if(faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
+								System.out.println(4);
+
 								e.setCancelled(true);
 								return;
 							}

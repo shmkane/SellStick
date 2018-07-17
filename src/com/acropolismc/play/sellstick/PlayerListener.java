@@ -154,26 +154,22 @@ public class PlayerListener implements Listener {
 							MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
 							faction = BoardColl.get().getFactionAt(PS.valueOf(location));
 
-							//Check own territory
-							if(mplayer.isInOwnTerritory() && StickConfig.instance.allowOwn) {
+							if((mplayer.hasFaction() && mplayer.isInOwnTerritory()) && !StickConfig.instance.allowOwn) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							//check Wilderness
-							else if(faction.getName().contains("Wilderness") && StickConfig.instance.allowWilderness) {
+							else if(faction.getName().contains("Wilderness") && !StickConfig.instance.allowWilderness) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							//check warzone
-							else if(faction.getName().contains("Warzone") && StickConfig.instance.allowWarzone) {
+							else if(faction.getName().contains("Warzone") && !StickConfig.instance.allowWarzone) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							//check safezone
-							else if(faction.getName().contains("Safezone") && StickConfig.instance.allowSafezone) {
+							else if(faction.getName().contains("Safezone") && !StickConfig.instance.allowSafezone) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
@@ -188,24 +184,23 @@ public class PlayerListener implements Listener {
 							FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
 							FLocation fLoc = new FLocation(location);
 							faction = Board.getInstance().getFactionAt(fLoc);
-
-
-							if(fplayer.isInOwnTerritory() && StickConfig.instance.allowOwn) {
+							
+							if((fplayer.hasFaction() && fplayer.isInOwnTerritory()) && !StickConfig.instance.allowOwn) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							else if(faction.getTag().contains("Wilderness") && StickConfig.instance.allowWilderness) {
+							else if(faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							else if(faction.getTag().contains("Warzone") && StickConfig.instance.allowWarzone) {
+							else if(faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							else if(faction.getTag().contains("Safezone") && StickConfig.instance.allowSafezone) {
+							else if(faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
@@ -219,23 +214,23 @@ public class PlayerListener implements Listener {
 							net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(
 									location);
 							faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
-
-							if(fplayer.isInOwnTerritory() && StickConfig.instance.allowOwn) {
+					
+							if((fplayer.hasFaction() && fplayer.isInOwnTerritory()) && !StickConfig.instance.allowOwn) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							else if(faction.getTag().contains("Wilderness") && StickConfig.instance.allowWilderness) {
+							else if(faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							else if(faction.getTag().contains("Warzone") && StickConfig.instance.allowWarzone) {
+							else if(faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							else if(faction.getTag().contains("Safezone") && StickConfig.instance.allowSafezone) {
+							else if(faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
 								p.sendMessage(StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;

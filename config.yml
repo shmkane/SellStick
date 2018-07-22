@@ -68,6 +68,13 @@ StickLore:
 #- '&aLike this' #line 6
 #
 #
+#Do you want the stick to glow
+#As if it has an enchantment?
+#Set to true if you do.
+#Set to false for regular-item-look
+Glow: true
+#
+#
 #If they have a Finite stick(non-infinite)
 #Please try not to include any other numbers
 #in this lore

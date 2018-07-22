@@ -35,7 +35,7 @@ public class SellStickCommand implements CommandExecutor {
 			// If the sender has perms to give a stick, show the help message
 			if (sender.hasPermission("sellstick.give")) {
 				sender.sendMessage(StickConfig.instance.prefix + ChatColor.GREEN
-						+ "/SellStick give <player> <amount> <<uses>/infinite>");
+						+ "/SellStick give <player> <amount> (<uses>/infinite)");
 			}
 			return true;
 
@@ -43,10 +43,15 @@ public class SellStickCommand implements CommandExecutor {
 		} else if (args.length == 1) {
 			// If the sender has permission to reload
 			if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("sellstick.reload")) {
-				plugin.getServer().getPluginManager().disablePlugin(plugin);
-				sender.sendMessage(ChatColor.RED + "Disabled Plugin");
-				plugin.getServer().getPluginManager().enablePlugin(plugin);
-				sender.sendMessage(ChatColor.GREEN + "Enabled Plugin");
+				try {
+					plugin.getServer().getPluginManager().disablePlugin(plugin);
+					sender.sendMessage(ChatColor.RED + "Reloading Plugin");
+					plugin.getServer().getPluginManager().enablePlugin(plugin);
+					sender.sendMessage(ChatColor.GREEN + "Plugin Reloaded");
+				}catch(Exception ex) {
+					sender.sendMessage("Something went wrong! Check console for error");
+					System.out.println(ex.getMessage());
+				}
 				return true;
 			} else {
 				sender.sendMessage(
@@ -73,11 +78,12 @@ public class SellStickCommand implements CommandExecutor {
 							String UUID = random.nextString();
 
 							ItemStack is = new ItemStack(Material.getMaterial(StickConfig.instance.item));
+							is = Glow.addGlow(is); //Add glow via Glow class
 							ItemMeta im = is.getItemMeta();
 							List<String> lores = new ArrayList<String>();
 
 							im.setDisplayName(StickConfig.instance.name);
-
+							
 							// Load values from config onto the stick lores array
 							for (int z = 0; z < StickConfig.instance.lore.size(); z++) {
 								lores.add(StickConfig.instance.lore.get(z).replace("&", "§"));

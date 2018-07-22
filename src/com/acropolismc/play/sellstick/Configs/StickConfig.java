@@ -35,6 +35,7 @@ public class StickConfig {
 	public String brokenStick;
 	public String giveMessage;
 	public String receiveMessage;
+	public boolean glow;
 
 	public boolean useEssentialsWorth;
 
@@ -46,11 +47,11 @@ public class StickConfig {
 		this.usingLegacyFactions = config.getBoolean("UsingLegacyFactions");
 		this.usingFactionsUUID = config.getBoolean("UsingFactionsUUID");
 		this.usingSavageFactions = config.getBoolean("UsingSavageFactions");
-		this.usingMCoreFactions = config.getBoolean("UsingMCoreFactions");
-		
+		this.usingMCoreFactions = config.getBoolean("UsingMCoreFactions");	
 		this.name = config.getString("DisplayName").replace("&", "§");
 		this.item = config.getString("ItemType").toUpperCase().replace("&", "§");
-		
+		this.glow = config.getBoolean("Glow");
+
 		this.allowOwn = config.getBoolean("AllowedInFactionClaim");
 		this.allowSafezone = config.getBoolean("AllowedInSafezoneClaim");
 		this.allowWarzone = config.getBoolean("AllowedInWarzoneClaim");
@@ -66,7 +67,6 @@ public class StickConfig {
 		this.brokenStick =  config.getString("BrokenStick").replace("&", "§");
 		this.giveMessage = config.getString("GiveMessage").replaceAll("&", "§");
 		this.receiveMessage = config.getString("ReceiveMessage").replaceAll("&", "§");
-
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
 	}
 
@@ -92,7 +92,8 @@ public class StickConfig {
 			
 			config.set("DisplayName", "&cSellStick");
 			config.set("ItemType", "STICK");
-			
+			config.get("Glow", true);
+
 			config.set("AllowedInFactionClaim", true);
 			config.set("AllowedInSafezoneClaim", false);
 			config.set("AllowedInWarzoneClaim", false);
@@ -100,6 +101,7 @@ public class StickConfig {
 
 			List<String> lore = Arrays.asList("&c&lLeft&c click on a chest to sell items inside!", "&cSellStick by &oshmkane");
 			config.set("StickLore", lore);
+			
 			config.set("FiniteLore", "&c%remaining% &fremaining uses");
 			config.set("InfiniteLore", "&4Infinite &cuses!");
 			config.set("MessagePrefix", "&6[&eSellStick&6] &e");	
@@ -110,8 +112,8 @@ public class StickConfig {
 			config.set("BrokenStick", "&cYour sellstick broke!(Ran out of uses)");
 			config.set("GiveMessage", "&aYou gave &e%player%& &e&l%amount% &asell sticks!");
 			config.set("ReceiveMessage", "&aYou've received &e&l%amount% &asell sticks!");
-
 			config.set("UseEssentialsWorth", false);
+			
 			try {
 				config.save(this.conf);
 			} catch (Exception e) {

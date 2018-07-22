@@ -78,12 +78,14 @@ public class SellStickCommand implements CommandExecutor {
 							String UUID = random.nextString();
 
 							ItemStack is = new ItemStack(Material.getMaterial(StickConfig.instance.item));
-							is = Glow.addGlow(is); //Add glow via Glow class
+							if(StickConfig.instance.glow) {
+								is = Glow.addGlow(is); //Add glow via Glow class
+							}
 							ItemMeta im = is.getItemMeta();
 							List<String> lores = new ArrayList<String>();
 
 							im.setDisplayName(StickConfig.instance.name);
-							
+
 							// Load values from config onto the stick lores array
 							for (int z = 0; z < StickConfig.instance.lore.size(); z++) {
 								lores.add(StickConfig.instance.lore.get(z).replace("&", "§"));

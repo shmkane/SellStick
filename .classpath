@@ -2,13 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Soham Kane/Downloads/askyblock.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Soham Kane/Desktop/EssentialsX-2.15.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Soham Kane/Downloads/LegacyFactions.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Soham Kane/Desktop/Factions-2.14.0/MassiveCore.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Soham Kane/Downloads/Vault-1.6.6.jar"/>
 	<classpathentry kind="lib" path="D:/Server/spigot.jar" sourcepath="C:/Users/Soham Kane/Downloads/PaperSpigot-api-1.8.8-R0.1-SNAPSHOT-latest.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Soham Kane/Desktop/Factions-2.14.0/MCoreFactions.jar"/>
-	<classpathentry kind="lib" path="D:/Server/plugins/SavageFactions.jar"/>
+	<classpathentry kind="lib" path="D:/SellStick Jars/askyblock.jar"/>
+	<classpathentry kind="lib" path="D:/SellStick Jars/EssentialsX-2.15.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/SellStick Jars/LegacyFactions.jar"/>
+	<classpathentry kind="lib" path="D:/SellStick Jars/MassiveCore.jar"/>
+	<classpathentry kind="lib" path="D:/SellStick Jars/MCoreFactions.jar"/>
+	<classpathentry kind="lib" path="D:/SellStick Jars/SavageFactions.jar"/>
+	<classpathentry kind="lib" path="D:/SellStick Jars/Vault-1.6.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -8,7 +8,9 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -30,11 +32,11 @@ public class SellStickCommand implements CommandExecutor {
 		// Args length is 0
 		if (args.length == 0) {
 			// For players, show them nothing.
-			sender.sendMessage(
+			plugin.msg(sender,
 					StickConfig.instance.prefix + ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
 			// If the sender has perms to give a stick, show the help message
 			if (sender.hasPermission("sellstick.give")) {
-				sender.sendMessage(StickConfig.instance.prefix + ChatColor.GREEN
+				plugin.msg(sender, StickConfig.instance.prefix + ChatColor.GREEN
 						+ "/SellStick give <player> <amount> (<uses>/infinite)");
 			}
 			return true;
@@ -45,16 +47,16 @@ public class SellStickCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("sellstick.reload")) {
 				try {
 					plugin.getServer().getPluginManager().disablePlugin(plugin);
-					sender.sendMessage(ChatColor.RED + "Reloading Plugin");
+					plugin.msg(sender, ChatColor.RED + "Reloading Plugin");
 					plugin.getServer().getPluginManager().enablePlugin(plugin);
-					sender.sendMessage(ChatColor.GREEN + "Plugin Reloaded");
-				}catch(Exception ex) {
-					sender.sendMessage("Something went wrong! Check console for error");
+					plugin.msg(sender, ChatColor.GREEN + "Plugin Reloaded");
+				} catch (Exception ex) {
+					plugin.msg(sender, "Something went wrong! Check console for error");
 					System.out.println(ex.getMessage());
 				}
 				return true;
 			} else {
-				sender.sendMessage(
+				plugin.msg(sender, 
 						StickConfig.instance.prefix + ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
 				return true;
 			}
@@ -78,10 +80,8 @@ public class SellStickCommand implements CommandExecutor {
 							String UUID = random.nextString();
 
 							ItemStack is = new ItemStack(Material.getMaterial(StickConfig.instance.item));
-							if(StickConfig.instance.glow) {
-								is = Glow.addGlow(is); //Add glow via Glow class
-							}
 							ItemMeta im = is.getItemMeta();
+
 							List<String> lores = new ArrayList<String>();
 
 							im.setDisplayName(StickConfig.instance.name);
@@ -101,37 +101,54 @@ public class SellStickCommand implements CommandExecutor {
 								lores.set(1, lores.get(1).replace("%usesLore%",
 										StickConfig.instance.usesLore.replace("%remaining%", uses + "")));
 							}
-
 							// assign the meta to the stick
 							lores.add(UUID);
 							im.setLore(lores);
+							im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
 							is.setItemMeta(im);
+
 							// Give the item
+							if (StickConfig.instance.glow) {
+								is = glow(is);
+							}
+
 							target.getInventory().addItem(is);
 						}
 						// Send target and sender a message.
-						target.sendMessage(StickConfig.instance.receiveMessage.replace("%amount%",
+						plugin.msg(target, StickConfig.instance.receiveMessage.replace("%amount%",
 								Integer.parseInt(args[2]) + ""));
 
-						sender.sendMessage(StickConfig.instance.giveMessage.replace("%player%", target.getName())
+						plugin.msg(sender, StickConfig.instance.giveMessage.replace("%player%", target.getName())
 								.replace("%amount%", Integer.parseInt(args[2]) + ""));
-
 
 						return true;
 
 						// If the target wasn't found
 					} else {
-						sender.sendMessage(ChatColor.RED + "Player not found");
+						plugin.msg(sender, ChatColor.RED + "Player not found");
 					}
 					// If the sender didn't have permission
 				} else {
-					sender.sendMessage(StickConfig.instance.prefix + StickConfig.instance.noPerm);
+					plugin.msg(sender, StickConfig.instance.prefix + StickConfig.instance.noPerm);
 				}
 			}
 			// Invalid number of args.
 		} else {
-			sender.sendMessage(ChatColor.RED + "Invalid command. Type /Sellstick for help");
+			plugin.msg(sender, "" + ChatColor.RED + "Invalid command. Type /Sellstick for help");
 		}
 		return false;
+	}
+
+
+
+	/**
+	 * 
+	 * @param itemStack Accepts an itemstack
+	 * @return returns an enchanted item with durability 1(unbreaking)
+	 */
+	public ItemStack glow(ItemStack itemStack) {
+		itemStack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+		return itemStack;
 	}
 }

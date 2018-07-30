@@ -58,6 +58,17 @@ public class PlayerListener implements Listener {
 		return false;
 	}
 
+	/**
+	 * This method was created incase someone wants to put
+	 * "%remaining uses out of 50%
+	 * Where the last int is NOT the remaining uses.
+	 * 
+	 * There's probably a more efficient way to do this
+	 * but I haven't gotten around to recoding it
+	 * and it hasn't given an issue yet.
+	 * @param lores Takes a string list
+	 * @return finds the uses in the lores and returns as int.
+	 */
 	public int getUsesFromLore(List<String> lores) {
 		String found = "";
 		// Get all the lores. lore[1] contains the uses/infinite
@@ -125,7 +136,6 @@ public class PlayerListener implements Listener {
 		return min;
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onUse(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
@@ -142,74 +152,73 @@ public class PlayerListener implements Listener {
 
 						// Didn't have permission :(
 						if (!p.hasPermission("sellstick.use")) {
-							p.sendMessage(StickConfig.instance.prefix + StickConfig.instance.noPerm);
+							plugin.msg(p, StickConfig.instance.prefix + StickConfig.instance.noPerm);
 							return;
 						}
 
 						Location location = e.getClickedBlock().getLocation();
-
 
 						if (StickConfig.instance.usingMCoreFactions) { // If the server runs MCore Factions
 							com.massivecraft.factions.entity.Faction faction = null;
 							MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
 							faction = BoardColl.get().getFactionAt(PS.valueOf(location));
 
-							if((mplayer.hasFaction() && mplayer.isInOwnTerritory()) && !StickConfig.instance.allowOwn) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+							if ((mplayer.hasFaction() && mplayer.isInOwnTerritory())
+									&& !StickConfig.instance.allowOwn) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							} else if (faction.getName().contains("Wilderness")
+									&& !StickConfig.instance.allowWilderness) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							} else if (faction.getName().contains("Warzone") && !StickConfig.instance.allowWarzone) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							} else if (faction.getName().contains("Safezone") && !StickConfig.instance.allowSafezone) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-							else if(faction.getName().contains("Wilderness") && !StickConfig.instance.allowWilderness) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							}
-							else if(faction.getName().contains("Warzone") && !StickConfig.instance.allowWarzone) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							}
-							else if(faction.getName().contains("Safezone") && !StickConfig.instance.allowSafezone) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							}
-
 
 						}
 
-						//SavageFactions or factionsuuid
+						// SavageFactions or factionsuuid
+						/**
+						 * This part checks what factions the user is running and will
+						 * handle sellstick accordingly
+						 */
 						if (StickConfig.instance.usingSavageFactions || StickConfig.instance.usingFactionsUUID) {
 							Faction faction = null;
 							FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
 							FLocation fLoc = new FLocation(location);
 							faction = Board.getInstance().getFactionAt(fLoc);
-							
-							if((fplayer.hasFaction() && fplayer.isInOwnTerritory()) && !StickConfig.instance.allowOwn) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+
+							if ((fplayer.hasFaction() && fplayer.isInOwnTerritory())
+									&& !StickConfig.instance.allowOwn) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								System.out.println(1);
 								e.setCancelled(true);
 								return;
-							}
-							else if(faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+							} else if (faction.getTag().contains("Wilderness")
+									&& !StickConfig.instance.allowWilderness) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								System.out.println(2);
 
 								e.setCancelled(true);
 								return;
-							}
-							else if(faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
-								
-								p.sendMessage(StickConfig.instance.territoryMessage);
+							} else if (faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
+
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								System.out.println(faction.getTag().contains("Warzone"));
 								System.out.println(StickConfig.instance.allowWarzone);
 
-
 								e.setCancelled(true);
 								return;
-							}
-							else if(faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+							} else if (faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								System.out.println(4);
 
 								e.setCancelled(true);
@@ -224,24 +233,23 @@ public class PlayerListener implements Listener {
 							net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(
 									location);
 							faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
-					
-							if((fplayer.hasFaction() && fplayer.isInOwnTerritory()) && !StickConfig.instance.allowOwn) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+
+							if ((fplayer.hasFaction() && fplayer.isInOwnTerritory())
+									&& !StickConfig.instance.allowOwn) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
-							}
-							else if(faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+							} else if (faction.getTag().contains("Wilderness")
+									&& !StickConfig.instance.allowWilderness) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
-							}
-							else if(faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+							} else if (faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
-							}
-							else if(faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+							} else if (faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
@@ -251,18 +259,24 @@ public class PlayerListener implements Listener {
 							Island island = null;
 							try {
 								island = ASkyBlockAPI.getInstance().getIslandAt(location);
-							}catch(Exception ex) {
-								System.out.println(ex.getMessage());
-							}
 
-							if (!island.getMembers().contains(p.getUniqueId())) {
-								p.sendMessage(StickConfig.instance.territoryMessage);
+								if (!island.getMembers().contains(p.getUniqueId())) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+
+							} catch (Exception ex) {
 								e.setCancelled(true);
 								return;
+								// System.out.println(ex.getMessage());
 							}
+
 						}
 
-
+						/**
+						 * This is where the selling magic happens
+						 */
 						ItemStack is = p.getItemInHand();
 						ItemMeta im = is.getItemMeta();
 
@@ -282,7 +296,7 @@ public class PlayerListener implements Listener {
 						// Sell the items
 						for (int i = 0; i < c.getInventory().getSize(); i++) {
 							try {// Calculate the price of each item.
-								// TryCatch incase something goes wrong
+									// TryCatch incase something goes wrong
 
 								// Loop through the config
 								if (!StickConfig.instance.useEssentialsWorth) {
@@ -361,11 +375,11 @@ public class PlayerListener implements Listener {
 								if (StickConfig.instance.sellMessage.contains("\\n")) {
 									String[] send = StickConfig.instance.sellMessage.split("\\\\n");
 									for (String msg : send) {
-										p.sendMessage(msg.replace("%balance%", plugin.getEcon().format(r.balance))
+										plugin.msg(p, msg.replace("%balance%", plugin.getEcon().format(r.balance))
 												.replace("%price%", plugin.getEcon().format(r.amount)));
 									}
 								} else {
-									p.sendMessage(StickConfig.instance.sellMessage
+									plugin.msg(p, StickConfig.instance.sellMessage
 											.replace("%balance%", plugin.getEcon().format(r.balance))
 											.replace("%price%", plugin.getEcon().format(r.amount)));
 								}
@@ -374,19 +388,19 @@ public class PlayerListener implements Listener {
 								System.out.println(p.getName() + " sold items via sellstick for " + r.amount
 										+ " and now has " + r.balance);
 							} else {
-								p.sendMessage(String.format("An error occured: %s", r.errorMessage));
+								plugin.msg(p, String.format("An error occured: %s", r.errorMessage));
 							}
 
 							// If it's out of uses, remove it from the player,
 							// update inv.
-							if (uses - 1 == 0) {
+							if (uses - 1 == 0) { //I guess this couldve also been if uses == 1 lol
 								p.getInventory().remove(p.getItemInHand());
 								p.updateInventory();
-								p.sendMessage(StickConfig.instance.brokenStick);
+								plugin.msg(p, StickConfig.instance.brokenStick);
 							}
 
 						} else { // If the sold amount < 0
-							p.sendMessage(StickConfig.instance.nothingWorth);
+							plugin.msg(p, StickConfig.instance.nothingWorth);
 						}
 					}
 				}

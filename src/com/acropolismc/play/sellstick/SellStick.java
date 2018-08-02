@@ -3,6 +3,7 @@ package com.acropolismc.play.sellstick;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -105,6 +106,16 @@ public class SellStick extends JavaPlugin {
 				log.info("[Sellstick] Hooked into Essentials Worth");
 			}
 		}
+		
+		if(StickConfig.instance.durabilityLine >= StickConfig.instance.uniqueID) {
+			log.severe("[Sellstick] You tried to set a DurabilityLine equal to or less than the UniqueID");
+			log.severe("[Sellstick] The plugin will attempt to work with this");
+			log.severe("[Sellstick] THIS IS NOT RECOMMENDED.");
+			log.severe("[Sellstick] You're strongly suggested to put the UniqueID number higher than the DurabilityLine");
+			log.severe("[Sellstick] Then, run /sellstick reload");
+			
+			StickConfig.instance.durabilityLine = StickConfig.instance.durabilityLine + 1;
+		}
 	}
 
 	public Economy getEcon() {
@@ -137,6 +148,6 @@ public class SellStick extends JavaPlugin {
 			return;
 		}
 
-		sender.sendMessage(msg);
+		sender.sendMessage(StickConfig.instance.prefix + msg);
 	}
 }

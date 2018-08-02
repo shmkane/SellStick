@@ -86,8 +86,23 @@ FiniteLore: '&c%remaining% &fremaining uses'
 InfiniteLore: '&4Infinite &cuses!'
 #
 #
+#This is the line number where you want to display the durability
+#If you have an infinite stick, the Infinite Lore set above will be here
+#If you have a finite stick, the Finite lore set above will be here
+#Be sure to leave this line blank under the StickLore: section to ensure you
+#don't accidentally override a line.
+DurabilityLine: 4
+#
+#
+#This is a invisible number that will prevent the sellsticks from being stackable
+#Pick the line number you want this on
+#Most people pick the last number
+#Once again, ensure the line you pick is empty in the StickLore section above.
+UniqueID: 2
+#
+#
 #Messages sent to the palyer will be prefixed with this
-MessagePrefix: '&6[&eSellStick&6] &e'
+MessagePrefix: '&6[&eSellStick&6] '
 #
 #
 #When they sell the items what message should be displayed

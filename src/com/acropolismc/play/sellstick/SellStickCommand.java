@@ -91,18 +91,41 @@ public class SellStickCommand implements CommandExecutor {
 								lores.add(StickConfig.instance.lore.get(z).replace("&", "§"));
 							}
 
-							lores.add(1, "%usesLore%");
+							try {
+								lores.add(StickConfig.instance.durabilityLine - 1, "%usesLore%");
+							}catch(IndexOutOfBoundsException e) {
+								plugin.msg(sender, ChatColor.RED + "CONFIG ERROR:");
+								plugin.msg(sender, ChatColor.RED + "You tried to set a DurabilityLine of " + (StickConfig.instance.durabilityLine - 1) + " but the lore is " + lores.size() + " long");
+								plugin.msg(sender, ChatColor.RED + "Try changing the DurabilityLine value in the config");
+								plugin.msg(sender, ChatColor.RED + "Then, run /sellstick reload");
+
+								return false;
+
+							}catch(Exception ex) {
+								plugin.msg(sender, ChatColor.RED + "Something went wrong. Please check the console for an error message.");
+								System.out.println(ex);
+								return false;
+							}
 
 							if (args[3].equalsIgnoreCase("infinite") || args[3].equalsIgnoreCase("i")) {
-								lores.set(1, lores.get(1).replace("%usesLore%", StickConfig.instance.infiniteLore));
+								lores.set(StickConfig.instance.durabilityLine - 1, lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%", StickConfig.instance.infiniteLore));
 							} else {
 								int uses = Integer.parseInt(args[3]);
 								// otherwise replace it with the remaining uses
-								lores.set(1, lores.get(1).replace("%usesLore%",
-										StickConfig.instance.usesLore.replace("%remaining%", uses + "")));
+								lores.set(StickConfig.instance.durabilityLine - 1, lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%",
+										StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
 							}
 							// assign the meta to the stick
-							lores.add(UUID);
+							try {
+								lores.add(StickConfig.instance.uniqueID - 1, UUID);
+							}catch(IndexOutOfBoundsException e) {
+								plugin.msg(sender, ChatColor.RED + "CONFIG ERROR:");
+								plugin.msg(sender, ChatColor.RED + "You tried to set a UniqueID of " + StickConfig.instance.uniqueID + " but it was invalid.");
+								plugin.msg(sender, ChatColor.RED + "Try changing the UniqueID value in the config.");
+								plugin.msg(sender, ChatColor.RED + "Then, run /sellstick reload");
+
+								return false;
+							}
 							im.setLore(lores);
 							im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 

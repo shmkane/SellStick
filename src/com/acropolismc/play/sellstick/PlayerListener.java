@@ -53,7 +53,7 @@ public class PlayerListener implements Listener {
 
 	public boolean isInfinite(List<String> lores) {
 		// If the 2nd line is the same as the config, its infinite
-		if (lores.get(1).equalsIgnoreCase(StickConfig.instance.infiniteLore))
+		if (lores.get(StickConfig.instance.durabilityLine - 1).equalsIgnoreCase(StickConfig.instance.infiniteLore))
 			return true;
 		return false;
 	}
@@ -85,18 +85,18 @@ public class PlayerListener implements Listener {
 		// Get the # of uses if theres multiple numbers
 		// in the lore
 		// We loop through the String(lore at index 1) and check all the indexes
-
-		for (int i = 0; i < lores.get(1).length(); i++) {
-			if (Character.isDigit(lores.get(1).charAt(i))) {
+		//TODO: Make this readable and more efficient.
+		for (int i = 0; i < lores.get(StickConfig.instance.durabilityLine - 1).length(); i++) {
+			if (Character.isDigit(lores.get(StickConfig.instance.durabilityLine - 1).charAt(i))) {
 				// Increment "found" string
 				// Make sure it wasnt a number from a color code
 
 				// If it ISNT the first index
 				if (i != 0) {
 					// Check to see if the index before is the & sign (If its a color code)
-					if (lores.get(1).charAt(i - 1) != ChatColor.COLOR_CHAR) {
+					if (lores.get(StickConfig.instance.durabilityLine - 1).charAt(i - 1) != ChatColor.COLOR_CHAR) {
 						// And if it isnt, keep track of it
-						found += lores.get(1).charAt(i);
+						found += lores.get(StickConfig.instance.durabilityLine - 1).charAt(i);
 					} else {
 						// If it IS a color code, simply ignore it
 						found += "-";
@@ -104,7 +104,7 @@ public class PlayerListener implements Listener {
 					// But if it's index == 0
 				} else {
 					// There can't be a & before it, so keep track of it
-					found += lores.get(1).charAt(i);
+					found += lores.get(StickConfig.instance.durabilityLine - 1).charAt(i);
 				}
 			} else {
 				// Otherwise we insert a "-"
@@ -126,7 +126,16 @@ public class PlayerListener implements Listener {
 		}
 		// Now we just do a quick loop through the hold array and find the
 		// lowest number.
-		int min = hold.get(0);
+
+		int min = -2;
+		try {
+			min = hold.get(0);
+		}catch(Exception ex) {
+			System.out.println(StickConfig.instance.durabilityLine);
+			System.out.println("The problem seems to be that your sellstick useline number has changed.");
+			System.out.println(ex);
+		}
+
 		for (int i = 0; i < hold.size(); i++) {
 			if (hold.get(i) < min) {
 				min = hold.get(i);
@@ -286,6 +295,22 @@ public class PlayerListener implements Listener {
 						if (!isInfinite(lores)) {
 							uses = getUsesFromLore(lores);
 						}
+						if(uses == -2) {
+							plugin.msg(p, ChatColor.RED + "There was an error!");
+							plugin.msg(p, ChatColor.RED + "Please let an admin know to check console, or, send them these messages:");
+							
+							plugin.msg(p, ChatColor.RED + "Player has a sellstick that has had its 'DurabilityLine' changed in the config");
+							plugin.msg(p, ChatColor.RED + "For this reason, the plugin could not find the line number on which the finite/infinite lore exists");
+							plugin.msg(p, ChatColor.RED + "This can be resolved by either:");
+							plugin.msg(p, ChatColor.RED + "1: Giving the player a new sellstick");
+							plugin.msg(p, ChatColor.RED + "(Includes anyone on the server that has this issue)");
+							plugin.msg(p, ChatColor.RED + "or");
+							plugin.msg(p, ChatColor.RED + "2: Changing the DurabilityLine to match the one that is on this sellstick");
+							
+							plugin.msg(p, ChatColor.RED + "For help, contact shmkane on spigot or github");
+
+							return;
+						}
 
 						InventoryHolder c = (InventoryHolder) e.getClickedBlock().getState();
 						ItemStack[] contents = (ItemStack[]) c.getInventory().getContents();
@@ -296,7 +321,7 @@ public class PlayerListener implements Listener {
 						// Sell the items
 						for (int i = 0; i < c.getInventory().getSize(); i++) {
 							try {// Calculate the price of each item.
-									// TryCatch incase something goes wrong
+								// TryCatch incase something goes wrong
 
 								// Loop through the config
 								if (!StickConfig.instance.useEssentialsWorth) {
@@ -364,7 +389,7 @@ public class PlayerListener implements Listener {
 							if (!isInfinite(lores)) { // If the item was NOT an
 								// infinite sell stick
 								// Lower the # of uses
-								lores.set(1, lores.get(1).replaceAll(uses + "", (uses - 1) + ""));
+								lores.set(StickConfig.instance.durabilityLine - 1, lores.get(StickConfig.instance.durabilityLine - 1).replaceAll(uses + "", (uses - 1) + ""));
 								im.setLore(lores);
 								is.setItemMeta(im);
 							}

@@ -25,8 +25,10 @@ public class StickConfig {
 	public boolean allowWarzone;
 	public boolean allowWilderness;
 	public List<String> lore;
-	public String usesLore;
+	public String finiteLore;
 	public String infiniteLore;
+	public int durabilityLine;
+	public int uniqueID;
 	public String prefix;
 	public String sellMessage;
 	public String noPerm;
@@ -43,7 +45,6 @@ public class StickConfig {
 		FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
 		
 		this.usingSkyblock = config.getBoolean("UsingSkyBlock");
-		
 		this.usingLegacyFactions = config.getBoolean("UsingLegacyFactions");
 		this.usingFactionsUUID = config.getBoolean("UsingFactionsUUID");
 		this.usingSavageFactions = config.getBoolean("UsingSavageFactions");
@@ -51,14 +52,17 @@ public class StickConfig {
 		this.name = config.getString("DisplayName").replace("&", "§");
 		this.item = config.getString("ItemType").toUpperCase().replace("&", "§");
 		this.glow = config.getBoolean("Glow");
-
 		this.allowOwn = config.getBoolean("AllowedInFactionClaim");
 		this.allowSafezone = config.getBoolean("AllowedInSafezoneClaim");
 		this.allowWarzone = config.getBoolean("AllowedInWarzoneClaim");
 		this.allowWilderness = config.getBoolean("AllowedInWildernessClaim");
 		this.lore = config.getStringList("StickLore");
-		this.usesLore = config.getString("FiniteLore").replace("&", "§");
+		this.finiteLore = config.getString("FiniteLore").replace("&", "§");
 		this.infiniteLore = config.getString("InfiniteLore").replace("&", "§");
+		
+		this.durabilityLine = config.getInt("DurabilityLine");
+		this.uniqueID = config.getInt("UniqueID");
+		
 		this.prefix = config.getString("MessagePrefix").replace("&", "§");
 		this.sellMessage = config.getString("SellMessage").replace("&", "§");
 		this.noPerm = config.getString("NoPermissionMessage").replace("&", "§");
@@ -89,21 +93,19 @@ public class StickConfig {
 			config.set("UsingSavageFactions", false);
 			config.set("UsingMCoreFactions", false);
 			config.set("UsingSkyBlock", false);
-			
 			config.set("DisplayName", "&cSellStick");
 			config.set("ItemType", "STICK");
 			config.get("Glow", true);
-
 			config.set("AllowedInFactionClaim", true);
 			config.set("AllowedInSafezoneClaim", false);
 			config.set("AllowedInWarzoneClaim", false);
 			config.set("AllowedInWildernessClaim", true);
-
 			List<String> lore = Arrays.asList("&c&lLeft&c click on a chest to sell items inside!", "&cSellStick by &oshmkane");
 			config.set("StickLore", lore);
-			
 			config.set("FiniteLore", "&c%remaining% &fremaining uses");
 			config.set("InfiniteLore", "&4Infinite &cuses!");
+			config.set("DurabilityLine", 2);
+			config.set("UniqueID", 4);
 			config.set("MessagePrefix", "&6[&eSellStick&6] &e");	
 			config.set("SellMessage", "&cYou sold items for &f%price% &cand now have &f%balance%");
 			config.set("NoPermissionMessage", "&cSorry, you don't have permission for this!");

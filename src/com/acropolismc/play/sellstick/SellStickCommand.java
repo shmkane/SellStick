@@ -76,7 +76,7 @@ public class SellStickCommand implements CommandExecutor {
 							 * This assigns a random string to the item meta so that the item cannot be
 							 * stacked
 							 */
-							RandomString random = new RandomString(10);
+							RandomString random = new RandomString(5);
 							String UUID = random.nextString();
 
 							ItemStack is = new ItemStack(Material.getMaterial(StickConfig.instance.item));
@@ -84,7 +84,7 @@ public class SellStickCommand implements CommandExecutor {
 
 							List<String> lores = new ArrayList<String>();
 
-							im.setDisplayName(StickConfig.instance.name);
+							im.setDisplayName(StickConfig.instance.name + UUID);
 
 							// Load values from config onto the stick lores array
 							for (int z = 0; z < StickConfig.instance.lore.size(); z++) {
@@ -116,16 +116,7 @@ public class SellStickCommand implements CommandExecutor {
 										StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
 							}
 							// assign the meta to the stick
-							try {
-								lores.add(StickConfig.instance.uniqueID - 1, UUID);
-							}catch(IndexOutOfBoundsException e) {
-								plugin.msg(sender, ChatColor.RED + "CONFIG ERROR:");
-								plugin.msg(sender, ChatColor.RED + "You tried to set a UniqueID of " + StickConfig.instance.uniqueID + " but it was invalid.");
-								plugin.msg(sender, ChatColor.RED + "Try changing the UniqueID value in the config.");
-								plugin.msg(sender, ChatColor.RED + "Then, run /sellstick reload");
 
-								return false;
-							}
 							im.setLore(lores);
 							im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 

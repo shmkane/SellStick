@@ -28,7 +28,6 @@ public class StickConfig {
 	public String finiteLore;
 	public String infiniteLore;
 	public int durabilityLine;
-	public int uniqueID;
 	public String prefix;
 	public String sellMessage;
 	public String noPerm;
@@ -61,7 +60,6 @@ public class StickConfig {
 		this.infiniteLore = config.getString("InfiniteLore").replace("&", "§");
 		
 		this.durabilityLine = config.getInt("DurabilityLine");
-		this.uniqueID = config.getInt("UniqueID");
 		
 		this.prefix = config.getString("MessagePrefix").replace("&", "§");
 		this.sellMessage = config.getString("SellMessage").replace("&", "§");
@@ -105,7 +103,6 @@ public class StickConfig {
 			config.set("FiniteLore", "&c%remaining% &fremaining uses");
 			config.set("InfiniteLore", "&4Infinite &cuses!");
 			config.set("DurabilityLine", 2);
-			config.set("UniqueID", 4);
 			config.set("MessagePrefix", "&6[&eSellStick&6] &e");	
 			config.set("SellMessage", "&cYou sold items for &f%price% &cand now have &f%balance%");
 			config.set("NoPermissionMessage", "&cSorry, you don't have permission for this!");

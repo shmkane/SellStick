@@ -106,16 +106,6 @@ public class SellStick extends JavaPlugin {
 				log.info("[Sellstick] Hooked into Essentials Worth");
 			}
 		}
-		
-		if(StickConfig.instance.durabilityLine >= StickConfig.instance.uniqueID) {
-			log.severe("[Sellstick] You tried to set a DurabilityLine equal to or less than the UniqueID");
-			log.severe("[Sellstick] The plugin will attempt to work with this");
-			log.severe("[Sellstick] THIS IS NOT RECOMMENDED.");
-			log.severe("[Sellstick] You're strongly suggested to put the UniqueID number higher than the DurabilityLine");
-			log.severe("[Sellstick] Then, run /sellstick reload");
-			
-			StickConfig.instance.durabilityLine = StickConfig.instance.durabilityLine + 1;
-		}
 	}
 
 	public Economy getEcon() {

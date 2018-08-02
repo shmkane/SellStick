@@ -155,7 +155,7 @@ public class PlayerListener implements Listener {
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			if (p.getItemInHand().getType() == sellItem) {
 				if (p.getItemInHand().getItemMeta().getDisplayName() != null && p.getItemInHand().getItemMeta()
-						.getDisplayName().equalsIgnoreCase(StickConfig.instance.name)) {
+						.getDisplayName().startsWith(StickConfig.instance.name)) {
 					if (e.getClickedBlock().getType() == Material.CHEST
 							|| e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
 

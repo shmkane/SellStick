@@ -166,7 +166,7 @@ public class PlayerListener implements Listener {
 
 						// Didn't have permission :(
 						if (!p.hasPermission("sellstick.use")) {
-							plugin.msg(p, StickConfig.instance.prefix + StickConfig.instance.noPerm);
+							plugin.msg(p, StickConfig.instance.noPerm);
 							return;
 						}
 

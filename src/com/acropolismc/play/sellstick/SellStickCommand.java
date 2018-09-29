@@ -36,7 +36,7 @@ public class SellStickCommand implements CommandExecutor {
 					ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
 			// If the sender has perms to give a stick, show the help message
 			if (sender.hasPermission("sellstick.give")) {
-				plugin.msg(sender, StickConfig.instance.prefix + ChatColor.GREEN
+				plugin.msg(sender, ChatColor.GREEN
 						+ "/SellStick give <player> <amount> (<uses>/infinite)");
 			}
 			return true;
@@ -57,7 +57,7 @@ public class SellStickCommand implements CommandExecutor {
 				return true;
 			} else {
 				plugin.msg(sender, 
-						StickConfig.instance.prefix + ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+						ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
 				return true;
 			}
 			// Args length is 3
@@ -144,7 +144,7 @@ public class SellStickCommand implements CommandExecutor {
 					}
 					// If the sender didn't have permission
 				} else {
-					plugin.msg(sender, StickConfig.instance.prefix + StickConfig.instance.noPerm);
+					plugin.msg(sender, StickConfig.instance.noPerm);
 				}
 			}
 			// Invalid number of args.

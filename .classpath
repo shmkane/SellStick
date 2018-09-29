@@ -10,7 +10,7 @@
 	<classpathentry kind="lib" path="F:/Server/plugins/McoreFactions.jar"/>
 	<classpathentry kind="lib" path="F:/Server/plugins/PlotSquared-Bukkit-18.09.09-eab918b-2040.jar"/>
 	<classpathentry kind="lib" path="F:/Server/plugins/SavageFactions.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/spigot-1.13.1.jar"/>
 	<classpathentry kind="lib" path="F:/Server/plugins/Vault-1.6.7.jar"/>
+	<classpathentry kind="lib" path="F:/Server/spigot.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

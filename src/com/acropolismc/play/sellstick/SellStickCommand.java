@@ -33,7 +33,7 @@ public class SellStickCommand implements CommandExecutor {
 		if (args.length == 0) {
 			// For players, show them nothing.
 			plugin.msg(sender,
-					StickConfig.instance.prefix + ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+					ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
 			// If the sender has perms to give a stick, show the help message
 			if (sender.hasPermission("sellstick.give")) {
 				plugin.msg(sender, StickConfig.instance.prefix + ChatColor.GREEN

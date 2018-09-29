@@ -17,6 +17,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
+import com.intellectualcrafters.plot.api.PlotAPI;
+import com.intellectualcrafters.plot.object.Plot;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
@@ -33,6 +35,7 @@ import net.redstoneore.legacyfactions.entity.FPlayerColl;
 
 public class PlayerListener implements Listener {
 	private SellStick plugin;
+	private PlotAPI plotapi;
 
 	// Instance of BukkitPlugin(Main)
 	public PlayerListener(SellStick plugin) {
@@ -143,6 +146,7 @@ public class PlayerListener implements Listener {
 		return min;
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onUse(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
@@ -151,6 +155,9 @@ public class PlayerListener implements Listener {
 		// When they left click with that item, and that item has the same name
 		// as a sellstick
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+			
+			//Leaving this depricated for some backwards compatibility. Anything after
+			//1.9 should have p.getInventory().getItemInMainHand()
 			if (p.getItemInHand().getType() == sellItem) {
 				if (p.getItemInHand().getItemMeta().getDisplayName() != null && p.getItemInHand().getItemMeta()
 						.getDisplayName().startsWith(StickConfig.instance.name)) {
@@ -165,6 +172,14 @@ public class PlayerListener implements Listener {
 
 						Location location = e.getClickedBlock().getLocation();
 
+						plotapi = null;
+						Plot plot = plotapi.getPlot(location);
+						if(!plot.getMembers().contains(p.getUniqueId()) && !plot.getOwners().contains(p.getUniqueId())) {
+							plugin.msg(p, StickConfig.instance.territoryMessage);
+							e.setCancelled(true);
+							return;
+						}
+						
 						if (StickConfig.instance.usingMCoreFactions) { // If the server runs MCore Factions
 							com.massivecraft.factions.entity.Faction faction = null;
 							MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());

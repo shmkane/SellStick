@@ -3,7 +3,7 @@ main: com.acropolismc.play.sellstick.SellStick
 version: 8.0.8a
 author: shmkane
 website: http://acropolismc.com
-depend: [Vault, Essentials]
+depend: [Vault, Essentials, PlotSquared]
 softdepend: [Factions, Essentials, MassiveCore, LegacyFactions, ASkyBlock]
 commands:
    sellstick:

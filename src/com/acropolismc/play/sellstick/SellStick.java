@@ -3,9 +3,7 @@ package com.acropolismc.play.sellstick;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -55,7 +53,17 @@ public class SellStick extends JavaPlugin {
 
 		Plugin factions;
 		Plugin skyblock;
-
+		Plugin plot;
+		
+		//plot
+		plot = getServer().getPluginManager().getPlugin("PlotSquared");
+		if (plot != null && plot.isEnabled())
+			log.info("[Sellstick] Hooking into PlotSquared");
+		else
+			log.warning("[Sellstick] Tried to hook into PlotSquared but failed! "
+					+ "NOT RECOMMENDED TO KEEP RUNNING THIS PLUGIN. USE DEFAULT PLUGIN ON SPIGOT");
+		
+		
 		//Checks for FactionsUUID
 		if (StickConfig.instance.usingFactionsUUID || StickConfig.instance.usingSavageFactions) {
 			factions = getServer().getPluginManager().getPlugin("Factions");

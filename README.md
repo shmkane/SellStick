@@ -1,3 +1,7 @@
+This version of SellStick should only be used with PlotSquared.
+If you do not have PlotSquared,
+DO NOT USE THIS VERSION!
+
 Made for AcropolisMC - play.acropolismc.com - you can catch me here for any questions you may have!
 
 Sell stick allows players to quickly sell items inside a chest with just one click! You can customize the item used and the amount of uses the item gives, as well as the name of the item and the lore! All of these options are located inside the config.yml!

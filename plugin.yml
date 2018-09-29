@@ -1,6 +1,6 @@
 name: SellStick
 main: com.acropolismc.play.sellstick.SellStick
-version: 8.0.8
+version: 8.0.8a
 author: shmkane
 website: http://acropolismc.com
 depend: [Vault, Essentials]

@@ -2,7 +2,9 @@ package com.acropolismc.play.sellstick;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,7 +19,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
-import com.intellectualcrafters.plot.api.PlotAPI;
 import com.intellectualcrafters.plot.object.Plot;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -27,6 +28,7 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.MPlayer;
 import com.massivecraft.massivecore.ps.PS;
+import com.plotsquared.bukkit.util.BukkitUtil;
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
 import com.wasteofplastic.askyblock.Island;
 
@@ -35,7 +37,6 @@ import net.redstoneore.legacyfactions.entity.FPlayerColl;
 
 public class PlayerListener implements Listener {
 	private SellStick plugin;
-	private PlotAPI plotapi;
 
 	// Instance of BukkitPlugin(Main)
 	public PlayerListener(SellStick plugin) {
@@ -60,13 +61,12 @@ public class PlayerListener implements Listener {
 	}
 
 	/**
-	 * This method was created incase someone wants to put
-	 * "%remaining uses out of 50%
-	 * Where the last int is NOT the remaining uses.
+	 * This method was created incase someone wants to put "%remaining uses out of
+	 * 50% Where the last int is NOT the remaining uses.
 	 * 
-	 * There's probably a more efficient way to do this
-	 * but I haven't gotten around to recoding it
-	 * and it hasn't given an issue yet.
+	 * There's probably a more efficient way to do this but I haven't gotten around
+	 * to recoding it and it hasn't given an issue yet.
+	 * 
 	 * @param lores Takes a string list
 	 * @return finds the uses in the lores and returns as int.
 	 */
@@ -86,7 +86,7 @@ public class PlayerListener implements Listener {
 		// Get the # of uses if theres multiple numbers
 		// in the lore
 		// We loop through the String(lore at index 1) and check all the indexes
-		//TODO: Make this readable and more efficient.
+		// TODO: Make this readable and more efficient.
 		for (int i = 0; i < lores.get(StickConfig.instance.durabilityLine - 1).length(); i++) {
 			if (Character.isDigit(lores.get(StickConfig.instance.durabilityLine - 1).charAt(i))) {
 				// Increment "found" string
@@ -131,7 +131,7 @@ public class PlayerListener implements Listener {
 		int min = -2;
 		try {
 			min = hold.get(0);
-		}catch(Exception ex) {
+		} catch (Exception ex) {
 			System.out.println(StickConfig.instance.durabilityLine);
 			System.out.println("The problem seems to be that your sellstick useline number has changed.");
 			System.out.println(ex);
@@ -155,12 +155,12 @@ public class PlayerListener implements Listener {
 		// When they left click with that item, and that item has the same name
 		// as a sellstick
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-			
-			//Leaving this depricated for some backwards compatibility. Anything after
-			//1.9 should have p.getInventory().getItemInMainHand()
+
+			// Leaving this depricated for some backwards compatibility. Anything after
+			// 1.9 should have p.getInventory().getItemInMainHand()
 			if (p.getItemInHand().getType() == sellItem) {
-				if (p.getItemInHand().getItemMeta().getDisplayName() != null && p.getItemInHand().getItemMeta()
-						.getDisplayName().startsWith(StickConfig.instance.name)) {
+				if (p.getItemInHand().getItemMeta().getDisplayName() != null
+						&& p.getItemInHand().getItemMeta().getDisplayName().startsWith(StickConfig.instance.name)) {
 					if (e.getClickedBlock().getType() == Material.CHEST
 							|| e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
 
@@ -172,14 +172,20 @@ public class PlayerListener implements Listener {
 
 						Location location = e.getClickedBlock().getLocation();
 
-						plotapi = null;
-						Plot plot = plotapi.getPlot(location);
-						if(!plot.getMembers().contains(p.getUniqueId()) && !plot.getOwners().contains(p.getUniqueId())) {
-							plugin.msg(p, StickConfig.instance.territoryMessage);
-							e.setCancelled(true);
-							return;
+						try {
+							Plot plot = Plot.getPlot(BukkitUtil.getLocation(location));
+
+							if (!plot.getMembers().contains(p.getUniqueId())
+									&& !plot.getOwners().contains(p.getUniqueId())
+									&& !plot.getTrusted().contains(p.getUniqueId())) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							}
+						} catch (Exception ex) {
+							//p.sendMessage("No plot here");
 						}
-						
+
 						if (StickConfig.instance.usingMCoreFactions) { // If the server runs MCore Factions
 							com.massivecraft.factions.entity.Faction faction = null;
 							MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
@@ -209,8 +215,8 @@ public class PlayerListener implements Listener {
 
 						// SavageFactions or factionsuuid
 						/**
-						 * This part checks what factions the user is running and will
-						 * handle sellstick accordingly
+						 * This part checks what factions the user is running and will handle sellstick
+						 * accordingly
 						 */
 						if (StickConfig.instance.usingSavageFactions || StickConfig.instance.usingFactionsUUID) {
 							Faction faction = null;
@@ -308,18 +314,22 @@ public class PlayerListener implements Listener {
 						if (!isInfinite(lores)) {
 							uses = getUsesFromLore(lores);
 						}
-						if(uses == -2) {
+						if (uses == -2) {
 							plugin.msg(p, ChatColor.RED + "There was an error!");
-							plugin.msg(p, ChatColor.RED + "Please let an admin know to check console, or, send them these messages:");
-							
-							plugin.msg(p, ChatColor.RED + "Player has a sellstick that has had its 'DurabilityLine' changed in the config");
-							plugin.msg(p, ChatColor.RED + "For this reason, the plugin could not find the line number on which the finite/infinite lore exists");
+							plugin.msg(p, ChatColor.RED
+									+ "Please let an admin know to check console, or, send them these messages:");
+
+							plugin.msg(p, ChatColor.RED
+									+ "Player has a sellstick that has had its 'DurabilityLine' changed in the config");
+							plugin.msg(p, ChatColor.RED
+									+ "For this reason, the plugin could not find the line number on which the finite/infinite lore exists");
 							plugin.msg(p, ChatColor.RED + "This can be resolved by either:");
 							plugin.msg(p, ChatColor.RED + "1: Giving the player a new sellstick");
 							plugin.msg(p, ChatColor.RED + "(Includes anyone on the server that has this issue)");
 							plugin.msg(p, ChatColor.RED + "or");
-							plugin.msg(p, ChatColor.RED + "2: Changing the DurabilityLine to match the one that is on this sellstick");
-							
+							plugin.msg(p, ChatColor.RED
+									+ "2: Changing the DurabilityLine to match the one that is on this sellstick");
+
 							plugin.msg(p, ChatColor.RED + "For help, contact shmkane on spigot or github");
 
 							return;
@@ -334,7 +344,7 @@ public class PlayerListener implements Listener {
 						// Sell the items
 						for (int i = 0; i < c.getInventory().getSize(); i++) {
 							try {// Calculate the price of each item.
-								// TryCatch incase something goes wrong
+									// TryCatch incase something goes wrong
 
 								// Loop through the config
 								if (!StickConfig.instance.useEssentialsWorth) {
@@ -402,7 +412,9 @@ public class PlayerListener implements Listener {
 							if (!isInfinite(lores)) { // If the item was NOT an
 								// infinite sell stick
 								// Lower the # of uses
-								lores.set(StickConfig.instance.durabilityLine - 1, lores.get(StickConfig.instance.durabilityLine - 1).replaceAll(uses + "", (uses - 1) + ""));
+								lores.set(StickConfig.instance.durabilityLine - 1,
+										lores.get(StickConfig.instance.durabilityLine - 1).replaceAll(uses + "",
+												(uses - 1) + ""));
 								im.setLore(lores);
 								is.setItemMeta(im);
 							}
@@ -417,9 +429,10 @@ public class PlayerListener implements Listener {
 												.replace("%price%", plugin.getEcon().format(r.amount)));
 									}
 								} else {
-									plugin.msg(p, StickConfig.instance.sellMessage
-											.replace("%balance%", plugin.getEcon().format(r.balance))
-											.replace("%price%", plugin.getEcon().format(r.amount)));
+									plugin.msg(p,
+											StickConfig.instance.sellMessage
+													.replace("%balance%", plugin.getEcon().format(r.balance))
+													.replace("%price%", plugin.getEcon().format(r.amount)));
 								}
 
 								// Add this to keep a log just incase.
@@ -431,7 +444,7 @@ public class PlayerListener implements Listener {
 
 							// If it's out of uses, remove it from the player,
 							// update inv.
-							if (uses - 1 == 0) { //I guess this couldve also been if uses == 1 lol
+							if (uses - 1 == 0) { // I guess this couldve also been if uses == 1 lol
 								p.getInventory().remove(p.getItemInHand());
 								p.updateInventory();
 								plugin.msg(p, StickConfig.instance.brokenStick);

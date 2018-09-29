@@ -1,6 +1,5 @@
 package com.acropolismc.play.sellstick;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,6 @@ import com.wasteofplastic.askyblock.Island;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.redstoneore.legacyfactions.entity.FPlayerColl;
-import net.redstoneore.legacyfactions.integration.essentials.EssentialsIntegration;
 
 public class PlayerListener implements Listener {
 	private SellStick plugin;

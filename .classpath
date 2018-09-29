@@ -2,13 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/Server/spigot.jar" sourcepath="C:/Users/Soham Kane/Downloads/PaperSpigot-api-1.8.8-R0.1-SNAPSHOT-latest.jar"/>
-	<classpathentry kind="lib" path="D:/SellStick Jars/askyblock.jar"/>
-	<classpathentry kind="lib" path="D:/SellStick Jars/EssentialsX-2.15.0.1.jar"/>
-	<classpathentry kind="lib" path="D:/SellStick Jars/LegacyFactions.jar"/>
-	<classpathentry kind="lib" path="D:/SellStick Jars/MassiveCore.jar"/>
-	<classpathentry kind="lib" path="D:/SellStick Jars/MCoreFactions.jar"/>
-	<classpathentry kind="lib" path="D:/SellStick Jars/SavageFactions.jar"/>
-	<classpathentry kind="lib" path="D:/SellStick Jars/Vault-1.6.6.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/askyblock.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/EssentialsX-2.15.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/EssentialsXSpawn-2.15.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/LegacyFactions.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/MassiveCore.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/McoreFactions.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/PlotSquared-Bukkit-18.09.09-eab918b-2040.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/SavageFactions.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/spigot-1.13.1.jar"/>
+	<classpathentry kind="lib" path="F:/Server/plugins/Vault-1.6.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

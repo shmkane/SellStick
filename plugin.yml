@@ -1,8 +1,8 @@
 name: SellStick
 main: com.acropolismc.play.sellstick.SellStick
-version: 8.0.9.0
+version: 8.0.9.0a
 author: shmkane
-website: http://acropolismc.com
+website: https://github.com/shmkane/SellStick
 depend: [Vault, Essentials]
 softdepend: [Factions, Essentials, MassiveCore, LegacyFactions, ASkyBlock, PlotSquared]
 commands:

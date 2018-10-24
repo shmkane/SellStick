@@ -56,14 +56,14 @@ public class SellStick extends JavaPlugin {
 		Plugin plot;
 		
 		//plot
-		plot = getServer().getPluginManager().getPlugin("PlotSquared");
-		if (plot != null && plot.isEnabled())
-			log.info("[Sellstick] Hooking into PlotSquared");
-		else
-			log.warning("[Sellstick] Tried to hook into PlotSquared but failed! "
-					+ "NOT RECOMMENDED TO KEEP RUNNING THIS PLUGIN. USE DEFAULT PLUGIN ON SPIGOT");
-		
-		
+		if(StickConfig.instance.usingPlotSquared) {
+			plot = getServer().getPluginManager().getPlugin("PlotSquared");
+			if (plot != null && plot.isEnabled())
+				log.info("[Sellstick] Hooking into PlotSquared");
+			else
+				log.warning("[Sellstick] Tried to hook into PlotSquared but failed!");
+		}
+
 		//Checks for FactionsUUID
 		if (StickConfig.instance.usingFactionsUUID || StickConfig.instance.usingSavageFactions) {
 			factions = getServer().getPluginManager().getPlugin("Factions");

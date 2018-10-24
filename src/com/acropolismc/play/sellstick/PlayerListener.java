@@ -2,9 +2,7 @@ package com.acropolismc.play.sellstick;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -171,19 +169,20 @@ public class PlayerListener implements Listener {
 						}
 
 						Location location = e.getClickedBlock().getLocation();
+						if (StickConfig.instance.usingPlotSquared) {
+							try {
+								Plot plot = Plot.getPlot(BukkitUtil.getLocation(location));
 
-						try {
-							Plot plot = Plot.getPlot(BukkitUtil.getLocation(location));
-
-							if (!plot.getMembers().contains(p.getUniqueId())
-									&& !plot.getOwners().contains(p.getUniqueId())
-									&& !plot.getTrusted().contains(p.getUniqueId())) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
+								if (!plot.getMembers().contains(p.getUniqueId())
+										&& !plot.getOwners().contains(p.getUniqueId())
+										&& !plot.getTrusted().contains(p.getUniqueId())) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+							} catch (Exception ex) {
+								// p.sendMessage("No plot here"); This is cheating but w/e
 							}
-						} catch (Exception ex) {
-							//p.sendMessage("No plot here");
 						}
 
 						if (StickConfig.instance.usingMCoreFactions) { // If the server runs MCore Factions
@@ -206,6 +205,14 @@ public class PlayerListener implements Listener {
 								e.setCancelled(true);
 								return;
 							} else if (faction.getName().contains("Safezone") && !StickConfig.instance.allowSafezone) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							} else if (mplayer.hasFaction() && !mplayer.isInOwnTerritory()) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							} else if (!mplayer.hasFaction()) {
 								plugin.msg(p, StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
@@ -248,8 +255,32 @@ public class PlayerListener implements Listener {
 							} else if (faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
 								plugin.msg(p, StickConfig.instance.territoryMessage);
 								System.out.println(4);
-
 								e.setCancelled(true);
+
+								return;
+							} else if (fplayer.hasFaction() && !fplayer.isInOwnTerritory()) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+
+								return;
+							} else if (!fplayer.hasFaction()) {
+								if (!faction.getTag().contains("Wilderness") || !StickConfig.instance.allowWilderness) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+								else if (!faction.getTag().contains("Warzone") || !StickConfig.instance.allowWarzone) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+								else if (!faction.getTag().contains("Safezone") || !StickConfig.instance.allowSafezone) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+
+
 								return;
 							}
 
@@ -277,6 +308,14 @@ public class PlayerListener implements Listener {
 								e.setCancelled(true);
 								return;
 							} else if (faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							} else if (fplayer.hasFaction() && !fplayer.isInOwnTerritory()) {
+								plugin.msg(p, StickConfig.instance.territoryMessage);
+								e.setCancelled(true);
+								return;
+							} else if (!fplayer.hasFaction()) {
 								plugin.msg(p, StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;

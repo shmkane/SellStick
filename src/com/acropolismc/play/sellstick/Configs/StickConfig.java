@@ -17,6 +17,7 @@ public class StickConfig {
 	public boolean usingFactionsUUID;
 	public boolean usingSavageFactions;
 	public boolean usingMCoreFactions;
+	public boolean usingPlotSquared;
 	
 	public String name;
 	public String item;
@@ -48,6 +49,8 @@ public class StickConfig {
 		this.usingFactionsUUID = config.getBoolean("UsingFactionsUUID");
 		this.usingSavageFactions = config.getBoolean("UsingSavageFactions");
 		this.usingMCoreFactions = config.getBoolean("UsingMCoreFactions");	
+		this.usingPlotSquared = config.getBoolean("UsingPlotSquared");
+		
 		this.name = config.getString("DisplayName").replace("&", "§");
 		this.item = config.getString("ItemType").toUpperCase().replace("&", "§");
 		this.glow = config.getBoolean("Glow");
@@ -91,6 +94,8 @@ public class StickConfig {
 			config.set("UsingSavageFactions", false);
 			config.set("UsingMCoreFactions", false);
 			config.set("UsingSkyBlock", false);
+			config.set("UsingPlotSquared", false);
+
 			config.set("DisplayName", "&cSellStick");
 			config.set("ItemType", "STICK");
 			config.get("Glow", true);

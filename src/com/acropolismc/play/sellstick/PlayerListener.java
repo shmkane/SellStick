@@ -213,8 +213,23 @@ public class PlayerListener implements Listener {
 								e.setCancelled(true);
 								return;
 							} else if (!mplayer.hasFaction()) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
+								if (!faction.getName().contains("Wilderness") || !StickConfig.instance.allowWilderness) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+								else if (!faction.getName().contains("Warzone") || !StickConfig.instance.allowWarzone) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+								else if (!faction.getName().contains("Safezone") || !StickConfig.instance.allowSafezone) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+
+
 								return;
 							}
 
@@ -316,8 +331,23 @@ public class PlayerListener implements Listener {
 								e.setCancelled(true);
 								return;
 							} else if (!fplayer.hasFaction()) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
+								if (!faction.getTag().contains("Wilderness") || !StickConfig.instance.allowWilderness) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+								else if (!faction.getTag().contains("Warzone") || !StickConfig.instance.allowWarzone) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+								else if (!faction.getTag().contains("Safezone") || !StickConfig.instance.allowSafezone) {
+									plugin.msg(p, StickConfig.instance.territoryMessage);
+									e.setCancelled(true);
+									return;
+								}
+
+
 								return;
 							}
 

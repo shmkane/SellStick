@@ -53,6 +53,16 @@ public class SellStick extends JavaPlugin {
 
 		Plugin factions;
 		Plugin skyblock;
+		Plugin plot;
+		
+		//plot
+		if(StickConfig.instance.usingPlotSquared) {
+			plot = getServer().getPluginManager().getPlugin("PlotSquared");
+			if (plot != null && plot.isEnabled())
+				log.info("[Sellstick] Hooking into PlotSquared");
+			else
+				log.warning("[Sellstick] Tried to hook into PlotSquared but failed!");
+		}
 
 		//Checks for FactionsUUID
 		if (StickConfig.instance.usingFactionsUUID || StickConfig.instance.usingSavageFactions) {

@@ -1,5 +1,7 @@
 Made originally for AcropolisMC. Message me on discord for support: shmkane#0001
 
+I strongly suggest you "Star" and "Watch" this thread. Updates are posted here much before Spigot.
+
 Sell stick allows players to quickly sell items inside a chest with just one click! You can customize the item used and the amount of uses the item gives, as well as the name of the item and the lore! All of these options are located inside the config.yml!
 
 To set the price for the items sold, simply edit the prices.yml

@@ -417,7 +417,7 @@ public class PlayerListener implements Listener {
 									// TryCatch incase something goes wrong
 
 								// Loop through the config
-								if (!StickConfig.instance.useEssentialsWorth) {
+								if (!StickConfig.instance.useEssentialsWorth || plugin.ess == null || !plugin.ess.isEnabled()) {
 									for (String key : PriceConfig.instance.getConfig().getConfigurationSection("prices")
 											.getKeys(false)) {
 

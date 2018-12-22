@@ -17,21 +17,16 @@ import net.milkbowl.vault.economy.Economy;
 // @author shmkane
 public class SellStick extends JavaPlugin {
 
-	public Plugin essentialsPlugin;
 	public Essentials ess;
 	private static Economy econ = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
 
 	public void onEnable() {
 		// Hook into essentials.
-		essentialsPlugin = Bukkit.getPluginManager().getPlugin("Essentials");
-		if (essentialsPlugin.isEnabled() && (essentialsPlugin instanceof Essentials)) {
+		if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
 			log.info("[Sellstick] Essentials found");
-			this.essentialsPlugin = (Essentials) essentialsPlugin;
+			ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 		}
-
-		// Essentials
-		ess = (Essentials) essentialsPlugin;
 		
 		// Commands
 		this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
@@ -108,7 +103,7 @@ public class SellStick extends JavaPlugin {
 		}
 
 		if (StickConfig.instance.useEssentialsWorth) {
-			if (essentialsPlugin == null || !essentialsPlugin.isEnabled()) {
+			if (ess == null || !ess.isEnabled()) {
 				log.warning("[Sellstick] Trying to use essentials worth but essentials not found!");
 			} else {
 				log.info("[Sellstick] Hooked into Essentials Worth");

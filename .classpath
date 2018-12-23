@@ -2,16 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/askyblock.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/MassiveCore.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/McoreFactions.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/SavageFactions.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/LegacyFactions.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/spigot.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/Vault-1.6.7.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/EssentialsX-2.15.0.1.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/EssentialsXSpawn-2.15.0.1.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/SellStick v8.0.5b.jar"/>
-	<classpathentry kind="lib" path="F:/Server/plugins/D/PlotSquared.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/askyblock.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/EssentialsX-2.15.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/EssentialsXSpawn-2.15.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/LegacyFactions.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/MassiveCore.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/McoreFactions.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/PlotSquared-Bukkit-18.12.21-03ad8eb-2059.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/SavageFactions.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/SellStickDepends/Vault-1.6.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

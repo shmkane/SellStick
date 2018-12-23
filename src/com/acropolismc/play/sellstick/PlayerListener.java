@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
@@ -411,6 +412,7 @@ public class PlayerListener implements Listener {
 						double total = 0;
 						double slotPrice = 0;
 						double price = 0;
+						double multiplier = Double.NEGATIVE_INFINITY;
 						// Sell the items
 						for (int i = 0; i < c.getInventory().getSize(); i++) {
 							try {// Calculate the price of each item.
@@ -489,7 +491,34 @@ public class PlayerListener implements Listener {
 								is.setItemMeta(im);
 							}
 
-							EconomyResponse r = plugin.getEcon().depositPlayer(p, total);
+							/*
+							 * Permissions based multiplier check.
+							 * If user doesn't have sellstick.multiplier.x permission
+							 * Multiplier defaults to 1 as seen below.
+							 */
+							for(PermissionAttachmentInfo perm : p.getEffectivePermissions()) {
+								if(perm.getPermission().startsWith("sellstick.multiplier")) {
+									String stringPerm = perm.getPermission();
+									String permSection = stringPerm.replaceAll("sellstick.multiplier.", "");
+									if(Double.parseDouble(permSection) > multiplier) {
+										multiplier = Double.parseDouble(permSection);
+									}
+								}
+							}
+							
+							/*
+							 * Multiplier set to Double.NEGATIVE_INFINITY by default to signal "unchanged"
+							 * Problem with defaulting to 0 is total*0 = 0,
+							 * Problem with defaulting to 1 is multipliers < 1.
+							 */
+							EconomyResponse r;
+							
+							if(multiplier == Double.NEGATIVE_INFINITY) {
+								r = plugin.getEcon().depositPlayer(p, total);
+							} else {
+								r = plugin.getEcon().depositPlayer(p, total*multiplier);
+							}
+							
 							// Send the payment
 							if (r.transactionSuccess()) {
 								if (StickConfig.instance.sellMessage.contains("\\n")) {

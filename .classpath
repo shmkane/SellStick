@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/shmka/SellStick/Dependencies/askyblock.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/SellStick/Dependencies/EssentialsX-2.15.0.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/SellStick/Dependencies/EssentialsXSpawn-2.15.0.1.jar"/>
@@ -13,5 +14,17 @@
 	<classpathentry kind="lib" path="C:/Users/shmka/SellStick/Dependencies/SellStick v8.0.5b.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/SellStick/Dependencies/spigot.jar"/>
 	<classpathentry kind="lib" path="C:/Users/shmka/SellStick/Dependencies/Vault-1.6.7.jar"/>
+=======
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/askyblock.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/EssentialsX-2.15.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/EssentialsXSpawn-2.15.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/LegacyFactions.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/MassiveCore.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/McoreFactions.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/PlotSquared-Bukkit-18.12.21-03ad8eb-2059.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/SavageFactions.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar"/>
+	<classpathentry kind="lib" path="D:/Eclipse/workspace/SellStick/dependencies/Vault-1.6.7.jar"/>
+>>>>>>> 038740eeec6640f26cb5c66bd305a9f5569eb2ca
 	<classpathentry kind="output" path="bin"/>
 </classpath>

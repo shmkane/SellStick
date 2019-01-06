@@ -19,7 +19,6 @@ import com.acropolismc.play.sellstick.Configs.StickConfig;
 public class SellStickCommand implements CommandExecutor {
 
 	private SellStick plugin;
-	// Saving which line the uses is on here
 	public static int index = 0;
 
 	public SellStickCommand(SellStick plugin) {
@@ -108,14 +107,12 @@ public class SellStickCommand implements CommandExecutor {
 										lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%",
 												StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
 							}
-							// assign the meta to the stick
 
 							im.setLore(lores);
 							im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
 							is.setItemMeta(im);
 
-							// Give the item
 							if (StickConfig.instance.glow) {
 								is = glow(is);
 							}

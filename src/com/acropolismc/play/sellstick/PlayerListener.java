@@ -133,7 +133,6 @@ public class PlayerListener implements Listener {
 				min = hold.get(i);
 			}
 		}
-		// System.out.println(min);
 		return min;
 	}
 

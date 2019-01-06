@@ -20,58 +20,72 @@ public class SellStick extends JavaPlugin {
 	public Essentials ess;
 	private static Economy econ = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
+	Plugin factions;
 
 	public void onEnable() {
-		// Hook into essentials.
-		if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
-			log.info("[Sellstick] Essentials found");
-			ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
-		}
-
-		// Commands
-		this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
-		// Listeners
-		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
-		// Safe the default config
 		this.saveDefaultConfig();
-		// Setup the other configs.
+
 		StickConfig.instance.setup(getDataFolder());
 		PriceConfig.instance.setup(getDataFolder());
-		// Vault
+
+		if (!setupFactions()) {
+			log.severe(String.format("[%s] - Disabled due to no Factions found!", getDescription().getName()));
+			getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
+
 		if (!setupEconomy()) {
 			log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
 
-		// There's probably a better way for this, but this will do for now.
+		setupEssentials();
 
-		Plugin factions;
+		this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
+		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+	}
 
-		//plot
-
-		//Checks for FactionsUUID
-		factions = getServer().getPluginManager().getPlugin("Factions");
-		if (factions != null && factions.isEnabled())
-			log.info("[Sellstick] Hooking into FactionsUUID/Savage");
-		else
-			log.warning("[Sellstick] Tried to hook into FactionsUUID/Savage but failed!");
-
-		if (StickConfig.instance.useEssentialsWorth) {
-			if (ess == null || !ess.isEnabled()) {
-				log.warning("[Sellstick] Trying to use essentials worth but essentials not found!");
-			} else {
-				log.info("[Sellstick] Hooked into Essentials Worth");
-			}
+	public void onDisable() {
+		log.warning(String.format("[%s] - Attempting to disabling...", getDescription().getName()));
+		try {
+			ess = null;
+			econ = null;
+			factions = null;
+			StickConfig.instance = null;
+			PriceConfig.instance = null;
+		} catch (Exception ex) {
+			log.severe(String.format("[%s] - Was not disabled correctly!", getDescription().getName()));
+		} finally {
+			log.warning(String.format("[%s] - Attempt complete!", getDescription().getName()));
 		}
 	}
 
-	public Economy getEcon() {
-		// Return instance of economy.
-		return SellStick.econ;
+	public void setupEssentials() {
+		if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
+			log.info(String.format("[%s] Hooked into essentials!", getDescription().getName()));
+			ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+		}
+
+		if (StickConfig.instance.useEssentialsWorth) {
+			if (ess == null || !ess.isEnabled()) {
+				log.warning(String.format("[%s] Trying to use essentials worth but essentials not found!",
+						getDescription().getName()));
+			} else {
+				log.info(String.format("[%s] Using essentials worth!", getDescription().getName()));
+			}
+		}
+
 	}
 
-	// Setup Vault
+	public boolean setupFactions() {
+		factions = getServer().getPluginManager().getPlugin("Factions");
+		if (factions != null && factions.isEnabled())
+			log.info(String.format("[%s] Hooked into FactionsUUID/Savage/OtherUUIDForks!", getDescription().getName()));
+
+		return factions != null && factions.isEnabled();
+	}
+
 	private boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
@@ -82,6 +96,11 @@ public class SellStick extends JavaPlugin {
 		}
 		econ = rsp.getProvider();
 		return econ != null;
+	}
+
+	public Economy getEcon() {
+		// Return instance of economy.
+		return SellStick.econ;
 	}
 
 	/**

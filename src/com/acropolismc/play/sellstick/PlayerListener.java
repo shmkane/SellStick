@@ -30,14 +30,13 @@ import net.milkbowl.vault.economy.EconomyResponse;
 public class PlayerListener implements Listener {
 	private SellStick plugin;
 
-	// Instance of BukkitPlugin(Main)
 	public PlayerListener(SellStick plugin) {
 		this.plugin = plugin;
 	}
 
-	@SuppressWarnings("unused")
 	public static boolean isNumeric(String str) {
 		try {
+			@SuppressWarnings("unused")
 			double d = Double.parseDouble(str);
 		} catch (NumberFormatException nfe) {
 			return false;
@@ -173,58 +172,62 @@ public class PlayerListener implements Listener {
 						FLocation fLoc = new FLocation(location);
 						faction = Board.getInstance().getFactionAt(fLoc);
 
-
-						//Own
-						if((fplayer.hasFaction() && fplayer.isInOwnTerritory() && !StickConfig.instance.allowOwn)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+						// Own
+						if ((fplayer.hasFaction() && fplayer.isInOwnTerritory() && !StickConfig.instance.allowOwn)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
 							e.setCancelled(true);
 							return;
 						}
 
-						//Wilderness
-						if((faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+						// Wilderness
+						if ((faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
 							e.setCancelled(true);
 							return;
 						}
-						//Warzone
-						if((faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+						// Warzone
+						if ((faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
 							e.setCancelled(true);
 							return;
 						}
-						//Safezone
-						if((faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
-							e.setCancelled(true);
-							return;
-						}
-						
-						//Enemy
-						if((fplayer.hasFaction() && fplayer.isInEnemyTerritory() && !StickConfig.instance.allowEnemy)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
-							e.setCancelled(true);
-							return;
-						}
-						
-						//Neutral
-						if((fplayer.hasFaction() && fplayer.isInNeutralTerritory() && !StickConfig.instance.allowNeutral)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
-							e.setCancelled(true);
-							return;
-						}
-						
-						//Ally
-						if((fplayer.hasFaction() && fplayer.isInAllyTerritory() && !StickConfig.instance.allowAlly)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+						// Safezone
+						if ((faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
 							e.setCancelled(true);
 							return;
 						}
 
+						// Enemy
+						if ((fplayer.hasFaction() && fplayer.isInEnemyTerritory()
+								&& !StickConfig.instance.allowEnemy)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
+						}
 
-						/**
-						 * This is where the selling magic happens
-						 */
+						// Neutral
+						if ((fplayer.hasFaction() && fplayer.isInNeutralTerritory()
+								&& !StickConfig.instance.allowNeutral)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
+						}
+
+						// Ally
+						if ((fplayer.hasFaction() && fplayer.isInAllyTerritory() && !StickConfig.instance.allowAlly)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
+						}
+
 						ItemStack is = p.getItemInHand();
 						ItemMeta im = is.getItemMeta();
 
@@ -235,7 +238,7 @@ public class PlayerListener implements Listener {
 							uses = getUsesFromLore(lores);
 						}
 						if (uses == -2) {
-							//This should honestly never happen unless someone changes sellstick lores
+							// This should honestly never happen unless someone changes sellstick lores
 							plugin.msg(p, ChatColor.RED + "There was an error!");
 							plugin.msg(p, ChatColor.RED
 									+ "Please let an admin know to check console, or, send them these messages:");
@@ -258,48 +261,34 @@ public class PlayerListener implements Listener {
 
 						InventoryHolder c = (InventoryHolder) e.getClickedBlock().getState();
 						ItemStack[] contents = (ItemStack[]) c.getInventory().getContents();
-						// Keep track of sold items price
 						double total = 0;
 						double slotPrice = 0;
 						double price = 0;
 						double multiplier = Double.NEGATIVE_INFINITY;
-						// Sell the items
-						for (int i = 0; i < c.getInventory().getSize(); i++) {
-							try {// Calculate the price of each item.
-								// TryCatch incase something goes wrong
 
-								// Loop through the config
-								if (!StickConfig.instance.useEssentialsWorth || plugin.ess == null || !plugin.ess.isEnabled()) {
+						for (int i = 0; i < c.getInventory().getSize(); i++) {
+							try {
+								if (!StickConfig.instance.useEssentialsWorth || plugin.ess == null
+										|| !plugin.ess.isEnabled()) {
 									for (String key : PriceConfig.instance.getConfig().getConfigurationSection("prices")
 											.getKeys(false)) {
 
-										// Pull put the item name and the data
 										int data;
 										String name;
 
 										if (!key.contains(":")) {
-											// If user didn't put a data value,
-											// assume its 0
 											data = 0;
 											name = key;
 										} else {
-											// Split by the colon.
 											name = (key.split(":"))[0];
 											data = Integer.parseInt(key.split(":")[1]);
 										}
 
-										// If the item matches(whether its numeric
-										// or string)
-										// in the config, and the data value
-										// matches,
 										if ((contents[i].getType().toString().equalsIgnoreCase(name) || (isNumeric(name)
 												&& contents[i].getType().getId() == Integer.parseInt(name)))
 												&& contents[i].getDurability() == data) {
-											// Get the price listed for that item
 											price = Double.parseDouble(
 													PriceConfig.instance.getConfig().getString("prices." + key));
-
-											// Get the amount of that in the chest
 
 										}
 									}
@@ -310,30 +299,24 @@ public class PlayerListener implements Listener {
 
 								int amount = (int) contents[i].getAmount();
 
-								slotPrice = price * amount; // Price for slot i
-								// If it was more than 0,
+								slotPrice = price * amount;
 								if (slotPrice > 0) {
 									ItemStack sell = contents[i];
-
-									// remove from chest
 									c.getInventory().remove(sell);
 									e.getClickedBlock().getState().update();
 								}
 
 							} catch (NullPointerException ex) {
-
 							}
-							// Increment total, reset slot price for
-							// next iteration
+
 							total += slotPrice;
 							slotPrice = 0;
 							price = 0;
 						}
-						// Give player money if the amount they sold was > 0
+
 						if (total > 0) {
-							if (!isInfinite(lores)) { // If the item was NOT an
-								// infinite sell stick
-								// Lower the # of uses
+							if (!isInfinite(lores)) {
+
 								lores.set(StickConfig.instance.durabilityLine - 1,
 										lores.get(StickConfig.instance.durabilityLine - 1).replaceAll(uses + "",
 												(uses - 1) + ""));
@@ -342,15 +325,14 @@ public class PlayerListener implements Listener {
 							}
 
 							/*
-							 * Permissions based multiplier check.
-							 * If user doesn't have sellstick.multiplier.x permission
-							 * Multiplier defaults to 1 as seen below.
+							 * Permissions based multiplier check. If user doesn't have
+							 * sellstick.multiplier.x permission Multiplier defaults to 1 as seen below.
 							 */
-							for(PermissionAttachmentInfo perm : p.getEffectivePermissions()) {
-								if(perm.getPermission().startsWith("sellstick.multiplier")) {
+							for (PermissionAttachmentInfo perm : p.getEffectivePermissions()) {
+								if (perm.getPermission().startsWith("sellstick.multiplier")) {
 									String stringPerm = perm.getPermission();
 									String permSection = stringPerm.replaceAll("sellstick.multiplier.", "");
-									if(Double.parseDouble(permSection) > multiplier) {
+									if (Double.parseDouble(permSection) > multiplier) {
 										multiplier = Double.parseDouble(permSection);
 									}
 								}
@@ -358,18 +340,17 @@ public class PlayerListener implements Listener {
 
 							/*
 							 * Multiplier set to Double.NEGATIVE_INFINITY by default to signal "unchanged"
-							 * Problem with defaulting to 0 is total*0 = 0,
-							 * Problem with defaulting to 1 is multipliers < 1.
+							 * Problem with defaulting to 0 is total*0 = 0, Problem with defaulting to 1 is
+							 * multipliers < 1.
 							 */
 							EconomyResponse r;
 
-							if(multiplier == Double.NEGATIVE_INFINITY) {
+							if (multiplier == Double.NEGATIVE_INFINITY) {
 								r = plugin.getEcon().depositPlayer(p, total);
 							} else {
-								r = plugin.getEcon().depositPlayer(p, total*multiplier);
+								r = plugin.getEcon().depositPlayer(p, total * multiplier);
 							}
 
-							// Send the payment
 							if (r.transactionSuccess()) {
 								if (StickConfig.instance.sellMessage.contains("\\n")) {
 									String[] send = StickConfig.instance.sellMessage.split("\\\\n");
@@ -380,26 +361,23 @@ public class PlayerListener implements Listener {
 								} else {
 									plugin.msg(p,
 											StickConfig.instance.sellMessage
-											.replace("%balance%", plugin.getEcon().format(r.balance))
-											.replace("%price%", plugin.getEcon().format(r.amount)));
+													.replace("%balance%", plugin.getEcon().format(r.balance))
+													.replace("%price%", plugin.getEcon().format(r.amount)));
 								}
 
-								// Add this to keep a log just incase.
 								System.out.println(p.getName() + " sold items via sellstick for " + r.amount
 										+ " and now has " + r.balance);
 							} else {
 								plugin.msg(p, String.format("An error occured: %s", r.errorMessage));
 							}
 
-							// If it's out of uses, remove it from the player,
-							// update inv.
-							if (uses - 1 == 0) { // I guess this couldve also been if uses == 1 lol
+							if (uses - 1 == 0) {
 								p.getInventory().remove(p.getItemInHand());
 								p.updateInventory();
 								plugin.msg(p, StickConfig.instance.brokenStick);
 							}
 
-						} else { // If the sold amount < 0
+						} else {
 							plugin.msg(p, StickConfig.instance.nothingWorth);
 						}
 						e.setCancelled(true);

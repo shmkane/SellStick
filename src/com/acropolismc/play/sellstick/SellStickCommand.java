@@ -28,21 +28,14 @@ public class SellStickCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		// Args length is 0
 		if (args.length == 0) {
-			// For players, show them nothing.
-			plugin.msg(sender,
-					ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
-			// If the sender has perms to give a stick, show the help message
+			plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
 			if (sender.hasPermission("sellstick.give")) {
-				plugin.msg(sender, ChatColor.GREEN
-						+ "/SellStick give <player> <amount> (<uses>/infinite)");
+				plugin.msg(sender, ChatColor.GREEN + "/SellStick give <player> <amount> (<uses>/infinite)");
 			}
 			return true;
 
-			// Args length is 1
 		} else if (args.length == 1) {
-			// If the sender has permission to reload
 			if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("sellstick.reload")) {
 				try {
 					plugin.getServer().getPluginManager().disablePlugin(plugin);
@@ -55,21 +48,14 @@ public class SellStickCommand implements CommandExecutor {
 				}
 				return true;
 			} else {
-				plugin.msg(sender, 
-						ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+				plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
 				return true;
 			}
-			// Args length is 3
 		} else if (args.length == 4) {
-			// If they're trying to give a stick...
 			if (args[0].equalsIgnoreCase("give")) {
-				// And has permission...
 				if (sender.hasPermission("sellstick.give")) {
-					// Get the intended target
 					Player target = plugin.getServer().getPlayer(args[1]);
-					// and make sure the target is online/exists
 					if (target != null && target.isOnline()) {
-						// Give them X number of sticks.
 						for (int i = 0; i < Integer.parseInt(args[2]); i++) {
 							/**
 							 * This assigns a random string to the item meta so that the item cannot be
@@ -92,27 +78,35 @@ public class SellStickCommand implements CommandExecutor {
 
 							try {
 								lores.add(StickConfig.instance.durabilityLine - 1, "%usesLore%");
-							}catch(IndexOutOfBoundsException e) {
+							} catch (IndexOutOfBoundsException e) {
 								plugin.msg(sender, ChatColor.RED + "CONFIG ERROR:");
-								plugin.msg(sender, ChatColor.RED + "You tried to set a DurabilityLine of " + (StickConfig.instance.durabilityLine - 1) + " but the lore is " + lores.size() + " long");
-								plugin.msg(sender, ChatColor.RED + "Try changing the DurabilityLine value in the config");
+								plugin.msg(sender,
+										ChatColor.RED + "You tried to set a DurabilityLine of "
+												+ (StickConfig.instance.durabilityLine - 1) + " but the lore is "
+												+ lores.size() + " long");
+								plugin.msg(sender,
+										ChatColor.RED + "Try changing the DurabilityLine value in the config");
 								plugin.msg(sender, ChatColor.RED + "Then, run /sellstick reload");
 
 								return false;
 
-							}catch(Exception ex) {
-								plugin.msg(sender, ChatColor.RED + "Something went wrong. Please check the console for an error message.");
+							} catch (Exception ex) {
+								plugin.msg(sender, ChatColor.RED
+										+ "Something went wrong. Please check the console for an error message.");
 								System.out.println(ex);
 								return false;
 							}
 
 							if (args[3].equalsIgnoreCase("infinite") || args[3].equalsIgnoreCase("i")) {
-								lores.set(StickConfig.instance.durabilityLine - 1, lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%", StickConfig.instance.infiniteLore));
+								lores.set(StickConfig.instance.durabilityLine - 1,
+										lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%",
+												StickConfig.instance.infiniteLore));
 							} else {
 								int uses = Integer.parseInt(args[3]);
 								// otherwise replace it with the remaining uses
-								lores.set(StickConfig.instance.durabilityLine - 1, lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%",
-										StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
+								lores.set(StickConfig.instance.durabilityLine - 1,
+										lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%",
+												StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
 							}
 							// assign the meta to the stick
 
@@ -128,7 +122,6 @@ public class SellStickCommand implements CommandExecutor {
 
 							target.getInventory().addItem(is);
 						}
-						// Send target and sender a message.
 						plugin.msg(target, StickConfig.instance.receiveMessage.replace("%amount%",
 								Integer.parseInt(args[2]) + ""));
 
@@ -137,23 +130,18 @@ public class SellStickCommand implements CommandExecutor {
 
 						return true;
 
-						// If the target wasn't found
 					} else {
 						plugin.msg(sender, ChatColor.RED + "Player not found");
 					}
-					// If the sender didn't have permission
 				} else {
 					plugin.msg(sender, StickConfig.instance.noPerm);
 				}
 			}
-			// Invalid number of args.
 		} else {
 			plugin.msg(sender, "" + ChatColor.RED + "Invalid command. Type /Sellstick for help");
 		}
 		return false;
 	}
-
-
 
 	/**
 	 * 

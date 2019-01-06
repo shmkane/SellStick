@@ -1,0 +1,10 @@
+name: SellStick
+main: com.acropolismc.play.sellstick.SellStick
+version: 8.1.0.1
+author: shmkane
+website: https://github.com/shmkane/SellStick
+depend: [Vault]
+softdepend: [Factions, Essentials, MassiveCore, LegacyFactions, ASkyBlock, PlotSquared]
+commands:
+   sellstick:
+      description: Sell all items in a chest easily!

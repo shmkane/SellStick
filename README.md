@@ -10,7 +10,7 @@
 # I strongly suggest "Watch" this thread. Updates are posted here much before Spigot.
 https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/
 
-###Version details:
+### Version details:
 If it ends in *.*.*.1 : Factions UUID or Savage Factions
 
 # Installation

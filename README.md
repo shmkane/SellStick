@@ -1,4 +1,4 @@
-# Sell Stick - UUID / Savage Factions Version
+# Sell Stick - UUID / Savage Factions Version (*.\*.\*.1)
 ## This will NOT work with Legacy / MCore Factions
 
 # Need Help?

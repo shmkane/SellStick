@@ -22,7 +22,6 @@ public class SellStickCommand implements CommandExecutor {
 	// Saving which line the uses is on here
 	public static int index = 0;
 
-	// Pass instance of main class to 'plugin'
 	public SellStickCommand(SellStick plugin) {
 		this.plugin = plugin;
 	}

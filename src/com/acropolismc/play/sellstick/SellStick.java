@@ -27,7 +27,7 @@ public class SellStick extends JavaPlugin {
 			log.info("[Sellstick] Essentials found");
 			ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 		}
-		
+
 		// Commands
 		this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
 		// Listeners
@@ -47,60 +47,15 @@ public class SellStick extends JavaPlugin {
 		// There's probably a better way for this, but this will do for now.
 
 		Plugin factions;
-		Plugin skyblock;
-		Plugin plot;
-		
+
 		//plot
-		if(StickConfig.instance.usingPlotSquared) {
-			plot = getServer().getPluginManager().getPlugin("PlotSquared");
-			if (plot != null && plot.isEnabled())
-				log.info("[Sellstick] Hooking into PlotSquared");
-			else
-				log.warning("[Sellstick] Tried to hook into PlotSquared but failed!");
-		}
 
 		//Checks for FactionsUUID
-		if (StickConfig.instance.usingFactionsUUID || StickConfig.instance.usingSavageFactions) {
-			factions = getServer().getPluginManager().getPlugin("Factions");
-			if (factions != null && factions.isEnabled())
-				log.info("[Sellstick] Hooking into FactionsUUID/Savage");
-			else
-				log.warning("[Sellstick] Tried to hook into FactionsUUID/Savage but failed!");
-			
-			
-		//Check for Legacy Factions
-		} else if (StickConfig.instance.usingLegacyFactions) {
-			factions = getServer().getPluginManager().getPlugin("Factions");
-			if (factions != null && factions.isEnabled())
-				log.info("[Sellstick] Hooking into LegacyFactions");
-			else
-				log.warning("[Sellstick] Tried to hook into LegacyFactions but failed!");
-			
-			
-		//Check for MCoreFactions
-		} else if (StickConfig.instance.usingMCoreFactions) {
-			factions = getServer().getPluginManager().getPlugin("MassiveCore");
-			if (factions != null && factions.isEnabled())
-				log.info("[Sellstick] Hooking into MCoreFactions");
-			else
-				log.warning("[Sellstick] Tried to hook into McoreFactions but failed!");
-			
-			
-		//Check for SavageFactions
-		} else {//If no Factions plugin was set.
-			log.warning("[Sellstick] No factions plugin enabled in config! Factions features won't work!");
-			if(!StickConfig.instance.usingSkyblock) {
-				log.warning("[Sellstick] No SkyBlock plugin enabled in config! Plugin won't function normally!");
-			}
-		}
-		//Check for SkyBlock
-		if (StickConfig.instance.usingSkyblock) {
-			skyblock = getServer().getPluginManager().getPlugin("ASkyBlock");
-			if (skyblock != null && skyblock.isEnabled())
-				log.info("[Sellstick] Hooking into ASkyBlock");
-			else
-				log.warning("[Sellstick] Tried to hook into ASkyBlock but failed!");
-		}
+		factions = getServer().getPluginManager().getPlugin("Factions");
+		if (factions != null && factions.isEnabled())
+			log.info("[Sellstick] Hooking into FactionsUUID/Savage");
+		else
+			log.warning("[Sellstick] Tried to hook into FactionsUUID/Savage but failed!");
 
 		if (StickConfig.instance.useEssentialsWorth) {
 			if (ess == null || !ess.isEnabled()) {
@@ -128,7 +83,7 @@ public class SellStick extends JavaPlugin {
 		econ = rsp.getProvider();
 		return econ != null;
 	}
-	
+
 	/**
 	 * This will send a player a message. If message is empty, it wont send
 	 * anything.

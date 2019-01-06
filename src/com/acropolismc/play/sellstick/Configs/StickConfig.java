@@ -10,21 +10,18 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class StickConfig {
 	public static StickConfig instance = new StickConfig();
 	public File conf;
-	
-	public boolean usingSkyblock;
-	
-	public boolean usingLegacyFactions;
-	public boolean usingFactionsUUID;
-	public boolean usingSavageFactions;
-	public boolean usingMCoreFactions;
-	public boolean usingPlotSquared;
-	
+
 	public String name;
 	public String item;
 	public boolean allowOwn;
 	public boolean allowSafezone;
 	public boolean allowWarzone;
 	public boolean allowWilderness;
+	public boolean allowEnemy;
+	public boolean allowNeutral;
+	public boolean allowAlly;
+
+
 	public List<String> lore;
 	public String finiteLore;
 	public String infiniteLore;
@@ -44,13 +41,6 @@ public class StickConfig {
 	public void loadValues() {
 		FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
 		
-		this.usingSkyblock = config.getBoolean("UsingSkyBlock");
-		this.usingLegacyFactions = config.getBoolean("UsingLegacyFactions");
-		this.usingFactionsUUID = config.getBoolean("UsingFactionsUUID");
-		this.usingSavageFactions = config.getBoolean("UsingSavageFactions");
-		this.usingMCoreFactions = config.getBoolean("UsingMCoreFactions");	
-		this.usingPlotSquared = config.getBoolean("UsingPlotSquared");
-		
 		this.name = config.getString("DisplayName").replace("&", "§");
 		this.item = config.getString("ItemType").toUpperCase().replace("&", "§");
 		this.glow = config.getBoolean("Glow");
@@ -58,6 +48,11 @@ public class StickConfig {
 		this.allowSafezone = config.getBoolean("AllowedInSafezoneClaim");
 		this.allowWarzone = config.getBoolean("AllowedInWarzoneClaim");
 		this.allowWilderness = config.getBoolean("AllowedInWildernessClaim");
+		this.allowEnemy = config.getBoolean("AllowedInEnemyClaim");
+		this.allowNeutral = config.getBoolean("AllowedInNeutralClaim");
+		this.allowAlly = config.getBoolean("AllowedInAllyClaim");
+
+
 		this.lore = config.getStringList("StickLore");
 		this.finiteLore = config.getString("FiniteLore").replace("&", "§");
 		this.infiniteLore = config.getString("InfiniteLore").replace("&", "§");
@@ -70,8 +65,8 @@ public class StickConfig {
 		this.territoryMessage = config.getString("InvalidTerritoryMessage").replace("&", "§");
 		this.nothingWorth = config.getString("NotWorthMessage").replace("&", "§");	
 		this.brokenStick =  config.getString("BrokenStick").replace("&", "§");
-		this.giveMessage = config.getString("GiveMessage").replaceAll("&", "§");
-		this.receiveMessage = config.getString("ReceiveMessage").replaceAll("&", "§");
+		this.giveMessage = config.getString("GiveMessage").replace("&", "§");
+		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "§");
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
 	}
 
@@ -88,13 +83,6 @@ public class StickConfig {
 			/*
 			 * Default config options
 			 */
-		
-			config.set("UsingLegacyFactions", false);
-			config.set("UsingFactionsUUID", true);
-			config.set("UsingSavageFactions", false);
-			config.set("UsingMCoreFactions", false);
-			config.set("UsingSkyBlock", false);
-			config.set("UsingPlotSquared", false);
 
 			config.set("DisplayName", "&cSellStick");
 			config.set("ItemType", "STICK");
@@ -103,6 +91,11 @@ public class StickConfig {
 			config.set("AllowedInSafezoneClaim", false);
 			config.set("AllowedInWarzoneClaim", false);
 			config.set("AllowedInWildernessClaim", true);
+			config.set("AllowedInEnemyClaim", false);
+			config.set("AllowedInNeutralClaim", false);
+			config.set("AllowedInAllyClaim", true);
+
+
 			List<String> lore = Arrays.asList("&c&lLeft&c click on a chest to sell items inside!", "&cSellStick by &oshmkane");
 			config.set("StickLore", lore);
 			config.set("FiniteLore", "&c%remaining% &fremaining uses");

@@ -19,21 +19,13 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
-import com.intellectualcrafters.plot.object.Plot;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.entity.BoardColl;
-import com.massivecraft.factions.entity.MPlayer;
-import com.massivecraft.massivecore.ps.PS;
-import com.plotsquared.bukkit.util.BukkitUtil;
-import com.wasteofplastic.askyblock.ASkyBlockAPI;
-import com.wasteofplastic.askyblock.Island;
 
 import net.milkbowl.vault.economy.EconomyResponse;
-import net.redstoneore.legacyfactions.entity.FPlayerColl;
 
 public class PlayerListener implements Listener {
 	private SellStick plugin;
@@ -171,207 +163,64 @@ public class PlayerListener implements Listener {
 						}
 
 						Location location = e.getClickedBlock().getLocation();
-						if (StickConfig.instance.usingPlotSquared) {
-							try {
-								Plot plot = Plot.getPlot(BukkitUtil.getLocation(location));
 
-								if (!plot.getMembers().contains(p.getUniqueId())
-										&& !plot.getOwners().contains(p.getUniqueId())
-										&& !plot.getTrusted().contains(p.getUniqueId())) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-							} catch (Exception ex) {
-								// p.sendMessage("No plot here"); This is cheating but w/e
-							}
-						}
-
-						if (StickConfig.instance.usingMCoreFactions) { // If the server runs MCore Factions
-							com.massivecraft.factions.entity.Faction faction = null;
-							MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
-							faction = BoardColl.get().getFactionAt(PS.valueOf(location));
-
-							if ((mplayer.hasFaction() && mplayer.isInOwnTerritory())
-									&& !StickConfig.instance.allowOwn) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (faction.getName().contains("Wilderness")
-									&& !StickConfig.instance.allowWilderness) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (faction.getName().contains("Warzone") && !StickConfig.instance.allowWarzone) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (faction.getName().contains("Safezone") && !StickConfig.instance.allowSafezone) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (mplayer.hasFaction() && !mplayer.isInOwnTerritory()) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (!mplayer.hasFaction()) {
-								if (!faction.getName().contains("Wilderness") || !StickConfig.instance.allowWilderness) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-								else if (!faction.getName().contains("Warzone") || !StickConfig.instance.allowWarzone) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-								else if (!faction.getName().contains("Safezone") || !StickConfig.instance.allowSafezone) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-
-
-								return;
-							}
-
-						}
-
-						// SavageFactions or factionsuuid
 						/**
 						 * This part checks what factions the user is running and will handle sellstick
 						 * accordingly
 						 */
-						if (StickConfig.instance.usingSavageFactions || StickConfig.instance.usingFactionsUUID) {
-							Faction faction = null;
-							FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
-							FLocation fLoc = new FLocation(location);
-							faction = Board.getInstance().getFactionAt(fLoc);
-
-							if ((fplayer.hasFaction() && fplayer.isInOwnTerritory())
-									&& !StickConfig.instance.allowOwn) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								System.out.println(1);
-								e.setCancelled(true);
-								return;
-							} else if (faction.getTag().contains("Wilderness")
-									&& !StickConfig.instance.allowWilderness) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								System.out.println(2);
-
-								e.setCancelled(true);
-								return;
-							} else if (faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
-
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								System.out.println(faction.getTag().contains("Warzone"));
-								System.out.println(StickConfig.instance.allowWarzone);
-
-								e.setCancelled(true);
-								return;
-							} else if (faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								System.out.println(4);
-								e.setCancelled(true);
-
-								return;
-							} else if (fplayer.hasFaction() && !fplayer.isInOwnTerritory()) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-
-								return;
-							} else if (!fplayer.hasFaction()) {
-								if (!faction.getTag().contains("Wilderness") || !StickConfig.instance.allowWilderness) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-								else if (!faction.getTag().contains("Warzone") || !StickConfig.instance.allowWarzone) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-								else if (!faction.getTag().contains("Safezone") || !StickConfig.instance.allowSafezone) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
+						Faction faction = null;
+						FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
+						FLocation fLoc = new FLocation(location);
+						faction = Board.getInstance().getFactionAt(fLoc);
 
 
-								return;
-							}
-
+						//Own
+						if((fplayer.hasFaction() && fplayer.isInOwnTerritory() && !StickConfig.instance.allowOwn)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
 						}
 
-						if (StickConfig.instance.usingLegacyFactions) { // Support for legacy factions
-							net.redstoneore.legacyfactions.entity.Faction faction = null;
-							net.redstoneore.legacyfactions.entity.FPlayer fplayer = FPlayerColl.get(p);
-							net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(
-									location);
-							faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
-
-							if ((fplayer.hasFaction() && fplayer.isInOwnTerritory())
-									&& !StickConfig.instance.allowOwn) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (faction.getTag().contains("Wilderness")
-									&& !StickConfig.instance.allowWilderness) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (fplayer.hasFaction() && !fplayer.isInOwnTerritory()) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
-								e.setCancelled(true);
-								return;
-							} else if (!fplayer.hasFaction()) {
-								if (!faction.getTag().contains("Wilderness") || !StickConfig.instance.allowWilderness) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-								else if (!faction.getTag().contains("Warzone") || !StickConfig.instance.allowWarzone) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-								else if (!faction.getTag().contains("Safezone") || !StickConfig.instance.allowSafezone) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-
-
-								return;
-							}
-
+						//Wilderness
+						if((faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
 						}
-						if (StickConfig.instance.usingSkyblock) {
-							Island island = null;
-							try {
-								island = ASkyBlockAPI.getInstance().getIslandAt(location);
-
-								if (!island.getMembers().contains(p.getUniqueId())) {
-									plugin.msg(p, StickConfig.instance.territoryMessage);
-									e.setCancelled(true);
-									return;
-								}
-
-							} catch (Exception ex) {
-								e.setCancelled(true);
-								return;
-								// System.out.println(ex.getMessage());
-							}
-
+						//Warzone
+						if((faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
 						}
+						//Safezone
+						if((faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
+						}
+						
+						//Enemy
+						if((fplayer.hasFaction() && fplayer.isInEnemyTerritory() && !StickConfig.instance.allowEnemy)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
+						}
+						
+						//Neutral
+						if((fplayer.hasFaction() && fplayer.isInNeutralTerritory() && !StickConfig.instance.allowNeutral)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
+						}
+						
+						//Ally
+						if((fplayer.hasFaction() && fplayer.isInAllyTerritory() && !StickConfig.instance.allowAlly)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+							e.setCancelled(true);
+							return;
+						}
+
 
 						/**
 						 * This is where the selling magic happens
@@ -386,6 +235,7 @@ public class PlayerListener implements Listener {
 							uses = getUsesFromLore(lores);
 						}
 						if (uses == -2) {
+							//This should honestly never happen unless someone changes sellstick lores
 							plugin.msg(p, ChatColor.RED + "There was an error!");
 							plugin.msg(p, ChatColor.RED
 									+ "Please let an admin know to check console, or, send them these messages:");
@@ -416,7 +266,7 @@ public class PlayerListener implements Listener {
 						// Sell the items
 						for (int i = 0; i < c.getInventory().getSize(); i++) {
 							try {// Calculate the price of each item.
-									// TryCatch incase something goes wrong
+								// TryCatch incase something goes wrong
 
 								// Loop through the config
 								if (!StickConfig.instance.useEssentialsWorth || plugin.ess == null || !plugin.ess.isEnabled()) {
@@ -505,20 +355,20 @@ public class PlayerListener implements Listener {
 									}
 								}
 							}
-							
+
 							/*
 							 * Multiplier set to Double.NEGATIVE_INFINITY by default to signal "unchanged"
 							 * Problem with defaulting to 0 is total*0 = 0,
 							 * Problem with defaulting to 1 is multipliers < 1.
 							 */
 							EconomyResponse r;
-							
+
 							if(multiplier == Double.NEGATIVE_INFINITY) {
 								r = plugin.getEcon().depositPlayer(p, total);
 							} else {
 								r = plugin.getEcon().depositPlayer(p, total*multiplier);
 							}
-							
+
 							// Send the payment
 							if (r.transactionSuccess()) {
 								if (StickConfig.instance.sellMessage.contains("\\n")) {
@@ -530,8 +380,8 @@ public class PlayerListener implements Listener {
 								} else {
 									plugin.msg(p,
 											StickConfig.instance.sellMessage
-													.replace("%balance%", plugin.getEcon().format(r.balance))
-													.replace("%price%", plugin.getEcon().format(r.amount)));
+											.replace("%balance%", plugin.getEcon().format(r.balance))
+											.replace("%price%", plugin.getEcon().format(r.amount)));
 								}
 
 								// Add this to keep a log just incase.
@@ -552,6 +402,7 @@ public class PlayerListener implements Listener {
 						} else { // If the sold amount < 0
 							plugin.msg(p, StickConfig.instance.nothingWorth);
 						}
+						e.setCancelled(true);
 					}
 				}
 			}

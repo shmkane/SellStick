@@ -5,8 +5,8 @@
 	<classpathentry kind="lib" path="D:/SellStick Dependencies/askyblock.jar"/>
 	<classpathentry kind="lib" path="D:/SellStick Dependencies/EssentialsX-2.15.0.1.jar"/>
 	<classpathentry kind="lib" path="D:/SellStick Dependencies/EssentialsXSpawn-2.15.0.1.jar"/>
-	<classpathentry kind="lib" path="D:/SellStick Dependencies/SavageFactions.jar"/>
 	<classpathentry kind="lib" path="D:/SellStick Dependencies/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar"/>
 	<classpathentry kind="lib" path="D:/SellStick Dependencies/Vault-1.6.7.jar"/>
+	<classpathentry kind="lib" path="D:/SellStick Dependencies/PlotSquared-Bukkit-18.12.21-03ad8eb-2059.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -19,8 +19,8 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
-import com.wasteofplastic.askyblock.ASkyBlockAPI;
-import com.wasteofplastic.askyblock.Island;
+import com.intellectualcrafters.plot.object.Plot;
+import com.plotsquared.bukkit.util.BukkitUtil;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -159,24 +159,18 @@ public class PlayerListener implements Listener {
 
 						Location location = e.getClickedBlock().getLocation();
 
-						/**
-						 * This part checks what factions the user is running and will handle sellstick
-						 * accordingly
-						 */
-						Island island = null;
 						try {
-							island = ASkyBlockAPI.getInstance().getIslandAt(location);
+							Plot plot = Plot.getPlot(BukkitUtil.getLocation(location));
 
-							if (!island.getMembers().contains(p.getUniqueId())) {
+							if (!plot.getMembers().contains(p.getUniqueId())
+									&& !plot.getOwners().contains(p.getUniqueId())
+									&& !plot.getTrusted().contains(p.getUniqueId())) {
 								plugin.msg(p, StickConfig.instance.territoryMessage);
 								e.setCancelled(true);
 								return;
 							}
-
 						} catch (Exception ex) {
-							e.setCancelled(true);
-							return;
-							// System.out.println(ex.getMessage());
+							// p.sendMessage("No plot here"); This is cheating but w/e
 						}
 
 						ItemStack is = p.getItemInHand();

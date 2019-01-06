@@ -20,7 +20,7 @@ public class SellStick extends JavaPlugin {
 	public Essentials ess;
 	private static Economy econ = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
-	Plugin factions;
+	Plugin p2;
 
 	public void onEnable() {
 		this.saveDefaultConfig();
@@ -28,8 +28,8 @@ public class SellStick extends JavaPlugin {
 		StickConfig.instance.setup(getDataFolder());
 		PriceConfig.instance.setup(getDataFolder());
 
-		if (!setupFactions()) {
-			log.severe(String.format("[%s] - Disabled due to no Factions found!", getDescription().getName()));
+		if (!setupPlotSquared()) {
+			log.severe(String.format("[%s] - Disabled due to no PlotSquared found!", getDescription().getName()));
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -51,7 +51,7 @@ public class SellStick extends JavaPlugin {
 		try {
 			ess = null;
 			econ = null;
-			factions = null;
+			p2 = null;
 			StickConfig.instance = null;
 			PriceConfig.instance = null;
 		} catch (Exception ex) {
@@ -78,12 +78,12 @@ public class SellStick extends JavaPlugin {
 
 	}
 
-	public boolean setupFactions() {
-		factions = getServer().getPluginManager().getPlugin("Factions");
-		if (factions != null && factions.isEnabled())
-			log.info(String.format("[%s] Hooked into FactionsUUID/Savage/OtherUUIDForks!", getDescription().getName()));
+	public boolean setupPlotSquared() {
+		p2 = getServer().getPluginManager().getPlugin("PlotSquared");
+		if (p2 != null && p2.isEnabled())
+			log.info(String.format("[%s] Hooked into PlotSquared!", getDescription().getName()));
 
-		return factions != null && factions.isEnabled();
+		return p2 != null && p2.isEnabled();
 	}
 
 	private boolean setupEconomy() {

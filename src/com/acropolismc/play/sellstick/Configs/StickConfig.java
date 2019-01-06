@@ -13,13 +13,6 @@ public class StickConfig {
 
 	public String name;
 	public String item;
-	public boolean allowOwn;
-	public boolean allowSafezone;
-	public boolean allowWarzone;
-	public boolean allowWilderness;
-	public boolean allowEnemy;
-	public boolean allowNeutral;
-	public boolean allowAlly;
 
 	public List<String> lore;
 	public String finiteLore;
@@ -43,13 +36,6 @@ public class StickConfig {
 		this.name = config.getString("DisplayName").replace("&", "§");
 		this.item = config.getString("ItemType").toUpperCase().replace("&", "§");
 		this.glow = config.getBoolean("Glow");
-		this.allowOwn = config.getBoolean("AllowedInFactionClaim");
-		this.allowSafezone = config.getBoolean("AllowedInSafezoneClaim");
-		this.allowWarzone = config.getBoolean("AllowedInWarzoneClaim");
-		this.allowWilderness = config.getBoolean("AllowedInWildernessClaim");
-		this.allowEnemy = config.getBoolean("AllowedInEnemyClaim");
-		this.allowNeutral = config.getBoolean("AllowedInNeutralClaim");
-		this.allowAlly = config.getBoolean("AllowedInAllyClaim");
 
 		this.lore = config.getStringList("StickLore");
 		this.finiteLore = config.getString("FiniteLore").replace("&", "§");
@@ -85,13 +71,6 @@ public class StickConfig {
 			config.set("DisplayName", "&cSellStick");
 			config.set("ItemType", "STICK");
 			config.get("Glow", true);
-			config.set("AllowedInFactionClaim", true);
-			config.set("AllowedInSafezoneClaim", false);
-			config.set("AllowedInWarzoneClaim", false);
-			config.set("AllowedInWildernessClaim", true);
-			config.set("AllowedInEnemyClaim", false);
-			config.set("AllowedInNeutralClaim", false);
-			config.set("AllowedInAllyClaim", true);
 
 			List<String> lore = Arrays.asList("&c&lLeft&c click on a chest to sell items inside!",
 					"&cSellStick by &oshmkane");

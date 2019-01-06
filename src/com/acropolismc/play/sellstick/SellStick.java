@@ -52,8 +52,6 @@ public class SellStick extends JavaPlugin {
 			ess = null;
 			econ = null;
 			askyblock = null;
-			StickConfig.instance = null;
-			PriceConfig.instance = null;
 		} catch (Exception ex) {
 			log.severe(String.format("[%s] - Was not disabled correctly!", getDescription().getName()));
 		} finally {

@@ -19,11 +19,8 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
+import net.redstoneore.legacyfactions.entity.FPlayerColl;
+
 
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -166,10 +163,10 @@ public class PlayerListener implements Listener {
 						 * This part checks what factions the user is running and will handle sellstick
 						 * accordingly
 						 */
-						Faction faction = null;
-						FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
-						FLocation fLoc = new FLocation(location);
-						faction = Board.getInstance().getFactionAt(fLoc);
+						net.redstoneore.legacyfactions.entity.Faction faction = null;
+						net.redstoneore.legacyfactions.entity.FPlayer fplayer = FPlayerColl.get(p);
+						net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(location);
+						faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
 
 						// Own
 						if ((fplayer.hasFaction() && fplayer.isInOwnTerritory() && !StickConfig.instance.allowOwn)) {
@@ -360,8 +357,8 @@ public class PlayerListener implements Listener {
 								} else {
 									plugin.msg(p,
 											StickConfig.instance.sellMessage
-													.replace("%balance%", plugin.getEcon().format(r.balance))
-													.replace("%price%", plugin.getEcon().format(r.amount)));
+											.replace("%balance%", plugin.getEcon().format(r.balance))
+											.replace("%price%", plugin.getEcon().format(r.amount)));
 								}
 
 								System.out.println(p.getName() + " sold items via sellstick for " + r.amount

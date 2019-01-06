@@ -10,7 +10,7 @@ Also supports **[ASkyBlock](https://github.com/shmkane/SellStick/tree/ASKYBLOCK)
 ## Donate
 SellStick has and always will be **free**. The development is done on my own time. If you'd like to treat me with a coffee, you can do that [here:)](http://paypal.me/shmkane/5) 
 
-## To Download:
+# To Download:
 Nagivate to [Releases](https://github.com/shmkane/SellStick/releases) and find what version you want. Then just download the jar.
 
 ## Highly Customizable:

@@ -1,7 +1,7 @@
-If you need help
+# If you need help
 
-1: https://github.com/shmkane/SellStick/issues - Create an issue here, THEN
-2: shmkane#0001 - Add me on discord. Please create the issue first and provide your discord so I know who you are before I accept.
+# 1: https://github.com/shmkane/SellStick/issues - Create an issue here, THEN
+# 2: shmkane#0001 - Add me on discord. Please create the issue first and provide your discord so I know who you are before I accept.
 
 # I strongly suggest "Watch" this thread. Updates are posted here much before Spigot.
 https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/

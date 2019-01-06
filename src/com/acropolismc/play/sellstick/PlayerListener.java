@@ -19,11 +19,10 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.Rel;
+import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.factions.entity.MPlayer;
+import com.massivecraft.massivecore.ps.PS;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -166,63 +165,64 @@ public class PlayerListener implements Listener {
 						 * This part checks what factions the user is running and will handle sellstick
 						 * accordingly
 						 */
-						Faction faction = null;
-						FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
-						FLocation fLoc = new FLocation(location);
-						faction = Board.getInstance().getFactionAt(fLoc);
+						com.massivecraft.factions.entity.Faction faction = null;
+						MPlayer mplayer = MPlayer.get(e.getPlayer().getUniqueId());
+						faction = BoardColl.get().getFactionAt(PS.valueOf(location));
 
 						// Own
-						if ((fplayer.hasFaction() && fplayer.isInOwnTerritory() && !StickConfig.instance.allowOwn)) {
+						if ((mplayer.hasFaction() && mplayer.isInOwnTerritory() && !StickConfig.instance.allowOwn)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+									mplayer.getRelationTo(faction).getColor() + faction.getName()));
 							e.setCancelled(true);
 							return;
 						}
 
 						// Wilderness
-						if ((faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness)) {
+						if ((faction.getName().contains("Wilderness") && !StickConfig.instance.allowWilderness)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+									mplayer.getRelationTo(faction).getColor() + faction.getName()));
 							e.setCancelled(true);
 							return;
 						}
 						// Warzone
-						if ((faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone)) {
+						if ((faction.getName().contains("Warzone") && !StickConfig.instance.allowWarzone)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+									mplayer.getRelationTo(faction).getColor() + faction.getName()));
 							e.setCancelled(true);
 							return;
 						}
 						// Safezone
-						if ((faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone)) {
+						if ((faction.getName().contains("Safezone") && !StickConfig.instance.allowSafezone)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+									mplayer.getRelationTo(faction).getColor() + faction.getName()));
 							e.setCancelled(true);
 							return;
 						}
 
 						// Enemy
-						if ((fplayer.hasFaction() && fplayer.isInEnemyTerritory()
+						if ((mplayer.hasFaction() && mplayer.isInEnemyTerritory()
 								&& !StickConfig.instance.allowEnemy)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+									mplayer.getRelationTo(faction).getColor() + faction.getName()));
 							e.setCancelled(true);
 							return;
 						}
 
 						// Neutral
-						if ((fplayer.hasFaction() && fplayer.isInNeutralTerritory()
+
+						if ((mplayer.hasFaction() && mplayer.getRelationTo(faction) == Rel.NEUTRAL
 								&& !StickConfig.instance.allowNeutral)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+									mplayer.getRelationTo(faction).getColor() + faction.getName()));
 							e.setCancelled(true);
 							return;
 						}
 
 						// Ally
-						if ((fplayer.hasFaction() && fplayer.isInAllyTerritory() && !StickConfig.instance.allowAlly)) {
+						if ((mplayer.hasFaction() && mplayer.getRelationTo(faction) == Rel.ALLY
+								&& !StickConfig.instance.allowAlly)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+									mplayer.getRelationTo(faction).getColor() + faction.getName()));
 							e.setCancelled(true);
 							return;
 						}

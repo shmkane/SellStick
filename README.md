@@ -1,4 +1,4 @@
-# Sell Stick - PlotSquared Version (*.*.*.2)
+# Sell Stick - PlotSquared Version (\*.\*.*.2)
 ## This will NOT work with Factions
 
 # Need Help?

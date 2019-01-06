@@ -6,26 +6,11 @@
 #######Server Settings#######
 #############################
 #---------------------------#
-# UUID/SAVAGE FACTIONS ONLY # 
+#         ASkyBlock         # 
 #---------------------------# 
 # If you don't have this,   #
 #    dont use this plugin   # 
 #############################
-#
-#Can players use sellstick in their own claims?
-AllowedInFactionClaim: true
-#Can players use sellstick in safezone?
-AllowedInSafezoneClaim: false
-#Can players use sellstick in warzone?
-AllowedInWarzoneClaim: false
-#Can players use sellstick in wilderness?
-AllowedInWildernessClaim: true
-#Can players use sellstick in enemy claims?
-AllowedInEnemyClaim: false
-#Can players use sellstick in neutral claims?
-AllowedInNeutralClaim: true
-#Can players use sellstick in ally claims?
-AllowedInAllyClaim: true
 #
 #############################
 #######Stick Settings########

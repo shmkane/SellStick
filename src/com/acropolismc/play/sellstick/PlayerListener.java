@@ -159,10 +159,6 @@ public class PlayerListener implements Listener {
 
 						Location location = e.getClickedBlock().getLocation();
 
-						/**
-						 * This part checks what factions the user is running and will handle sellstick
-						 * accordingly
-						 */
 						Island island = null;
 						try {
 							island = ASkyBlockAPI.getInstance().getIslandAt(location);

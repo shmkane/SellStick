@@ -21,7 +21,6 @@ public class StickConfig {
 	public boolean allowNeutral;
 	public boolean allowAlly;
 
-
 	public List<String> lore;
 	public String finiteLore;
 	public String infiniteLore;
@@ -40,7 +39,7 @@ public class StickConfig {
 
 	public void loadValues() {
 		FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
-		
+
 		this.name = config.getString("DisplayName").replace("&", "§");
 		this.item = config.getString("ItemType").toUpperCase().replace("&", "§");
 		this.glow = config.getBoolean("Glow");
@@ -52,19 +51,18 @@ public class StickConfig {
 		this.allowNeutral = config.getBoolean("AllowedInNeutralClaim");
 		this.allowAlly = config.getBoolean("AllowedInAllyClaim");
 
-
 		this.lore = config.getStringList("StickLore");
 		this.finiteLore = config.getString("FiniteLore").replace("&", "§");
 		this.infiniteLore = config.getString("InfiniteLore").replace("&", "§");
-		
+
 		this.durabilityLine = config.getInt("DurabilityLine");
-		
+
 		this.prefix = config.getString("MessagePrefix").replace("&", "§");
 		this.sellMessage = config.getString("SellMessage").replace("&", "§");
 		this.noPerm = config.getString("NoPermissionMessage").replace("&", "§");
 		this.territoryMessage = config.getString("InvalidTerritoryMessage").replace("&", "§");
-		this.nothingWorth = config.getString("NotWorthMessage").replace("&", "§");	
-		this.brokenStick =  config.getString("BrokenStick").replace("&", "§");
+		this.nothingWorth = config.getString("NotWorthMessage").replace("&", "§");
+		this.brokenStick = config.getString("BrokenStick").replace("&", "§");
 		this.giveMessage = config.getString("GiveMessage").replace("&", "§");
 		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "§");
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
@@ -95,13 +93,13 @@ public class StickConfig {
 			config.set("AllowedInNeutralClaim", false);
 			config.set("AllowedInAllyClaim", true);
 
-
-			List<String> lore = Arrays.asList("&c&lLeft&c click on a chest to sell items inside!", "&cSellStick by &oshmkane");
+			List<String> lore = Arrays.asList("&c&lLeft&c click on a chest to sell items inside!",
+					"&cSellStick by &oshmkane");
 			config.set("StickLore", lore);
 			config.set("FiniteLore", "&c%remaining% &fremaining uses");
 			config.set("InfiniteLore", "&4Infinite &cuses!");
 			config.set("DurabilityLine", 2);
-			config.set("MessagePrefix", "&6[&eSellStick&6] &e");	
+			config.set("MessagePrefix", "&6[&eSellStick&6] &e");
 			config.set("SellMessage", "&cYou sold items for &f%price% &cand now have &f%balance%");
 			config.set("NoPermissionMessage", "&cSorry, you don't have permission for this!");
 			config.set("InvalidTerritoryMessage", "&cYou can't use sell stick outside your territory!");
@@ -110,7 +108,7 @@ public class StickConfig {
 			config.set("GiveMessage", "&aYou gave &e%player%& &e&l%amount% &asell sticks!");
 			config.set("ReceiveMessage", "&aYou've received &e&l%amount% &asell sticks!");
 			config.set("UseEssentialsWorth", false);
-			
+
 			try {
 				config.save(this.conf);
 			} catch (Exception e) {

@@ -1,4 +1,4 @@
-# Sell Stick - UUID / Savage Factions Version (*.\*.\*.5)
+# Sell Stick - ASkyBlock Version (*.\*.\*.5)
 ## This will NOT work with Factions
 
 # Need Help?

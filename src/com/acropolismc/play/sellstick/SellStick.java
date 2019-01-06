@@ -79,9 +79,9 @@ public class SellStick extends JavaPlugin {
 	}
 
 	public boolean setupFactions() {
-		factions = getServer().getPluginManager().getPlugin("Factions");
+		factions = getServer().getPluginManager().getPlugin("LegacyFactions");
 		if (factions != null && factions.isEnabled())
-			log.info(String.format("[%s] Hooked into FactionsUUID/Savage/OtherUUIDForks!", getDescription().getName()));
+			log.info(String.format("[%s] Hooked into LegacyFactions!", getDescription().getName()));
 
 		return factions != null && factions.isEnabled();
 	}

@@ -1,12 +1,19 @@
-Made originally for AcropolisMC. Message me on discord for support: shmkane#0001
+If you need help
 
-# I strongly suggest you "Star" and "Watch" this thread. Updates are posted here much before Spigot.
+1: https://github.com/shmkane/SellStick/issues - Create an issue here, THEN
+2: shmkane#0001 - Add me on discord. Please create the issue first and provide your discord so I know who you are before I accept.
+
+# I strongly suggest "Watch" this thread. Updates are posted here much before Spigot.
+https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/
+
+Version details:
+If it ends in *.*.*.1 : Factions UUID or Savage Factions
 
 Sell stick allows players to quickly sell items inside a chest with just one click! You can customize the item used and the amount of uses the item gives, as well as the name of the item and the lore! All of these options are located inside the config.yml!
 
 To set the price for the items sold, simply edit the prices.yml
 
-(Tested on paperspigot1.8.8)
+(Tested on spigot 1.8.9 && 1.9.4)
 
     Download SellStick
     Download Vault!

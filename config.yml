@@ -1,7 +1,7 @@
 #############################
 ####Sell Stick by shmkane####
 #############################
-###Plugin Version: 8.1.0.0###
+###Plugin Version: 8.1.1.5###
 #############################
 #######Server Settings#######
 #############################
@@ -100,7 +100,7 @@ NoPermissionMessage: '&cSorry, you don''t have permission for this!'
 #
 #
 #If they try using the stick in an invalid territory.
-InvalidTerritoryMessage: '&cYou can''t use sell stick in %claims% &cclaims!'
+InvalidTerritoryMessage: '&cYou can''t use sell stick in %claims%s &cclaims!'
 # terrotory
 #
 #If the chest chest didnt have anything they could sell

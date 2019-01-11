@@ -2,7 +2,9 @@ package com.acropolismc.play.sellstick;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -164,7 +166,7 @@ public class PlayerListener implements Listener {
 							island = ASkyBlockAPI.getInstance().getIslandAt(location);
 
 							if (!island.getMembers().contains(p.getUniqueId())) {
-								plugin.msg(p, StickConfig.instance.territoryMessage);
+								plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", Bukkit.getPlayer(island.getOwner()).getDisplayName()));
 								e.setCancelled(true);
 								return;
 							}

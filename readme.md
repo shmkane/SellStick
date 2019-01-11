@@ -1,19 +1,23 @@
-# PSSST! Down here!
-
 # ![SellStick](https://proxy.spigotmc.org/2dc1dbaacf1f39b89a69ab13340b1c4a32370866?url=https%3A%2F%2Fi.gyazo.com%2F6820a34e0050ac2295dfbcaedb06fde9.png "SellStick")
 
-Own a **factions** server? This plugin is a **must-have**!
-Currently supports **[FactionsUUID](https://github.com/shmkane/SellStick/tree/UUID_OR_SAVAGE)**, **[LegacyFactions](https://github.com/shmkane/SellStick/tree/LEGACY)**,  **[SavageFactions](https://github.com/shmkane/SellStick/tree/UUID_OR_SAVAGE)**, and **[MCoreFactions](https://github.com/shmkane/SellStick/tree/MCORE)**(MassiveCraft Factions)!
-
-Also supports **[ASkyBlock](https://github.com/shmkane/SellStick/tree/ASKYBLOCK)**, and **[PlotSquared](https://github.com/shmkane/SellStick/tree/PLOTSQUARED)**!
-
 ## Donate
-SellStick has and always will be **free**. The development is done on my own time. If you'd like to treat me with a coffee, you can do that [here:)](http://paypal.me/shmkane/5) 
+Do you like SellStick?
 
-# To Download:
+The development is done on my own time. 
+If you'd like to treat me with a coffee, you can do that [https://paypal.me/shmkane](http://paypal.me/shmkane/1.99)
+
+## To Download
+**Pick what plugin you run on your server:**
+1. FactionsUUID or Branches (ex: LegacyFactions)
+2. PlotSquared
+3. SavageFactions
+4. MCoreFactions
+5. ASkyBlock
+
+
 Nagivate to [Releases](https://github.com/shmkane/SellStick/releases) and find what version you want. Then just download the jar.
 
-## Highly Customizable:
+## Highly Customizable
 ![Customize](https://proxy.spigotmc.org/96f3cf014b4d3ff6e811eebf4f22220b2fb41858?url=https%3A%2F%2Fimage.prntscr.com%2Fimage%2F6mGwaXYbT6m6nIk3wgllOw.png "Customize!") ![Customize](https://proxy.spigotmc.org/ab1a457fb602789aa8fa289b8d1fb98a0ec49383?url=https%3A%2F%2Fimage.prntscr.com%2Fimage%2FcQ3WdReqRGur-DQS0k4Pxg.png "Customize!!!") ![Customize](https://proxy.spigotmc.org/a91d97d1708446671fddcdb356ecd59214c86b83?url=https%3A%2F%2Fimage.prntscr.com%2Fimage%2Fw1UWdaHnRbiFL14F0-rkFQ.png "Customize!!!!!")
 
 Sell stick allows players to quickly sell items inside a chest with just one click! You can **customize** almost everything! The item used, the amount of uses the item gives, as well as the name of the item and the lore! All of these options are located inside the **config.yml**!

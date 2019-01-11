@@ -4,7 +4,7 @@
 Do you like SellStick?
 
 The development is done on my own time. 
-If you'd like to treat me with a coffee, you can do that [https://paypal.me/shmkane](http://paypal.me/shmkane/1.99)
+If you'd like to treat me with a coffee, you can do that here :) [https://paypal.me/shmkane](http://paypal.me/shmkane/1.99)
 
 ## To Download
 **Pick what plugin you run on your server:**

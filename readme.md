@@ -8,14 +8,13 @@ If you'd like to treat me with a coffee, you can do that [https://paypal.me/shmk
 
 ## To Download
 **Pick what plugin you run on your server:**
-1. FactionsUUID or Branches (ex: LegacyFactions)
-2. PlotSquared
-3. SavageFactions
-4. MCoreFactions
-5. ASkyBlock
+1. [FactionsUUID or Branches (ex: SavageFactions)](https://github.com/shmkane/SellStick/releases/tag/v8.1.0.1-beta)
+2. [PlotSquared](https://github.com/shmkane/SellStick/releases/tag/v8.1.1.2)
+3. [LegacyFactions](https://github.com/shmkane/SellStick/releases/tag/v8.1.0.3-beta)
+4. [MCoreFactions](https://github.com/shmkane/SellStick/releases/tag/v8.1.0.4-beta)
+5. [ASkyBlock](https://github.com/shmkane/SellStick/releases/tag/v8.1.1.5)
 
-
-Nagivate to [Releases](https://github.com/shmkane/SellStick/releases) and find what version you want. Then just download the jar.
+Alternatively, nagivate to [Releases](https://github.com/shmkane/SellStick/releases) and find what version you want. Then just download the jar you want.
 
 ## Highly Customizable
 ![Customize](https://proxy.spigotmc.org/96f3cf014b4d3ff6e811eebf4f22220b2fb41858?url=https%3A%2F%2Fimage.prntscr.com%2Fimage%2F6mGwaXYbT6m6nIk3wgllOw.png "Customize!") ![Customize](https://proxy.spigotmc.org/ab1a457fb602789aa8fa289b8d1fb98a0ec49383?url=https%3A%2F%2Fimage.prntscr.com%2Fimage%2FcQ3WdReqRGur-DQS0k4Pxg.png "Customize!!!") ![Customize](https://proxy.spigotmc.org/a91d97d1708446671fddcdb356ecd59214c86b83?url=https%3A%2F%2Fimage.prntscr.com%2Fimage%2Fw1UWdaHnRbiFL14F0-rkFQ.png "Customize!!!!!")

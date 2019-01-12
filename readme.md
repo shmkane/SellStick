@@ -12,6 +12,7 @@ If you'd like to treat me with a coffee, you can do that here :) [https://paypal
 3. [LegacyFactions](https://github.com/shmkane/SellStick/releases/tag/v8.1.0.3-beta)
 4. [MCoreFactions](https://github.com/shmkane/SellStick/releases/tag/v8.1.0.4-beta)
 5. [ASkyBlock](https://github.com/shmkane/SellStick/releases/tag/v8.1.1.5)
+6. [Towny](https://github.com/shmkane/SellStick/releases/tag/v8.1.0.6)
 
 Alternatively, nagivate to [Releases](https://github.com/shmkane/SellStick/releases) and find what version you want. Then just download the jar you want.
 

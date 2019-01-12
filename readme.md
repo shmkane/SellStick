@@ -23,7 +23,7 @@ Sell stick allows players to quickly sell items inside a chest with just one cli
 To set the **price** for the items sold, simply edit the **prices.yml**. Alternatively, you can use your **Essentialy worth.yml** if you have that setup. Just enable that in the config.
 
 # More Info
-Check out the spigot page for more information regarding the plugin.
+Check out the [spigot page](https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/) for more information regarding the plugin.
 
 # Need Support?
 Create a ticket in the [issues](https://github.com/shmkane/SellStick/issues) section. If it needs more immediate attention, add me on discord shmkane#0001

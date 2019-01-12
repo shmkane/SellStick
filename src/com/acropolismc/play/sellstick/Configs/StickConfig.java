@@ -81,7 +81,7 @@ public class StickConfig {
 			config.set("MessagePrefix", "&6[&eSellStick&6] &e");
 			config.set("SellMessage", "&cYou sold items for &f%price% &cand now have &f%balance%");
 			config.set("NoPermissionMessage", "&cSorry, you don't have permission for this!");
-			config.set("InvalidTerritoryMessage", "&cYou can't use sell stick outside your island!");
+			config.set("InvalidTerritoryMessage", "&cYou can't use sell stick in the town of %claims%!");
 			config.set("NotWorthMessage", "&cNothing worth selling inside");
 			config.set("BrokenStick", "&cYour sellstick broke!(Ran out of uses)");
 			config.set("GiveMessage", "&aYou gave &e%player%& &e&l%amount% &asell sticks!");

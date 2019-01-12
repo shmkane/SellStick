@@ -1,5 +1,6 @@
-# Sell Stick - ASkyBlock Version (*.\*.\*.5)
-## This will NOT work with Factions
+# Sell Stick - Towny Version (*.\*.\*.6)
+## This will NOT work with Factions/ASkyblock/Plotsquared
+##Only Towny
 
 # Need Help?
 

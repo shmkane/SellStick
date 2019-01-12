@@ -1,12 +1,12 @@
 #############################
 ####Sell Stick by shmkane####
 #############################
-###Plugin Version: 8.1.1.5###
+###Plugin Version: 8.1.0.6###
 #############################
 #######Server Settings#######
 #############################
 #---------------------------#
-#         ASkyBlock         # 
+#           Towny           # 
 #---------------------------# 
 # If you don't have this,   #
 #    dont use this plugin   # 
@@ -101,7 +101,7 @@ NoPermissionMessage: '&cSorry, you don''t have permission for this!'
 #
 #If they try using the stick in an invalid territory.
 InvalidTerritoryMessage: '&cYou can''t use sell stick in %claims%s &cclaims!'
-# terrotory
+# territory
 #
 #If the chest chest didnt have anything they could sell
 #Meaning, if the items in the chest didnt appear in the Price.yml

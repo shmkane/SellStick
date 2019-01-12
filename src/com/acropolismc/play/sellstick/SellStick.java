@@ -20,7 +20,7 @@ public class SellStick extends JavaPlugin {
 	public Essentials ess;
 	private static Economy econ = null;
 	private static final Logger log = Logger.getLogger("Minecraft");
-	Plugin askyblock;
+	Plugin towny;
 
 	public void onEnable() {
 		this.saveDefaultConfig();
@@ -28,8 +28,8 @@ public class SellStick extends JavaPlugin {
 		StickConfig.instance.setup(getDataFolder());
 		PriceConfig.instance.setup(getDataFolder());
 
-		if (!setupSkyBlock()) {
-			log.severe(String.format("[%s] - Disabled due to no ASkyBlock found!", getDescription().getName()));
+		if (!setupTowny()) {
+			log.severe(String.format("[%s] - Disabled due to no Towny found!", getDescription().getName()));
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -51,7 +51,7 @@ public class SellStick extends JavaPlugin {
 		try {
 			ess = null;
 			econ = null;
-			askyblock = null;
+			towny = null;
 		} catch (Exception ex) {
 			log.severe(String.format("[%s] - Was not disabled correctly!", getDescription().getName()));
 		} finally {
@@ -76,12 +76,12 @@ public class SellStick extends JavaPlugin {
 
 	}
 
-	public boolean setupSkyBlock() {
-		askyblock = getServer().getPluginManager().getPlugin("ASkyBlock");
-		if (askyblock != null && askyblock.isEnabled())
-			log.info(String.format("[%s] Hooked into ASkyBlock!", getDescription().getName()));
+	public boolean setupTowny() {
+		towny = getServer().getPluginManager().getPlugin("Towny");
+		if (towny != null && towny.isEnabled())
+			log.info(String.format("[%s] Hooked into Towny!", getDescription().getName()));
 
-		return askyblock != null && askyblock.isEnabled();
+		return towny != null && towny.isEnabled();
 	}
 
 	private boolean setupEconomy() {

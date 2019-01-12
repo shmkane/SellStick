@@ -21,8 +21,13 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import com.acropolismc.play.sellstick.Configs.PriceConfig;
 import com.acropolismc.play.sellstick.Configs.StickConfig;
-import com.wasteofplastic.askyblock.ASkyBlockAPI;
-import com.wasteofplastic.askyblock.Island;
+import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownBlockOwner;
+import com.palmergames.bukkit.towny.object.TownyUniverse;
+import com.palmergames.bukkit.towny.object.WorldCoord;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -160,21 +165,22 @@ public class PlayerListener implements Listener {
 						}
 
 						Location location = e.getClickedBlock().getLocation();
-
-						Island island = null;
 						try {
-							island = ASkyBlockAPI.getInstance().getIslandAt(location);
-
-							if (!island.getMembers().contains(p.getUniqueId())) {
-								plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", Bukkit.getPlayer(island.getOwner()).getDisplayName()));
-								e.setCancelled(true);
-								return;
+							
+							if(WorldCoord.parseWorldCoord(location).getTownBlock().hasTown()) {
+								Town town = WorldCoord.parseWorldCoord(location).getTownBlock().getTown();
+								Resident chestUser = TownyUniverse.getDataSource().getResident(p.getName());
+								
+								if(!chestUser.hasTown() || !town.getResidents().contains(chestUser) || !chestUser.getTown().equals(town)) {
+									plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%", town.getName()));
+									e.setCancelled(true);
+									return;
+								}
 							}
 
-						} catch (Exception ex) {
-							e.setCancelled(true);
-							return;
-							// System.out.println(ex.getMessage());
+
+						} catch (NotRegisteredException e1) {
+							//System.out.println("No town here");;
 						}
 
 						ItemStack is = p.getItemInHand();

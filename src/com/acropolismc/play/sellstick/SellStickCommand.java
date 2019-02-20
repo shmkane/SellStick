@@ -72,7 +72,7 @@ public class SellStickCommand implements CommandExecutor {
 
 							// Load values from config onto the stick lores array
 							for (int z = 0; z < StickConfig.instance.lore.size(); z++) {
-								lores.add(StickConfig.instance.lore.get(z).replace("&", "ง"));
+								lores.add(StickConfig.instance.lore.get(z).replace("&", "ยง"));
 							}
 
 							try {

@@ -210,6 +210,14 @@ public class PlayerListener implements Listener {
 							e.setCancelled(true);
 							return;
 						}
+						// Ally
+						else if ((fplayer.isInAllyTerritory() && !StickConfig.instance.allowAlly)) {
+							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+
+							e.setCancelled(true);
+							return;
+						}
 						// Neutral
 						else if ((fplayer.isInNeutralTerritory() && !StickConfig.instance.allowNeutral)) {
 							if (!faction.getTag().contains("Wilderness") && !faction.getTag().contains("Safezone")

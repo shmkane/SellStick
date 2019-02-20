@@ -168,10 +168,12 @@ public class PlayerListener implements Listener {
 						net.redstoneore.legacyfactions.FLocation fLoc = new net.redstoneore.legacyfactions.FLocation(location);
 						faction = net.redstoneore.legacyfactions.entity.Board.get().getFactionAt(fLoc);
 
+						
 						// Own
 						if ((fplayer.hasFaction() && fplayer.isInOwnTerritory() && !StickConfig.instance.allowOwn)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
 									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+
 							e.setCancelled(true);
 							return;
 						}
@@ -180,50 +182,46 @@ public class PlayerListener implements Listener {
 						if ((faction.getTag().contains("Wilderness") && !StickConfig.instance.allowWilderness)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
 									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+
 							e.setCancelled(true);
 							return;
 						}
 						// Warzone
-						if ((faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone)) {
+						else if ((faction.getTag().contains("Warzone") && !StickConfig.instance.allowWarzone)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
 									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+
 							e.setCancelled(true);
 							return;
 						}
 						// Safezone
-						if ((faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone)) {
+						else if ((faction.getTag().contains("Safezone") && !StickConfig.instance.allowSafezone)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
 									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+
 							e.setCancelled(true);
 							return;
 						}
-
 						// Enemy
-						if ((fplayer.hasFaction() && fplayer.isInEnemyTerritory()
-								&& !StickConfig.instance.allowEnemy)) {
+						else if ((fplayer.isInEnemyTerritory() && !StickConfig.instance.allowEnemy)) {
 							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
 									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
+
 							e.setCancelled(true);
 							return;
 						}
-
 						// Neutral
-						if ((fplayer.hasFaction() && fplayer.isInNeutralTerritory()
-								&& !StickConfig.instance.allowNeutral)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
-							e.setCancelled(true);
-							return;
-						}
+						else if ((fplayer.isInNeutralTerritory() && !StickConfig.instance.allowNeutral)) {
+							if (!faction.getTag().contains("Wilderness") && !faction.getTag().contains("Safezone")
+									&& !faction.getTag().contains("Warzone")) {
 
-						// Ally
-						if ((fplayer.hasFaction() && fplayer.isInAllyTerritory() && !StickConfig.instance.allowAlly)) {
-							plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
-									fplayer.getRelationTo(faction).getColor() + faction.getTag()));
-							e.setCancelled(true);
-							return;
-						}
+								plugin.msg(p, StickConfig.instance.territoryMessage.replace("%claims%",
+										fplayer.getRelationTo(faction).getColor() + faction.getTag()));
 
+								e.setCancelled(true);
+								return;
+							}
+						}
 						ItemStack is = p.getItemInHand();
 						ItemMeta im = is.getItemMeta();
 

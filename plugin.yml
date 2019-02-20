@@ -1,8 +1,8 @@
 name: SellStick
 main: com.acropolismc.play.sellstick.SellStick
-version: 8.1.0.3
+version: 8.1.0.4
 author: shmkane
-website: https://github.com/shmkane/SellStick
+website: https://shmkane.github.io/SellStick/
 depend: [Vault, LegacyFactions]
 softdepend: [Factions, Essentials]
 commands:

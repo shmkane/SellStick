@@ -7,7 +7,7 @@ The development is done on my own time.
 If you'd like to treat me with a coffee, you can do that here :) [https://paypal.me/shmkane](http://paypal.me/shmkane/1.99)
 
 # Download Links
-1. [FactionsUUID or Branches (ex: SavageFactions)](https://github.com/shmkane/SellStick/releases/tag/8.1.0.4)
+1. [FactionsUUID or Forks (ex: SavageFactions)](https://github.com/shmkane/SellStick/releases/tag/8.1.0.4)
 2. [PlotSquared](https://github.com/shmkane/SellStick/releases/tag/v8.1.1.2)
 3. [LegacyFactions](https://github.com/shmkane/SellStick/releases/tag/v8.1.0.3-beta)
 4. [MCoreFactions](https://github.com/shmkane/SellStick/releases/tag/v8.1.0.4-beta)

@@ -47,7 +47,7 @@ public class RandomString {
 		char[] letters = original.toCharArray();
 		String newLetters = "";
 		for (int i = 0; i < original.length(); i++) {
-			newLetters += "ง" + letters[i] + "";
+			newLetters += "ยง" + letters[i] + "";
 		}
 		return newLetters;
 	}

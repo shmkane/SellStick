@@ -1,5 +1,5 @@
 name: SellStick
-main: com.acropolismc.play.sellstick.SellStick
+main: com.shmkane.sellstick.SellStick
 version: 9.0.0
 author: shmkane
 website: https://github.com/shmkane/SellStick

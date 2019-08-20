@@ -167,7 +167,6 @@ public class PlayerListener implements Listener {
 	 * @param e
 	 * @return
 	 */
-	@SuppressWarnings("deprecation")
 	public boolean didClickChestWithSellStick(Player p, PlayerInteractEvent e) {
 		Material sellItem = Material.getMaterial(StickConfig.instance.item.toUpperCase());
 

@@ -4,7 +4,7 @@
 
 # Need Help?
 
-### 1.[Create an 'issue' here](https://github.com/shmkane/SellStick/issues)
+### 1. [Create an 'issue' here](https://github.com/shmkane/SellStick/issues)
 ### 2. [Ask on the NEW discord server](https://discord.gg/Q4CMsKC)
 
 # "Watch" this thread! 

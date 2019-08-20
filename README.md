@@ -1,14 +1,16 @@
-# Sell Stick - All-In-One Version (9.\*.\*.\*)
-## This SHOULD work with all plugins!
-## Beta Build!
+# Sell Stick 9.0.0.0
+## SellStick has been refactored to work with almost ALL major plugins!
+### Tested: Factions UUID, Savage Factions, MCore Factions, ASkyBlock, FabledSkyblock, and many more!
 
 # Need Help?
 
-### 1: https://github.com/shmkane/SellStick/issues - Create an issue here, THEN
-### 2: shmkane#0001 - Add me on discord. Please create the issue first and provide your discord so I know who you are before I accept.
+### 1.[Create an 'issue' here](https://github.com/shmkane/SellStick/issues)
+### 2. [Ask on the NEW discord server](https://discord.gg/Q4CMsKC)
 
-# I strongly suggest "Watch" this thread. Updates are posted here much before Spigot.
-https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/
+# "Watch" this thread! 
+## Updates *always* come here before [Spigot](https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/)
+### ![How To Watch](https://i.imgur.com/sFfO7Vo.png)
+
 # Commands
 ## /sellstick give <player> <amount> <uses/infinite> - Give player sellsticks
 ## Examples:

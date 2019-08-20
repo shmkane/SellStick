@@ -56,6 +56,9 @@ public class SellStick extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 	}
 
+	/**
+	 * Attempt to disable plugin. Reset the values of some instance varibles.
+	 */
 	@Override
 	public void onDisable() {
 		log.warning(String.format("[%s] - Attempting to disabling...", getDescription().getName()));
@@ -69,6 +72,9 @@ public class SellStick extends JavaPlugin {
 		}
 	}
 
+	/**
+	 * Checks if Essentials is available to be hooked into.
+	 */
 	public void setupEssentials() {
 		if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
 			log.info(String.format("[%s] Hooked into essentials!", getDescription().getName()));
@@ -86,6 +92,10 @@ public class SellStick extends JavaPlugin {
 
 	}
 
+	/**
+	 * Attempts to hook into Vault.
+	 * @return If vault is available or not.
+	 */
 	private boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
@@ -98,6 +108,10 @@ public class SellStick extends JavaPlugin {
 		return econ != null;
 	}
 
+	/**
+	 * Returns an instance of vault.
+	 * @return
+	 */
 	public Economy getEcon() {
 		return SellStick.econ;
 	}

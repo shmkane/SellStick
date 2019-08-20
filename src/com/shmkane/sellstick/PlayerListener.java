@@ -22,25 +22,38 @@ import com.shmkane.sellstick.Configs.StickConfig;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 
+/**
+ * Handles all interactions by users
+ * 
+ * @author shmkane
+ *
+ */
 public class PlayerListener implements Listener {
+	/** Instance of the plugin **/
 	private SellStick plugin;
 
+	/** Construct object, pass instance of SellStick **/
 	public PlayerListener(SellStick plugin) {
 		this.plugin = plugin;
 	}
 
+	/** returns if a string is numeric **/
 	public static boolean isNumeric(String str) {
 		try {
-			@SuppressWarnings("unused")
-			double d = Double.parseDouble(str);
+			Double.parseDouble(str);
 		} catch (NumberFormatException nfe) {
 			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * Determines if the stick is infinte
+	 * 
+	 * @param lores Given these lores from the stick
+	 * @return True if infinite stick
+	 */
 	public boolean isInfinite(List<String> lores) {
-		// If the 2nd line is the same as the config, its infinite
 		if (lores.get(StickConfig.instance.durabilityLine - 1).equalsIgnoreCase(StickConfig.instance.infiniteLore))
 			return true;
 		return false;
@@ -57,21 +70,18 @@ public class PlayerListener implements Listener {
 	 * @return finds the uses in the lores and returns as int.
 	 */
 	public int getUsesFromLore(List<String> lores) {
+
+		/*
+		 * Get all the lores. lore[1] contains the uses/infinite info. We need to get
+		 * the uses. The reason for all of this is incase someone puts %remaining% uses
+		 * out of 50, in the config. We need to be able to get the first number(or the
+		 * lower number in most cases) because an annoying person will put out of 50 you
+		 * have %remaining% uses left. Again, the only purpose of this is to Get the #
+		 * of uses if theres multiple numbers in the lore We loop through the
+		 * String(lore at index 1) and check all the indexes
+		 */
+		
 		String found = "";
-		// Get all the lores. lore[1] contains the uses/infinite
-		// info.
-		// We need to get the uses.
-		// The reason for all of this is incase someone puts
-		// %remaining% uses out of 50, in the config. We need to
-		// be able to
-		// get the first number(or the lower number in most
-		// cases)
-		// because an annoying person will put
-		// out of 50 you have %remaining% uses left.
-		// Again, the only purpose of this is to
-		// Get the # of uses if theres multiple numbers
-		// in the lore
-		// We loop through the String(lore at index 1) and check all the indexes
 		// TODO: Make this readable and more efficient.
 		for (int i = 0; i < lores.get(StickConfig.instance.durabilityLine - 1).length(); i++) {
 			if (Character.isDigit(lores.get(StickConfig.instance.durabilityLine - 1).charAt(i))) {
@@ -163,15 +173,13 @@ public class PlayerListener implements Listener {
 							e.setCancelled(true);
 							return;
 						}
-						
+
 						// Didn't have permission :(
 						if (!p.hasPermission("sellstick.use")) {
 							plugin.msg(p, StickConfig.instance.noPerm);
 							e.setCancelled(true);
 							return;
 						}
-
-
 
 						ItemStack is = p.getItemInHand();
 						ItemMeta im = is.getItemMeta();

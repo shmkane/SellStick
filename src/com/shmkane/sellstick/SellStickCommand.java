@@ -18,15 +18,28 @@ import com.shmkane.sellstick.RandomString;
 import com.shmkane.sellstick.SellStick;
 import com.shmkane.sellstick.Configs.StickConfig;
 
+/**
+ * Handles the /sellstick Command
+ * @author shmkane
+ *
+ */
 public class SellStickCommand implements CommandExecutor {
 
+	/** Instance of the plugin **/
 	private SellStick plugin;
-	public static int index = 0;
-
+	
+	/**
+	 * Constructor of SellStickCommand
+	 * Only one of these should be constructed in the onEnable of SellStick.java
+	 * @param plugin Takes a SellStick object
+	 */
 	public SellStickCommand(SellStick plugin) {
 		this.plugin = plugin;
 	}
 
+	/**
+	 * Handle the sellstick command here
+	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length == 0) {

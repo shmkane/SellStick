@@ -80,34 +80,10 @@ public class PlayerListener implements Listener {
 		 * of uses if theres multiple numbers in the lore We loop through the
 		 * String(lore at index 1) and check all the indexes
 		 */
-		
-		String found = "";
-		// TODO: Make this readable and more efficient.
-		for (int i = 0; i < lores.get(StickConfig.instance.durabilityLine - 1).length(); i++) {
-			if (Character.isDigit(lores.get(StickConfig.instance.durabilityLine - 1).charAt(i))) {
-				// Increment "found" string
-				// Make sure it wasnt a number from a color code
 
-				// If it ISNT the first index
-				if (i != 0) {
-					// Check to see if the index before is the & sign (If its a color code)
-					if (lores.get(StickConfig.instance.durabilityLine - 1).charAt(i - 1) != ChatColor.COLOR_CHAR) {
-						// And if it isnt, keep track of it
-						found += lores.get(StickConfig.instance.durabilityLine - 1).charAt(i);
-					} else {
-						// If it IS a color code, simply ignore it
-						found += "-";
-					}
-					// But if it's index == 0
-				} else {
-					// There can't be a & before it, so keep track of it
-					found += lores.get(StickConfig.instance.durabilityLine - 1).charAt(i);
-				}
-			} else {
-				// Otherwise we insert a "-"
-				found += "-";
-			}
-		}
+		String found = parseDurabilityLine(lores);
+		// TODO: Make this readable and more efficient.
+
 		// We now take that found string, and split it at every "-"
 		String[] split = found.split("-");
 
@@ -141,12 +117,58 @@ public class PlayerListener implements Listener {
 		return min;
 	}
 
+	/**
+	 * Loops through the lores and determines if lines are valid and if they're
+	 * color codes.
+	 * 
+	 * Also parses the durability from all it.
+	 * 
+	 * Tried to make this as idiot-proof as possible, but made code sloppy
+	 * 
+	 * @param lores Lores of the sellstick
+	 * @return a specially "encrypted" string that can be read to make sense by
+	 *         further methods.
+	 */
+	public String parseDurabilityLine(List<String> lores) {
+		String found = "";
+		for (int i = 0; i < lores.get(StickConfig.instance.durabilityLine - 1).length(); i++) {
+			if (Character.isDigit(lores.get(StickConfig.instance.durabilityLine - 1).charAt(i))) {
+				// Increment "found" string
+				// Make sure it wasnt a number from a color code
+
+				// If it ISNT the first index
+				if (i != 0) {
+					// Check to see if the index before is the & sign (If its a color code)
+					if (lores.get(StickConfig.instance.durabilityLine - 1).charAt(i - 1) != ChatColor.COLOR_CHAR) {
+						// And if it isnt, keep track of it
+						found += lores.get(StickConfig.instance.durabilityLine - 1).charAt(i);
+					} else {
+						// If it IS a color code, simply ignore it
+						found += "-";
+					}
+					// But if it's index == 0
+				} else {
+					// There can't be a & before it, so keep track of it
+					found += lores.get(StickConfig.instance.durabilityLine - 1).charAt(i);
+				}
+			} else {
+				// Otherwise we insert a "-"
+				found += "-";
+			}
+		}
+
+		return found;
+	}
+
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
+
 	/**
-	 * Will handle player interactions with chests
+	 * Handles the actual clicking event of the player. Deprecated since getItemHand
+	 * in 1.9+ should specify which hand, but will keep since it allows for
+	 * backwards compatibility
 	 * 
-	 * @param e interaction event
+	 * @param e The event
 	 */
 	public void onUse(PlayerInteractEvent e) {
 		Player p = e.getPlayer();

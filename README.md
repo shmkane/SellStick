@@ -1,6 +1,6 @@
 # Sell Stick - All-In-One Version (9.\*.\*.\*)
 ## This SHOULD work with all plugins!
-## Currently under development! Unstable build!
+## Beta Build!
 
 # Need Help?
 

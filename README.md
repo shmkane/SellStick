@@ -12,6 +12,7 @@
 ### ![How To Watch](https://i.imgur.com/sFfO7Vo.png)
 
 # Commands
+## /sellstick reload - Loads new config changes onto server
 ## /sellstick give <player> <amount> <uses/infinite> - Give player sellsticks
    
 ## Examples:
@@ -21,9 +22,11 @@
 ### /sellstick give shmkane 1 infinite - Gives an infinite sellstick
 ### /sellstick give shmkane 2 i - Gives 2 infinite sellsticks
 
-## /sellstick reload - Loads new config changes onto server
 
 # Permissions 
 ## sellstick.give - Allows the player with this permission to give another player sell sticks!
 ## sellstick.use - Allows the player with this permission to use a sell stick!
-## sellstick.multiplier.x - Allows players to sell by a factor. (Ex: sellstick.multiplier.1.1 will sell for 1.1x the regular price)
+## sellstick.multiplier.x - Allows players to sell by a factor. 
+
+## Examples:
+### sellstick.multiplier.1.1 - Sells for 1.1x reular price

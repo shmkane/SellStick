@@ -8,12 +8,12 @@
 ### 2. [Ask on the NEW discord server](https://discord.gg/Q4CMsKC)
 
 # "Watch" this thread! 
-## Updates *always* come here before [Spigot](https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/)
+## Updates **always** come to [GitHub](https://github.com/shmkane/SellStick) before [Spigot](https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/)
 ### ![How To Watch](https://i.imgur.com/sFfO7Vo.png)
 
 # Commands
-## /sellstick reload - Loads new config changes onto server
-## /sellstick give <player> <amount> <uses/infinite> - Give player sellsticks
+## /**sellstick reload** - Loads new config changes onto server
+## /**sellstick give** <player> <amount> <uses/infinite> - Give player sellsticks
    
 ## Examples:
  

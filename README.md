@@ -13,11 +13,14 @@
 
 # Commands
 ## /sellstick give <player> <amount> <uses/infinite> - Give player sellsticks
+   
 ## Examples:
-   ### /sellstick give shmkane 1 20 - Gives 1 sellstick with 20 uses
-   ### /sellstick give shmkane 2 10 - Gives 2 sellsticks each with 10 uses
-   ### /sellstick give shmkane 1 infinite - Gives an infinite sellstick
-   ### /sellstick give shmkane 2 i - Gives 2 infinite sellsticks
+ 
+### /sellstick give shmkane 1 20 - Gives 1 sellstick with 20 uses
+### /sellstick give shmkane 2 10 - Gives 2 sellsticks each with 10 uses
+### /sellstick give shmkane 1 infinite - Gives an infinite sellstick
+### /sellstick give shmkane 2 i - Gives 2 infinite sellsticks
+
 ## /sellstick reload - Loads new config changes onto server
 
 # Permissions 

@@ -1,4 +1,4 @@
-# Sell Stick 9.0 (Coming Soon...)
+# Sell Stick 9.0 [(Download Here)](https://github.com/shmkane/SellStick/releases)
 ## SellStick has been refactored to work with almost ALL major plugins!
 ### Tested: Factions UUID, Savage Factions, MCore Factions, ASkyBlock, FabledSkyblock, and many more!
 

@@ -16,7 +16,12 @@ import com.earth2me.essentials.Essentials;
 
 import net.milkbowl.vault.economy.Economy;
 
-// @author shmkane
+/**
+ * SellStick is a MC plugin that allows customizable selling of
+ * chest contents.
+ * @author shmkane
+ *
+ */
 public class SellStick extends JavaPlugin {
 
 	/** Holds instance of Essentials **/

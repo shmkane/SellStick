@@ -1,6 +1,6 @@
 #############################
 ####Sell Stick by shmkane####
-###Plugin Version: 9.0.0.0###
+###Plugin Version: 9.0.2.0###
 #############################
 #
 #############################
@@ -92,7 +92,7 @@ NoPermissionMessage: '&cSorry, you don''t have permission for this!'
 #
 #If they try using the stick in an invalid territory.
 InvalidTerritoryMessage: '&cYou can''t use sell stick here!'
-# terrotory
+# territory
 #
 #If the chest chest didnt have anything they could sell
 #Meaning, if the items in the chest didnt appear in the Price.yml
@@ -119,3 +119,5 @@ ReceiveMessage: '&aYou''ve received &e&l%amount% &asell sticks!'
 #That's it! If you have questions, ask on GitHub.
 #https://github.com/shmkane/SellStick/issues
 #Don't leave a negative review then expect me to help you with an issue
+debug: false
+#Suggested: leave this false unless you want your console spammed with info.

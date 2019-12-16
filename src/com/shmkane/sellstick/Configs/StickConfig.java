@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import com.shmkane.sellstick.Configs.StickConfig;
 
 /**
- * Handles the opeations of the config.yml
+ * Handles the operations of the config.yml
  * @author shmkane
  *
  */
@@ -20,11 +20,13 @@ public class StickConfig {
 	/** Instance of the file **/
 	public File conf;
 
+	
 	/** Display name of the stick **/
 	public String name;
 	/** String version of item **/
 	public String item;
 
+	
 	/** Item Lore **/
 	public List<String> lore;
 	/** Lore if finite **/
@@ -53,6 +55,8 @@ public class StickConfig {
 	public boolean glow;
 	/** Whether or not to use essentials worth **/
 	public boolean useEssentialsWorth;
+	/** Whether or not to print debug messages to console **/
+	public boolean debug;
 
 	/**
 	 * Takes values from the config and loads them into variables.
@@ -60,25 +64,26 @@ public class StickConfig {
 	public void loadValues() {
 		FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
 
-		this.name = config.getString("DisplayName").replace("&", "ง");
-		this.item = config.getString("ItemType").toUpperCase().replace("&", "ง");
+		this.name = config.getString("DisplayName").replace("&", "ยง");
+		this.item = config.getString("ItemType").toUpperCase().replace("&", "ยง");
 		this.glow = config.getBoolean("Glow");
 
 		this.lore = config.getStringList("StickLore");
-		this.finiteLore = config.getString("FiniteLore").replace("&", "ง");
-		this.infiniteLore = config.getString("InfiniteLore").replace("&", "ง");
+		this.finiteLore = config.getString("FiniteLore").replace("&", "ยง");
+		this.infiniteLore = config.getString("InfiniteLore").replace("&", "ยง");
 
 		this.durabilityLine = config.getInt("DurabilityLine");
 
-		this.prefix = config.getString("MessagePrefix").replace("&", "ง");
-		this.sellMessage = config.getString("SellMessage").replace("&", "ง");
-		this.noPerm = config.getString("NoPermissionMessage").replace("&", "ง");
-		this.territoryMessage = config.getString("InvalidTerritoryMessage").replace("&", "ง");
-		this.nothingWorth = config.getString("NotWorthMessage").replace("&", "ง");
-		this.brokenStick = config.getString("BrokenStick").replace("&", "ง");
-		this.giveMessage = config.getString("GiveMessage").replace("&", "ง");
-		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "ง");
+		this.prefix = config.getString("MessagePrefix").replace("&", "ยง");
+		this.sellMessage = config.getString("SellMessage").replace("&", "ยง");
+		this.noPerm = config.getString("NoPermissionMessage").replace("&", "ยง");
+		this.territoryMessage = config.getString("InvalidTerritoryMessage").replace("&", "ยง");
+		this.nothingWorth = config.getString("NotWorthMessage").replace("&", "ยง");
+		this.brokenStick = config.getString("BrokenStick").replace("&", "ยง");
+		this.giveMessage = config.getString("GiveMessage").replace("&", "ยง");
+		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "ยง");
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
+		this.debug = config.getBoolean("debug");
 	}
 
 	/**
@@ -114,6 +119,7 @@ public class StickConfig {
 			config.set("GiveMessage", "&aYou gave &e%player%& &e&l%amount% &asell sticks!");
 			config.set("ReceiveMessage", "&aYou've received &e&l%amount% &asell sticks!");
 			config.set("UseEssentialsWorth", false);
+			config.set("debug", false);
 
 			try {
 				config.save(this.conf);

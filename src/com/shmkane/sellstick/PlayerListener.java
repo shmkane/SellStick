@@ -23,7 +23,9 @@ import com.shmkane.sellstick.Configs.StickConfig;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 /**
- * Handles all interactions by users
+ * The PlayerListener class will handle all of the events from the player.
+ * Furthermore, it contains code that will take a stick's lore/display name, and
+ * chest interaction events.
  * 
  * @author shmkane
  *
@@ -32,12 +34,21 @@ public class PlayerListener implements Listener {
 	/** Instance of the plugin **/
 	private SellStick plugin;
 
-	/** Construct object, pass instance of SellStick **/
+	/**
+	 * Construct object, pass instance of SellStick
+	 * 
+	 * @param plugin The passed in instance
+	 */
 	public PlayerListener(SellStick plugin) {
 		this.plugin = plugin;
 	}
 
-	/** returns if a string is numeric **/
+	/**
+	 * Given a string, check if it's numeric.
+	 * 
+	 * @param str Given a string
+	 * @return Check if it is a number.
+	 */
 	public static boolean isNumeric(String str) {
 		try {
 			Double.parseDouble(str);
@@ -48,7 +59,12 @@ public class PlayerListener implements Listener {
 	}
 
 	/**
-	 * Determines if the stick is infinte
+	 * Determines if the stick is infinite. An infinte stick means that it can be
+	 * used regardless of it's durabaility. For that matter, it's infinite if the
+	 * item lore matches the infinite lore stated in the config.
+	 * 
+	 * IMPORTANT: If you change the infiniteLore in the config, you may break the
+	 * sticks with the old lore.
 	 * 
 	 * @param lores Given these lores from the stick
 	 * @return True if infinite stick
@@ -82,7 +98,6 @@ public class PlayerListener implements Listener {
 		 */
 
 		String found = parseDurabilityLine(lores);
-		// TODO: Make this readable and more efficient.
 
 		// We now take that found string, and split it at every "-"
 		String[] split = found.split("-");
@@ -121,6 +136,15 @@ public class PlayerListener implements Listener {
 	 * Loops through the lores and determines if lines are valid and if they're
 	 * color codes.
 	 * 
+	 * This method will go through and find a digit (i). If a digit is found, get
+	 * the char before it (i-1). if (i-1) is the color_char(§).
+	 * 
+	 * It will make a string that looks something like "----a--b-4--" where dashes
+	 * represent something, and everything remaining represents color codes.
+	 *
+	 * It's not worth understanding how this method works if I'm being honest. Just
+	 * don't break it.
+	 * 
 	 * Also parses the durability from all it.
 	 * 
 	 * Tried to make this as idiot-proof as possible, but made code sloppy
@@ -131,17 +155,16 @@ public class PlayerListener implements Listener {
 	 */
 	public String parseDurabilityLine(List<String> lores) {
 		String found = "";
-		for (int i = 0; i < lores.get(StickConfig.instance.durabilityLine - 1).length(); i++) {
-			if (Character.isDigit(lores.get(StickConfig.instance.durabilityLine - 1).charAt(i))) {
-				// Increment "found" string
-				// Make sure it wasnt a number from a color code
+		int duraLine = StickConfig.instance.durabilityLine;
 
-				// If it ISNT the first index
+		for (int i = 0; i < lores.get(duraLine - 1).length(); i++) {
+			if (Character.isDigit(lores.get(duraLine - 1).charAt(i))) {
+
 				if (i != 0) {
 					// Check to see if the index before is the & sign (If its a color code)
-					if (lores.get(StickConfig.instance.durabilityLine - 1).charAt(i - 1) != ChatColor.COLOR_CHAR) {
+					if (lores.get(duraLine - 1).charAt(i - 1) != ChatColor.COLOR_CHAR) {
 						// And if it isnt, keep track of it
-						found += lores.get(StickConfig.instance.durabilityLine - 1).charAt(i);
+						found += lores.get(duraLine - 1).charAt(i);
 					} else {
 						// If it IS a color code, simply ignore it
 						found += "-";
@@ -149,7 +172,7 @@ public class PlayerListener implements Listener {
 					// But if it's index == 0
 				} else {
 					// There can't be a & before it, so keep track of it
-					found += lores.get(StickConfig.instance.durabilityLine - 1).charAt(i);
+					found += lores.get(duraLine - 1).charAt(i);
 				}
 			} else {
 				// Otherwise we insert a "-"
@@ -161,12 +184,13 @@ public class PlayerListener implements Listener {
 	}
 
 	/**
-	 * Determines if a player clicked a chest using a sellstick or not.
+	 * Method for checking if a player just clicked a chest with a sellstick
 	 * 
-	 * @param p
-	 * @param e
-	 * @return
+	 * @param p Player that clicked the chest
+	 * @param e On a player interact event
+	 * @return True if the item in hand was a sellstick && player clicked a chest
 	 */
+	@SuppressWarnings("deprecation")
 	public boolean didClickChestWithSellStick(Player p, PlayerInteractEvent e) {
 		Material sellItem = Material.getMaterial(StickConfig.instance.item.toUpperCase());
 
@@ -212,28 +236,35 @@ public class PlayerListener implements Listener {
 			plugin.msg(p, ChatColor.RED + "2: Changing the DurabilityLine to match the one that is on this sellstick");
 
 			plugin.msg(p, ChatColor.RED + "For help, contact shmkane on spigot or github");
+			plugin.msg(p, ChatColor.RED + "But shmkane will just tell you to do one of the above options.");
 
 		}
 		return uses;
 	}
 
 	/**
-	 * Checks if a chest is worth anything
-	 * @param c The chest itself
-	 * @param contents
-	 * @param e
-	 * @return
+	 * Now check the worth of what we're about to sell.
+	 * 
+	 * @param c Inventory Holder is a chest
+	 * @param e Triggers on a playerinterct event
+	 * @return the worth
 	 */
+	@SuppressWarnings("deprecation")
 	public double calculateWorth(InventoryHolder c, PlayerInteractEvent e) {
-		
+
 		ItemStack[] contents = (ItemStack[]) c.getInventory().getContents();
 
 		double total = 0;
 		double slotPrice = 0;
 		double price = 0;
+		if (StickConfig.instance.debug)
+			System.out.println("Chest Contents: ");
 
 		for (int i = 0; i < c.getInventory().getSize(); i++) {
+
 			try {
+				if (StickConfig.instance.debug)
+					System.out.print(contents[i].getType() + ", ");
 				if (!StickConfig.instance.useEssentialsWorth || plugin.ess == null || !plugin.ess.isEnabled()) {
 					for (String key : PriceConfig.instance.getConfig().getConfigurationSection("prices")
 							.getKeys(false)) {
@@ -270,26 +301,31 @@ public class PlayerListener implements Listener {
 					e.getClickedBlock().getState().update();
 				}
 
-			} catch (NullPointerException ex) {
+			} catch (Exception ex) {
 			}
 
 			total += slotPrice;
 			slotPrice = 0;
 			price = 0;
 		}
+		if (StickConfig.instance.debug)
+			System.out.println();
 
 		return total;
 	}
 
 	/**
 	 * Handles the sellstick after the 'sale' has been made.
+	 * 
+	 * @author MrGhetto
 	 * @param lores Lores of the sellstick
-	 * @param uses number of uses
-	 * @param p The player who used it
+	 * @param uses  number of uses
+	 * @param p     The player who used it
 	 * @param total how much was sold
-	 * @param im Item meta of the stick
-	 * @param is Item stack object of the stick
+	 * @param im    Item meta of the stick
+	 * @param is    Item stack object of the stick
 	 */
+	@SuppressWarnings("deprecation")
 	public void postSale(List<String> lores, int uses, Player p, double total, ItemMeta im, ItemStack is) {
 
 		if (!isInfinite(lores)) {
@@ -325,7 +361,11 @@ public class PlayerListener implements Listener {
 
 		if (multiplier == Double.NEGATIVE_INFINITY) {
 			r = plugin.getEcon().depositPlayer(p, total);
+			if (StickConfig.instance.debug)
+				System.out.print("Depositing " + total + " to " + p.getName());
 		} else {
+			if (StickConfig.instance.debug)
+				System.out.print("Depositing " + total * multiplier + " to " + p.getName());
 			r = plugin.getEcon().depositPlayer(p, total * multiplier);
 		}
 
@@ -364,6 +404,7 @@ public class PlayerListener implements Listener {
 	 * 
 	 * @param e The event
 	 */
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onUse(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
@@ -386,7 +427,9 @@ public class PlayerListener implements Listener {
 					e.setCancelled(true);
 					return;
 				}
-
+				if(StickConfig.instance.debug) {
+					System.out.println("Player " + p.getName() + " clicked on a chest");
+				}
 				ItemStack is = p.getItemInHand();
 				ItemMeta im = is.getItemMeta();
 
@@ -397,11 +440,15 @@ public class PlayerListener implements Listener {
 				InventoryHolder c = (InventoryHolder) e.getClickedBlock().getState();
 
 				double total = calculateWorth(c, e);
+				if(StickConfig.instance.debug) {
+					System.out.println("Worth: " + total);
+				}
 
 				if (total > 0) {
 					postSale(lores, uses, p, total, im, is);
 				} else {
 					plugin.msg(p, StickConfig.instance.nothingWorth);
+
 				}
 				e.setCancelled(true);
 			}

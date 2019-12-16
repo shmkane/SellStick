@@ -2,11 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="D:/Server/EssentialsX-2.17.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/Server/EssentialsXSpawn-2.17.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/Server/Lockette.jar"/>
-	<classpathentry kind="lib" path="D:/Server/SellStick.jar"/>
-	<classpathentry kind="lib" path="D:/Server/Vault.jar"/>
-	<classpathentry kind="lib" path="D:/Server/Server Files/paper.jar"/>
+	<classpathentry kind="lib" path="/Users/soham/Desktop/EssentialsX-2.17.1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/soham/Desktop/Vault.jar"/>
+	<classpathentry kind="lib" path="/Users/soham/Desktop/spigot-1.14.4.jar" sourcepath="/Users/soham/Desktop/Spigot/Spigot/Spigot-API"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -103,6 +103,12 @@ NotWorthMessage: '&cNothing worth selling inside'
 BrokenStick: '&cYour sellstick broke!(Ran out of uses)'
 #
 #
+#Do you want to use shopgui for prices
+#instead of my prices.yml?
+#if so, enable this
+UseShopGUI: false
+#
+#
 #Do you want to use essentials worth.yml for your prices
 #instead of my prices.yml?
 #if so, enable this

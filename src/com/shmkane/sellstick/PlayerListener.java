@@ -16,10 +16,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import com.shmkane.sellstick.SellStick;
 import com.shmkane.sellstick.Configs.PriceConfig;
 import com.shmkane.sellstick.Configs.StickConfig;
 
+import net.brcdev.shopgui.ShopGuiPlusApi;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 /**
@@ -258,16 +258,17 @@ public class PlayerListener implements Listener {
 		double slotPrice = 0;
 		double price = 0;
 		if (StickConfig.instance.debug)
-			System.out.println("Chest Contents: ");
-
+			System.out.println("-Chest Contents: ");
+		
 		for (int i = 0; i < c.getInventory().getSize(); i++) {
 
 			try {
 				if (StickConfig.instance.debug)
-					System.out.print(contents[i].getType() + ", ");
-				if (!StickConfig.instance.useEssentialsWorth || plugin.ess == null || !plugin.ess.isEnabled()) {
-					for (String key : PriceConfig.instance.getConfig().getConfigurationSection("prices")
-							.getKeys(false)) {
+					System.out.print(contents[i].getType() + "; ");
+				if (!StickConfig.instance.useEssentialsWorth && !StickConfig.instance.useShopGUI) { //Not essW, not shopgui
+					System.out.println("Regular");
+
+					for (String key : PriceConfig.instance.getPrices()) {
 
 						int data;
 						String name;
@@ -287,9 +288,24 @@ public class PlayerListener implements Listener {
 
 						}
 					}
-				} else {
+				} else if (StickConfig.instance.useEssentialsWorth && !StickConfig.instance.useShopGUI) {
 					// Essentials Worth
+					System.out.println("ess");
+
 					price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
+
+				} else if (!StickConfig.instance.useEssentialsWorth && StickConfig.instance.useShopGUI) {
+					// ShopGUI
+					System.out.println("shopgui");
+
+					price = ShopGuiPlusApi.getItemStackPriceSell(e.getPlayer(), contents[i]);
+
+				}else {
+					System.out.println("CWhaa");
+
+				}
+				if (StickConfig.instance.debug) {
+					System.out.println("Price of (" + contents[i].getType() + "): " + price);
 				}
 
 				int amount = (int) contents[i].getAmount();

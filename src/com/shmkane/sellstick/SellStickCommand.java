@@ -14,8 +14,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.shmkane.sellstick.RandomString;
-import com.shmkane.sellstick.SellStick;
 import com.shmkane.sellstick.Configs.StickConfig;
 
 /**

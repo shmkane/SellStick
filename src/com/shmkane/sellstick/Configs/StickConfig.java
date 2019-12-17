@@ -7,8 +7,6 @@ import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.shmkane.sellstick.Configs.StickConfig;
-
 /**
  * Handles the operations of the config.yml
  * @author shmkane
@@ -55,6 +53,8 @@ public class StickConfig {
 	public boolean glow;
 	/** Whether or not to use essentials worth **/
 	public boolean useEssentialsWorth;
+	/** Whether or not to use ShopGUI+**/
+	public boolean useShopGUI;
 	/** Whether or not to print debug messages to console **/
 	public boolean debug;
 
@@ -83,6 +83,7 @@ public class StickConfig {
 		this.giveMessage = config.getString("GiveMessage").replace("&", "§");
 		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "§");
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
+		this.useShopGUI = config.getBoolean("UseShopGUI");
 		this.debug = config.getBoolean("debug");
 	}
 
@@ -119,6 +120,7 @@ public class StickConfig {
 			config.set("GiveMessage", "&aYou gave &e%player%& &e&l%amount% &asell sticks!");
 			config.set("ReceiveMessage", "&aYou've received &e&l%amount% &asell sticks!");
 			config.set("UseEssentialsWorth", false);
+			config.set("UseShopGUI", false);
 			config.set("debug", false);
 
 			try {

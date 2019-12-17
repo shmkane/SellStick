@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import com.shmkane.sellstick.Configs.StickConfig;
+import org.bukkit.craftbukkit.libs.jline.internal.Log;
 
 /**
  * Handles the operations of the config.yml
@@ -55,8 +54,20 @@ public class StickConfig {
 	public boolean glow;
 	/** Whether or not to use essentials worth **/
 	public boolean useEssentialsWorth;
+	/** Whether or not to use ShopGUI+**/
+	public boolean useShopGUI;
 	/** Whether or not to print debug messages to console **/
 	public boolean debug;
+	/** What interface to use to sell **/
+	
+	public enum SellingInterface{
+		PRICESYML, 
+		ESSWORTH, 
+		SHOPGUI
+	}
+	
+	private SellingInterface sellInterface = SellingInterface.PRICESYML;
+	
 
 	/**
 	 * Takes values from the config and loads them into variables.
@@ -83,6 +94,7 @@ public class StickConfig {
 		this.giveMessage = config.getString("GiveMessage").replace("&", "§");
 		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "§");
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
+		this.useShopGUI = config.getBoolean("UseShopGUI");
 		this.debug = config.getBoolean("debug");
 	}
 
@@ -119,6 +131,7 @@ public class StickConfig {
 			config.set("GiveMessage", "&aYou gave &e%player%& &e&l%amount% &asell sticks!");
 			config.set("ReceiveMessage", "&aYou've received &e&l%amount% &asell sticks!");
 			config.set("UseEssentialsWorth", false);
+			config.set("UseShopGUI", false);
 			config.set("debug", false);
 
 			try {
@@ -128,6 +141,40 @@ public class StickConfig {
 			}
 		}
 		loadValues();
+		handleInterface();
+	}
+
+	private void handleInterface() {
+		if(useEssentialsWorth && useShopGUI) {
+			Log.error("Server has EssentialsWorth AND ShopGUI Selected.");
+			Log.error("Defaulting to ShopGUI");
+			Log.error("Edit the config to remove this error.");
+			sellInterface = SellingInterface.SHOPGUI;
+			
+		}else if(!useEssentialsWorth && useShopGUI) {
+			
+			Log.info("Using ShopGUI worth for prices");
+			sellInterface = SellingInterface.SHOPGUI;
+
+			
+		}else if(useEssentialsWorth && !useShopGUI){
+			
+			Log.info("Using essentials for prices");
+			sellInterface = SellingInterface.ESSWORTH;
+
+			
+		}else if(!useEssentialsWorth && !useShopGUI){
+			
+			Log.info("Using prices.yml for prices");
+			sellInterface = SellingInterface.PRICESYML;
+
+		}else {
+			Log.error("Couldn't determine what to use.");
+			Log.error("Defaulting to PricesYML");
+			Log.error("Edit the config to remove this error.");
+			sellInterface = SellingInterface.PRICESYML;
+		}
+		
 	}
 
 	/**
@@ -158,5 +205,13 @@ public class StickConfig {
 			e.printStackTrace();
 		}
 		loadValues();
+	}
+
+	/**
+	 * Returns what way to get prices
+	 * @return The method of getting prices
+	 */
+	public SellingInterface getSellInterface() {
+		return sellInterface;
 	}
 }

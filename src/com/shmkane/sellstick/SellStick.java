@@ -7,12 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.shmkane.sellstick.PlayerListener;
-import com.shmkane.sellstick.SellStick;
-import com.shmkane.sellstick.SellStickCommand;
+import com.earth2me.essentials.Essentials;
 import com.shmkane.sellstick.Configs.PriceConfig;
 import com.shmkane.sellstick.Configs.StickConfig;
-import com.earth2me.essentials.Essentials;
 
 import net.milkbowl.vault.economy.Economy;
 

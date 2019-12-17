@@ -16,10 +16,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import com.shmkane.sellstick.SellStick;
 import com.shmkane.sellstick.Configs.PriceConfig;
 import com.shmkane.sellstick.Configs.StickConfig;
+import com.shmkane.sellstick.Configs.StickConfig.SellingInterface;
 
+import net.brcdev.shopgui.ShopGuiPlusApi;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 /**
@@ -246,7 +247,7 @@ public class PlayerListener implements Listener {
 	 * Now check the worth of what we're about to sell.
 	 * 
 	 * @param c Inventory Holder is a chest
-	 * @param e Triggers on a playerinterct event
+	 * @param e Triggers on a playerinteract event
 	 * @return the worth
 	 */
 	@SuppressWarnings("deprecation")
@@ -257,17 +258,21 @@ public class PlayerListener implements Listener {
 		double total = 0;
 		double slotPrice = 0;
 		double price = 0;
-		if (StickConfig.instance.debug)
-			System.out.println("Chest Contents: ");
+
+		SellingInterface si = StickConfig.instance.getSellInterface();
+
+		if (StickConfig.instance.debug) {
+			System.out.println("-Getting prices from " + si);
+			System.out.println("-Chest Contents(size=" + c.getInventory().getSize() + "):");
+		}
 
 		for (int i = 0; i < c.getInventory().getSize(); i++) {
 
 			try {
-				if (StickConfig.instance.debug)
-					System.out.print(contents[i].getType() + ", ");
-				if (!StickConfig.instance.useEssentialsWorth || plugin.ess == null || !plugin.ess.isEnabled()) {
-					for (String key : PriceConfig.instance.getConfig().getConfigurationSection("prices")
-							.getKeys(false)) {
+				if (si == SellingInterface.PRICESYML) { // Not essW, not
+														// shopgui
+
+					for (String key : PriceConfig.instance.getPrices()) {
 
 						int data;
 						String name;
@@ -287,9 +292,19 @@ public class PlayerListener implements Listener {
 
 						}
 					}
-				} else {
-					// Essentials Worth
+				} else if (si == SellingInterface.ESSWORTH) {
 					price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
+
+				} else if (si == SellingInterface.SHOPGUI) {
+
+					price = ShopGuiPlusApi.getItemStackPriceSell(e.getPlayer(), contents[i]);
+					if (price < 0) {
+						price = 0;
+					}
+
+				}
+				if (StickConfig.instance.debug) {
+					System.out.println("--Price of (" + contents[i].getType() + "): " + price);
 				}
 
 				int amount = (int) contents[i].getAmount();
@@ -361,11 +376,7 @@ public class PlayerListener implements Listener {
 
 		if (multiplier == Double.NEGATIVE_INFINITY) {
 			r = plugin.getEcon().depositPlayer(p, total);
-			if (StickConfig.instance.debug)
-				System.out.print("Depositing " + total + " to " + p.getName());
 		} else {
-			if (StickConfig.instance.debug)
-				System.out.print("Depositing " + total * multiplier + " to " + p.getName());
 			r = plugin.getEcon().depositPlayer(p, total * multiplier);
 		}
 
@@ -427,9 +438,7 @@ public class PlayerListener implements Listener {
 					e.setCancelled(true);
 					return;
 				}
-				if(StickConfig.instance.debug) {
-					System.out.println("Player " + p.getName() + " clicked on a chest");
-				}
+
 				ItemStack is = p.getItemInHand();
 				ItemMeta im = is.getItemMeta();
 
@@ -440,9 +449,6 @@ public class PlayerListener implements Listener {
 				InventoryHolder c = (InventoryHolder) e.getClickedBlock().getState();
 
 				double total = calculateWorth(c, e);
-				if(StickConfig.instance.debug) {
-					System.out.println("Worth: " + total);
-				}
 
 				if (total > 0) {
 					postSale(lores, uses, p, total, im, is);

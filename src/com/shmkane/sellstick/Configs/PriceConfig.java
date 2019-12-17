@@ -1,10 +1,10 @@
 package com.shmkane.sellstick.Configs;
 
 import java.io.File;
+import java.util.Set;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import com.shmkane.sellstick.Configs.PriceConfig;
 
 /**
  * Handles the opeations of the config.yml
@@ -16,6 +16,8 @@ public class PriceConfig {
 	public static PriceConfig instance = new PriceConfig();
 	/** Instance of the file **/
 	public File conf;
+	
+	private Set<String> prices;
 
 	/**
 	 * Sets up default Prices file with some arbitrary values.
@@ -47,6 +49,8 @@ public class PriceConfig {
 				e.printStackTrace();
 			}
 		}
+		
+		prices = getConfig().getConfigurationSection("prices").getKeys(false);
 	}
 
 	/**
@@ -76,5 +80,13 @@ public class PriceConfig {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Return a set of the prices;
+	 * @return The prices in the config.
+	 */
+	public Set<String> getPrices() {
+		return prices;
 	}
 }

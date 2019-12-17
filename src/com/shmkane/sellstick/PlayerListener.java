@@ -18,6 +18,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import com.shmkane.sellstick.Configs.PriceConfig;
 import com.shmkane.sellstick.Configs.StickConfig;
+import com.shmkane.sellstick.Configs.StickConfig.SellingInterface;
 
 import net.brcdev.shopgui.ShopGuiPlusApi;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -246,7 +247,7 @@ public class PlayerListener implements Listener {
 	 * Now check the worth of what we're about to sell.
 	 * 
 	 * @param c Inventory Holder is a chest
-	 * @param e Triggers on a playerinterct event
+	 * @param e Triggers on a playerinteract event
 	 * @return the worth
 	 */
 	@SuppressWarnings("deprecation")
@@ -257,16 +258,19 @@ public class PlayerListener implements Listener {
 		double total = 0;
 		double slotPrice = 0;
 		double price = 0;
-		if (StickConfig.instance.debug)
-			System.out.println("-Chest Contents: ");
-		
+
+		SellingInterface si = StickConfig.instance.getSellInterface();
+
+		if (StickConfig.instance.debug) {
+			System.out.println("-Getting prices from " + si);
+			System.out.println("-Chest Contents(size=" + c.getInventory().getSize() + "):");
+		}
+
 		for (int i = 0; i < c.getInventory().getSize(); i++) {
 
 			try {
-				if (StickConfig.instance.debug)
-					System.out.print(contents[i].getType() + "; ");
-				if (!StickConfig.instance.useEssentialsWorth && !StickConfig.instance.useShopGUI) { //Not essW, not shopgui
-					System.out.println("Regular");
+				if (si == SellingInterface.PRICESYML) { // Not essW, not
+														// shopgui
 
 					for (String key : PriceConfig.instance.getPrices()) {
 
@@ -288,24 +292,19 @@ public class PlayerListener implements Listener {
 
 						}
 					}
-				} else if (StickConfig.instance.useEssentialsWorth && !StickConfig.instance.useShopGUI) {
-					// Essentials Worth
-					System.out.println("ess");
-
+				} else if (si == SellingInterface.ESSWORTH) {
 					price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
 
-				} else if (!StickConfig.instance.useEssentialsWorth && StickConfig.instance.useShopGUI) {
-					// ShopGUI
-					System.out.println("shopgui");
+				} else if (si == SellingInterface.SHOPGUI) {
 
 					price = ShopGuiPlusApi.getItemStackPriceSell(e.getPlayer(), contents[i]);
-
-				}else {
-					System.out.println("CWhaa");
+					if (price < 0) {
+						price = 0;
+					}
 
 				}
 				if (StickConfig.instance.debug) {
-					System.out.println("Price of (" + contents[i].getType() + "): " + price);
+					System.out.println("--Price of (" + contents[i].getType() + "): " + price);
 				}
 
 				int amount = (int) contents[i].getAmount();

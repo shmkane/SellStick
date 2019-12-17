@@ -18,6 +18,7 @@ import com.shmkane.sellstick.Configs.StickConfig;
 
 /**
  * Handles the /sellstick Command
+ * 
  * @author shmkane
  *
  */
@@ -25,10 +26,11 @@ public class SellStickCommand implements CommandExecutor {
 
 	/** Instance of the plugin **/
 	private SellStick plugin;
-	
+
 	/**
-	 * Constructor of SellStickCommand
-	 * Only one of these should be constructed in the onEnable of SellStick.java
+	 * Constructor of SellStickCommand Only one of these should be constructed in
+	 * the onEnable of SellStick.java
+	 * 
 	 * @param plugin Takes a SellStick object
 	 */
 	public SellStickCommand(SellStick plugin) {
@@ -68,7 +70,22 @@ public class SellStickCommand implements CommandExecutor {
 				if (sender.hasPermission("sellstick.give")) {
 					Player target = plugin.getServer().getPlayer(args[1]);
 					if (target != null && target.isOnline()) {
-						for (int i = 0; i < Integer.parseInt(args[2]); i++) {
+						
+						int numSticks;
+						
+						try {
+							numSticks = Integer.parseInt(args[2]);
+						} catch (Exception ex) {
+							plugin.msg(sender,
+									ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+							if (sender.hasPermission("sellstick.give")) {
+								plugin.msg(sender, ChatColor.GREEN
+										+ "/SellStick give <player> <amount> (<uses>/infinite)");
+							}
+							return false;
+						}
+						
+						for (int i = 0; i < numSticks; i++) {
 							/**
 							 * This assigns a random string to the item meta so that the item cannot be
 							 * stacked
@@ -114,11 +131,22 @@ public class SellStickCommand implements CommandExecutor {
 										lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%",
 												StickConfig.instance.infiniteLore));
 							} else {
-								int uses = Integer.parseInt(args[3]);
-								// otherwise replace it with the remaining uses
-								lores.set(StickConfig.instance.durabilityLine - 1,
-										lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%",
-												StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
+								try {
+									int uses = Integer.parseInt(args[3]);
+									// otherwise replace it with the remaining uses
+									lores.set(StickConfig.instance.durabilityLine - 1,
+											lores.get(StickConfig.instance.durabilityLine - 1).replace("%usesLore%",
+													StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
+								} catch (Exception ex) {
+									// They typed something stupid here...
+									plugin.msg(sender,
+											ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+									if (sender.hasPermission("sellstick.give")) {
+										plugin.msg(sender, ChatColor.GREEN
+												+ "/SellStick give <player> <amount> (<uses>/infinite)");
+									}
+									return false;
+								}
 							}
 
 							im.setLore(lores);

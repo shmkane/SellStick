@@ -1,6 +1,6 @@
 name: SellStick
 main: com.shmkane.sellstick.SellStick
-version: 9.0.2
+version: 10.0.0
 api-version: 1.13
 author: shmkane
 website: https://github.com/shmkane/SellStick

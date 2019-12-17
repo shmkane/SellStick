@@ -361,11 +361,7 @@ public class PlayerListener implements Listener {
 
 		if (multiplier == Double.NEGATIVE_INFINITY) {
 			r = plugin.getEcon().depositPlayer(p, total);
-			if (StickConfig.instance.debug)
-				System.out.print("Depositing " + total + " to " + p.getName());
 		} else {
-			if (StickConfig.instance.debug)
-				System.out.print("Depositing " + total * multiplier + " to " + p.getName());
 			r = plugin.getEcon().depositPlayer(p, total * multiplier);
 		}
 
@@ -427,9 +423,7 @@ public class PlayerListener implements Listener {
 					e.setCancelled(true);
 					return;
 				}
-				if(StickConfig.instance.debug) {
-					System.out.println("Player " + p.getName() + " clicked on a chest");
-				}
+
 				ItemStack is = p.getItemInHand();
 				ItemMeta im = is.getItemMeta();
 
@@ -440,9 +434,6 @@ public class PlayerListener implements Listener {
 				InventoryHolder c = (InventoryHolder) e.getClickedBlock().getState();
 
 				double total = calculateWorth(c, e);
-				if(StickConfig.instance.debug) {
-					System.out.println("Worth: " + total);
-				}
 
 				if (total > 0) {
 					postSale(lores, uses, p, total, im, is);

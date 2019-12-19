@@ -146,32 +146,32 @@ public class StickConfig {
 
 	private void handleInterface() {
 		if(useEssentialsWorth && useShopGUI) {
-			Log.error("Server has EssentialsWorth AND ShopGUI Selected.");
-			Log.error("Defaulting to ShopGUI");
-			Log.error("Edit the config to remove this error.");
+			System.out.println("Server has EssentialsWorth AND ShopGUI Selected.");
+			System.out.println("Defaulting to ShopGUI");
+			System.out.println("Edit the config to remove this error.");
 			sellInterface = SellingInterface.SHOPGUI;
 			
 		}else if(!useEssentialsWorth && useShopGUI) {
 			
-			Log.info("Using ShopGUI worth for prices");
+			System.out.println("Using ShopGUI worth for prices");
 			sellInterface = SellingInterface.SHOPGUI;
 
 			
 		}else if(useEssentialsWorth && !useShopGUI){
 			
-			Log.info("Using essentials for prices");
+			System.out.println("Using essentials for prices");
 			sellInterface = SellingInterface.ESSWORTH;
 
 			
 		}else if(!useEssentialsWorth && !useShopGUI){
 			
-			Log.info("Using prices.yml for prices");
+			System.out.println("Using prices.yml for prices");
 			sellInterface = SellingInterface.PRICESYML;
 
 		}else {
-			Log.error("Couldn't determine what to use.");
-			Log.error("Defaulting to PricesYML");
-			Log.error("Edit the config to remove this error.");
+			System.out.println("Couldn't determine what to use.");
+			System.out.println("Defaulting to PricesYML");
+			System.out.println("Edit the config to remove this error.");
 			sellInterface = SellingInterface.PRICESYML;
 		}
 		

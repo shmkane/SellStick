@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 import com.shmkane.sellstick.Configs.StickConfig;
 
@@ -43,7 +44,9 @@ public class SellStickCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-			plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+			PluginDescriptionFile pdf = plugin.getDescription();
+			plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC " + pdf.getAPIVersion()
+					+ ") by " + pdf.getAuthors().get(0));
 			if (sender.hasPermission("sellstick.give")) {
 				plugin.msg(sender, ChatColor.GREEN + "/SellStick give <player> <amount> (<uses>/infinite)");
 			}
@@ -62,7 +65,9 @@ public class SellStickCommand implements CommandExecutor {
 				}
 				return true;
 			} else {
-				plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+				PluginDescriptionFile pdf = plugin.getDescription();
+				plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
+						+ pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
 				return true;
 			}
 		} else if (args.length == 4) {
@@ -70,21 +75,22 @@ public class SellStickCommand implements CommandExecutor {
 				if (sender.hasPermission("sellstick.give")) {
 					Player target = plugin.getServer().getPlayer(args[1]);
 					if (target != null && target.isOnline()) {
-						
+
 						int numSticks;
-						
+
 						try {
 							numSticks = Integer.parseInt(args[2]);
 						} catch (Exception ex) {
-							plugin.msg(sender,
-									ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+							PluginDescriptionFile pdf = plugin.getDescription();
+							plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
+									+ pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
 							if (sender.hasPermission("sellstick.give")) {
-								plugin.msg(sender, ChatColor.GREEN
-										+ "/SellStick give <player> <amount> (<uses>/infinite)");
+								plugin.msg(sender,
+										ChatColor.GREEN + "/SellStick give <player> <amount> (<uses>/infinite)");
 							}
 							return false;
 						}
-						
+
 						for (int i = 0; i < numSticks; i++) {
 							/**
 							 * This assigns a random string to the item meta so that the item cannot be
@@ -139,8 +145,9 @@ public class SellStickCommand implements CommandExecutor {
 													StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
 								} catch (Exception ex) {
 									// They typed something stupid here...
-									plugin.msg(sender,
-											ChatColor.GRAY + "" + ChatColor.ITALIC + "Sell Stick by shmkane");
+									PluginDescriptionFile pdf = plugin.getDescription();
+									plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName()
+											+ " (MC " + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
 									if (sender.hasPermission("sellstick.give")) {
 										plugin.msg(sender, ChatColor.GREEN
 												+ "/SellStick give <player> <amount> (<uses>/infinite)");

@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -23,7 +24,7 @@ import com.shmkane.sellstick.Configs.StickConfig;
  * @author shmkane
  *
  */
-public class SellStickCommand implements CommandExecutor {
+public class SellStickCommand implements CommandExecutor, TabExecutor {
 
 	/** Instance of the plugin **/
 	private SellStick plugin;
@@ -38,6 +39,22 @@ public class SellStickCommand implements CommandExecutor {
 		this.plugin = plugin;
 	}
 
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+		List<String> commands = new ArrayList<>();
+
+		if (args.length == 1) {
+			commands.add("give");
+		} else if (args.length == 2) {
+			commands.add(sender.getName());
+		} else if (args.length == 3) {
+			commands.add("1");
+		} else if (args.length == 4) {
+			commands.add("i");
+		}
+		return commands;
+	}
+
 	/**
 	 * Handle the sellstick command here
 	 */
@@ -45,8 +62,8 @@ public class SellStickCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			PluginDescriptionFile pdf = plugin.getDescription();
-			plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC " + pdf.getAPIVersion()
-					+ ") by " + pdf.getAuthors().get(0));
+			plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
+					+ pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
 			if (sender.hasPermission("sellstick.give")) {
 				plugin.msg(sender, ChatColor.GREEN + "/SellStick give <player> <amount> (<uses>/infinite)");
 			}
@@ -197,4 +214,5 @@ public class SellStickCommand implements CommandExecutor {
 		itemStack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 		return itemStack;
 	}
+
 }

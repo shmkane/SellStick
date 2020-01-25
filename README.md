@@ -1,4 +1,4 @@
-# Sell Stick 10.0.1 [(Download Here)](https://github.com/shmkane/SellStick/releases)
+# Sell Stick [(Download Here)](https://github.com/shmkane/SellStick/releases)
 ### SellStick has been refactored to work with almost ALL major plugins!
 ### SellStick can use your pre-configured ShopGUIPlus or Essentials Worth!
 ### Tested: Factions UUID, Savage Factions, MCore Factions, ASkyBlock, FabledSkyblock, Lockette, and many more!

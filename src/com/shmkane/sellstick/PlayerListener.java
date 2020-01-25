@@ -262,15 +262,15 @@ public class PlayerListener implements Listener {
 		SellingInterface si = StickConfig.instance.getSellInterface();
 
 		if (StickConfig.instance.debug) {
-			System.out.println("-Getting prices from " + si);
-			System.out.println("-Chest Contents(size=" + c.getInventory().getSize() + "):");
+			System.out.println("1-Getting prices from " + si);
+			System.out.println("2-Chest Contents(size=" + c.getInventory().getSize() + "):");
 		}
 
 		for (int i = 0; i < c.getInventory().getSize(); i++) {
 
 			try {
 				if (si == SellingInterface.PRICESYML) { // Not essW, not
-														// shopgui
+					// shopgui
 
 					for (String key : PriceConfig.instance.getPrices()) {
 
@@ -298,18 +298,30 @@ public class PlayerListener implements Listener {
 				} else if (si == SellingInterface.SHOPGUI) {
 
 					price = ShopGuiPlusApi.getItemStackPriceSell(e.getPlayer(), contents[i]);
+
 					if (price < 0) {
 						price = 0;
 					}
 
+					if (StickConfig.instance.debug) {
+						if (price > 0)
+							System.out.println("3-Price: " + price);
+						System.out.println(contents[i].getType() + " and " + contents[i].getAmount());
+					}
+
 				}
 				if (StickConfig.instance.debug) {
-					System.out.println("--Price of (" + contents[i].getType() + "): " + price);
+					System.out.println("4--Price of (" + contents[i].getType() + "): " + price);
 				}
 
-				int amount = (int) contents[i].getAmount();
-
+				int amount;
+				if( si != SellingInterface.SHOPGUI) {
+					amount = (int) contents[i].getAmount();
+				}else {
+					amount = 1;
+				}
 				slotPrice = price * amount;
+
 				if (slotPrice > 0) {
 					ItemStack sell = contents[i];
 					c.getInventory().remove(sell);
@@ -318,7 +330,10 @@ public class PlayerListener implements Listener {
 
 			} catch (Exception ex) {
 			}
-
+			if (StickConfig.instance.debug && slotPrice > 0) {
+				System.out.println("---slotPrice=" + slotPrice);
+				System.out.println("---total=" + total);
+			}
 			total += slotPrice;
 			slotPrice = 0;
 			price = 0;

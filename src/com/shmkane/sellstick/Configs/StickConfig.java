@@ -74,24 +74,24 @@ public class StickConfig {
 	public void loadValues() {
 		FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
 
-		this.name = config.getString("DisplayName").replace("&", "ยง");
-		this.item = config.getString("ItemType").toUpperCase().replace("&", "ยง");
+		this.name = config.getString("DisplayName").replace("&", "ง");
+		this.item = config.getString("ItemType").toUpperCase().replace("&", "ง");
 		this.glow = config.getBoolean("Glow");
 
 		this.lore = config.getStringList("StickLore");
-		this.finiteLore = config.getString("FiniteLore").replace("&", "ยง");
-		this.infiniteLore = config.getString("InfiniteLore").replace("&", "ยง");
+		this.finiteLore = config.getString("FiniteLore").replace("&", "ง");
+		this.infiniteLore = config.getString("InfiniteLore").replace("&", "ง");
 
 		this.durabilityLine = config.getInt("DurabilityLine");
 
-		this.prefix = config.getString("MessagePrefix").replace("&", "ยง");
-		this.sellMessage = config.getString("SellMessage").replace("&", "ยง");
-		this.noPerm = config.getString("NoPermissionMessage").replace("&", "ยง");
-		this.territoryMessage = config.getString("InvalidTerritoryMessage").replace("&", "ยง");
-		this.nothingWorth = config.getString("NotWorthMessage").replace("&", "ยง");
-		this.brokenStick = config.getString("BrokenStick").replace("&", "ยง");
-		this.giveMessage = config.getString("GiveMessage").replace("&", "ยง");
-		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "ยง");
+		this.prefix = config.getString("MessagePrefix").replace("&", "ง");
+		this.sellMessage = config.getString("SellMessage").replace("&", "ง");
+		this.noPerm = config.getString("NoPermissionMessage").replace("&", "ง");
+		this.territoryMessage = config.getString("InvalidTerritoryMessage").replace("&", "ง");
+		this.nothingWorth = config.getString("NotWorthMessage").replace("&", "ง");
+		this.brokenStick = config.getString("BrokenStick").replace("&", "ง");
+		this.giveMessage = config.getString("GiveMessage").replace("&", "ง");
+		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "ง");
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
 		this.useShopGUI = config.getBoolean("UseShopGUI");
 		this.debug = config.getBoolean("debug");

@@ -1,5 +1,5 @@
 # Sell Stick [(Download Here)](https://github.com/shmkane/SellStick/releases)
-### SellStick can hook into pre-configured *ShopGUIPlus* or *Essentials Worth* configs!
+### SellStick can hook into pre-configured **ShopGUIPlus** or **Essentials Worth** configs!
 ### Tested: Factions UUID, Savage Factions, MCore Factions, ASkyBlock, BSkyBlock, FabledSkyblock, Lockette, and many more!
 
 # Need Help?

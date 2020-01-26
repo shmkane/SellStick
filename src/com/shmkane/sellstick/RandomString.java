@@ -2,6 +2,8 @@ package com.shmkane.sellstick;
 
 import java.util.Random;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class RandomString {
 
 	private static final char[] symbols;
@@ -57,7 +59,8 @@ public class RandomString {
 		char[] letters = original.toCharArray();
 		String newLetters = "";
 		for (int i = 0; i < original.length(); i++) {
-			newLetters += "§" + letters[i] + "";
+			newLetters += ChatColor.getByChar(letters[i]);
+			
 		}
 		return newLetters;
 	}

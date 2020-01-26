@@ -138,7 +138,7 @@ public class PlayerListener implements Listener {
 	 * color codes.
 	 * 
 	 * This method will go through and find a digit (i). If a digit is found, get
-	 * the char before it (i-1). if (i-1) is the color_char(ยง).
+	 * the char before it (i-1). if (i-1) is the color_char(ง).
 	 * 
 	 * It will make a string that looks something like "----a--b-4--" where dashes
 	 * represent something, and everything remaining represents color codes.

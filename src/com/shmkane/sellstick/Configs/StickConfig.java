@@ -7,6 +7,8 @@ import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import net.md_5.bungee.api.ChatColor;
+
 /**
  * Handles the operations of the config.yml
  * @author shmkane
@@ -74,24 +76,24 @@ public class StickConfig {
 	public void loadValues() {
 		FileConfiguration config = YamlConfiguration.loadConfiguration(this.conf);
 
-		this.name = config.getString("DisplayName").replace("&", "§");
-		this.item = config.getString("ItemType").toUpperCase().replace("&", "§");
+		this.name = ChatColor.translateAlternateColorCodes('&', config.getString("DisplayName"));
+		this.item = ChatColor.translateAlternateColorCodes('&', config.getString("ItemType").toUpperCase());
 		this.glow = config.getBoolean("Glow");
 
 		this.lore = config.getStringList("StickLore");
-		this.finiteLore = config.getString("FiniteLore").replace("&", "§");
-		this.infiniteLore = config.getString("InfiniteLore").replace("&", "§");
+		this.finiteLore = ChatColor.translateAlternateColorCodes('&', config.getString("FiniteLore"));
+		this.infiniteLore = ChatColor.translateAlternateColorCodes('&', config.getString("InfiniteLore"));
 
 		this.durabilityLine = config.getInt("DurabilityLine");
 
-		this.prefix = config.getString("MessagePrefix").replace("&", "§");
-		this.sellMessage = config.getString("SellMessage").replace("&", "§");
-		this.noPerm = config.getString("NoPermissionMessage").replace("&", "§");
-		this.territoryMessage = config.getString("InvalidTerritoryMessage").replace("&", "§");
-		this.nothingWorth = config.getString("NotWorthMessage").replace("&", "§");
-		this.brokenStick = config.getString("BrokenStick").replace("&", "§");
-		this.giveMessage = config.getString("GiveMessage").replace("&", "§");
-		this.receiveMessage = config.getString("ReceiveMessage").replace("&", "§");
+		this.prefix = ChatColor.translateAlternateColorCodes('&', config.getString("MessagePrefix"));
+		this.sellMessage = ChatColor.translateAlternateColorCodes('&', config.getString("SellMessage"));
+		this.noPerm = ChatColor.translateAlternateColorCodes('&', config.getString("NoPermissionMessage"));
+		this.territoryMessage = ChatColor.translateAlternateColorCodes('&', config.getString("InvalidTerritoryMessage"));
+		this.nothingWorth = ChatColor.translateAlternateColorCodes('&', config.getString("NotWorthMessage"));
+		this.brokenStick = ChatColor.translateAlternateColorCodes('&', config.getString("BrokenStick"));
+		this.giveMessage = ChatColor.translateAlternateColorCodes('&', config.getString("GiveMessage"));
+		this.receiveMessage = ChatColor.translateAlternateColorCodes('&', config.getString("ReceiveMessage"));
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
 		this.useShopGUI = config.getBoolean("UseShopGUI");
 		this.debug = config.getBoolean("debug");

@@ -45,6 +45,9 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
 
 		if (args.length == 1) {
 			commands.add("give");
+			if(sender.hasPermission("sellstick.reload")){
+				commands.add("reload");
+			}
 		} else if (args.length == 2) {
 			commands.add(sender.getName());
 		} else if (args.length == 3) {
@@ -125,7 +128,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
 
 							// Load values from config onto the stick lores array
 							for (int z = 0; z < StickConfig.instance.lore.size(); z++) {
-								lores.add(StickConfig.instance.lore.get(z).replace("&", "§"));
+								lores.add(StickConfig.instance.lore.get(z).replace("&", ChatColor.COLOR_CHAR + ""));
 							}
 
 							try {

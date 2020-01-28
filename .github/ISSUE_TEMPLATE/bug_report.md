@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
+title: "[BUG] SHORT TITLE DESCRIBING ISSUE"
 labels: Small Bug - Unintended Feature
 assignees: shmkane
 
@@ -23,10 +23,10 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
+**Server Info(please complete the following information):**
  - Server Version: [e.g. SellStick 1.14]
  - SellStick version[e.g. 10.0.1. Found in /sellstick menu]
 
 
 **Additional context**
-Add any other context about the problem here.
+Please upload your config.yml as well as prices.yml and any additional files necessary

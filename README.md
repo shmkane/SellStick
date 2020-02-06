@@ -6,7 +6,7 @@
 # Need Help?
 
 ### 1. [Create an 'issue' here](https://github.com/shmkane/SellStick/issues)
-### 2. [Ask on the NEW discord server](https://discord.gg/Q4CMsKC)
+### 2. [Join the DISCORD server](https://discord.gg/Q4CMsKC)
 
 # "Watch" this thread! 
 ## Updates *always* come to [GitHub](https://github.com/shmkane/SellStick) before [Spigot](https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/)

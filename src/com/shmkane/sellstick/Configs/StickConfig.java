@@ -57,13 +57,14 @@ public class StickConfig {
 	public boolean useEssentialsWorth;
 	/** Whether or not to use ShopGUI+**/
 	public boolean useShopGUI;
+	/** Whether or not to play a sound on use of sellstick **/
+	public boolean sound;
 	/** Whether or not to print debug messages to console **/
 	public boolean debug;
-	/** What interface to use to sell **/
-	public boolean sound;
-	/** Whether or not to play a sound on use of sellstick **/
+
 	
 	
+	/** What interface to use to sell **/	
 	public enum SellingInterface{
 		PRICESYML, 
 		ESSWORTH, 
@@ -99,6 +100,7 @@ public class StickConfig {
 		this.receiveMessage = ChatColor.translateAlternateColorCodes('&', config.getString("ReceiveMessage"));
 		this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
 		this.useShopGUI = config.getBoolean("UseShopGUI");
+		this.sound = config.getBoolean("UseSound");
 		this.debug = config.getBoolean("debug");
 	}
 
@@ -136,6 +138,7 @@ public class StickConfig {
 			config.set("ReceiveMessage", "&aYou've received &e&l%amount% &asell sticks!");
 			config.set("UseEssentialsWorth", false);
 			config.set("UseShopGUI", false);
+			config.set("UseSound", true);
 			config.set("debug", false);
 
 			try {

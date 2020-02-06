@@ -38,9 +38,9 @@ ItemType: STICK #ONCE AGAIN, USE THE LINK ABOVE FOR ITEM NAMES
 #
 StickLore:
 - '&a&lRight click &con a chest to sell items inside!' #line 1
-#The Finite or Infinite lore will go here.
+#The Finite or Infinite lore will always go on line 2
 - '&bSellStick by &oshmkane' #line 3
-- '&cAsk an admin to customize this!' #line 4
+- '&cCustomize this in the CONFIG!' #line 4
 #- '&cadd more lines' #line 5
 #- '&aLike this' #line 6
 #
@@ -121,6 +121,10 @@ GiveMessage: '&aYou gave &e%player% &e&l%amount% &asell sticks!'
 #
 #Message to send to the player who received the sticks
 ReceiveMessage: '&aYou''ve received &e&l%amount% &asell sticks!'
+#
+#Do you want a little noise to play when players sell something?
+UseSound: true
+#
 #
 #That's it! If you have questions, ask on GitHub.
 #https://github.com/shmkane/SellStick/issues

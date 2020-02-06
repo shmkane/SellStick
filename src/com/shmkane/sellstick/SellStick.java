@@ -45,16 +45,18 @@ public class SellStick extends JavaPlugin {
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
+		setupEssentials();
+
+		if (Bukkit.getPluginManager().isPluginEnabled("ShopGuiPlus")) {
+			log.info(String.format("[%s] ShopGUI+ was found!", getDescription().getName()));
+		}
 		
 		this.saveDefaultConfig();
 
 		StickConfig.instance.setup(getDataFolder());
 		PriceConfig.instance.setup(getDataFolder());
-	
-		setupEssentials();
 
 		this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
-		
 		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 	}
 
@@ -79,7 +81,7 @@ public class SellStick extends JavaPlugin {
 	 */
 	public void setupEssentials() {
 		if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
-			log.info(String.format("[%s] Hooked into essentials!", getDescription().getName()));
+			log.info(String.format("[%s] Essentals was found", getDescription().getName()));
 			ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 		}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -356,7 +357,7 @@ public class PlayerListener implements Listener {
 	 * @param is    Item stack object of the stick
 	 */
 	@SuppressWarnings("deprecation")
-	public void postSale(List<String> lores, int uses, Player p, double total, ItemMeta im, ItemStack is) {
+	public boolean postSale(List<String> lores, int uses, Player p, double total, ItemMeta im, ItemStack is) {
 
 		if (!isInfinite(lores)) {
 
@@ -394,8 +395,9 @@ public class PlayerListener implements Listener {
 		} else {
 			r = plugin.getEcon().depositPlayer(p, total * multiplier);
 		}
-
+		boolean success = false;
 		if (r.transactionSuccess()) {
+			success = true;
 			if (StickConfig.instance.sellMessage.contains("\\n")) {
 				String[] send = StickConfig.instance.sellMessage.split("\\\\n");
 				for (String msg : send) {
@@ -406,7 +408,7 @@ public class PlayerListener implements Listener {
 				plugin.msg(p, StickConfig.instance.sellMessage.replace("%balance%", plugin.getEcon().format(r.balance))
 						.replace("%price%", plugin.getEcon().format(r.amount)));
 			}
-
+			
 			System.out.println(p.getName() + " sold items via sellstick for " + r.amount + " and now has " + r.balance);
 		} else {
 			plugin.msg(p, String.format("An error occured: %s", r.errorMessage));
@@ -417,6 +419,8 @@ public class PlayerListener implements Listener {
 			p.updateInventory();
 			plugin.msg(p, StickConfig.instance.brokenStick);
 		}
+		
+		return success;
 
 	}
 
@@ -466,10 +470,11 @@ public class PlayerListener implements Listener {
 				double total = calculateWorth(c, e);
 
 				if (total > 0) {
-					postSale(lores, uses, p, total, im, is);
+					if(postSale(lores, uses, p, total, im, is)) {
+						p.playSound(e.getClickedBlock().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 0.5f);
+					}
 				} else {
 					plugin.msg(p, StickConfig.instance.nothingWorth);
-
 				}
 				e.setCancelled(true);
 			}

@@ -60,6 +60,9 @@ public class StickConfig {
 	/** Whether or not to print debug messages to console **/
 	public boolean debug;
 	/** What interface to use to sell **/
+	public boolean sound;
+	/** Whether or not to play a sound on use of sellstick **/
+	
 	
 	public enum SellingInterface{
 		PRICESYML, 

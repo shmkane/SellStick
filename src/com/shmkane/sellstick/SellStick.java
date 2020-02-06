@@ -26,7 +26,7 @@ public class SellStick extends JavaPlugin {
 	/** Instance of Vault Economy **/
 	private static Economy econ;
 	/** Server logger **/
-	private static final Logger log = Logger.getLogger("Minecraft");
+	public static final Logger log = Logger.getLogger("Minecraft");
 
 	/**
 	 * Initial plugin setup. Creation and loading of YML files.
@@ -48,7 +48,9 @@ public class SellStick extends JavaPlugin {
 		setupEssentials();
 
 		if (Bukkit.getPluginManager().isPluginEnabled("ShopGuiPlus")) {
-			log.info(String.format("[%s] ShopGUI+ was found!", getDescription().getName()));
+			if(!StickConfig.instance.useShopGUI) {
+				log.warning(String.format("[%s] ShopGUI+ was found but not enabled in the config!", getDescription().getName()));
+			}
 		}
 		
 		this.saveDefaultConfig();

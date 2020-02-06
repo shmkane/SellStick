@@ -122,9 +122,9 @@ public class PlayerListener implements Listener {
 		try {
 			min = hold.get(0);
 		} catch (Exception ex) {
-			System.out.println(StickConfig.instance.durabilityLine);
-			System.out.println("The problem seems to be that your sellstick useline number has changed.");
-			System.out.println(ex);
+			SellStick.log.severe(StickConfig.instance.durabilityLine + "");
+			SellStick.log.severe("The problem seems to be that your sellstick useline number has changed.");
+			SellStick.log.severe(ex.toString());
 		}
 
 		for (int i = 0; i < hold.size(); i++) {
@@ -264,8 +264,8 @@ public class PlayerListener implements Listener {
 		SellingInterface si = StickConfig.instance.getSellInterface();
 
 		if (StickConfig.instance.debug) {
-			System.out.println("1-Getting prices from " + si);
-			System.out.println("2-Clicked Chest(size=" + c.getInventory().getSize() + "):");
+			SellStick.log.warning("1-Getting prices from " + si);
+			SellStick.log.warning("2-Clicked Chest(size=" + c.getInventory().getSize() + "):");
 		}
 
 		for (int i = 0; i < c.getInventory().getSize(); i++) {
@@ -296,8 +296,8 @@ public class PlayerListener implements Listener {
 
 						if (StickConfig.instance.debug) {
 							if (price > 0) {
-								System.out.println(contents[i].getType() + " x " + contents[i].getAmount());
-								System.out.println("-Price: " + price);
+								SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
+								SellStick.log.warning("-Price: " + price);
 							}
 						}
 
@@ -306,8 +306,8 @@ public class PlayerListener implements Listener {
 					price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
 					if (StickConfig.instance.debug) {
 						if (price > 0)
-							System.out.println("-Price: " + price);
-						System.out.println(contents[i].getType() + " x " + contents[i].getAmount());
+							SellStick.log.warning("-Price: " + price);
+						SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
 					}
 
 				} else if (si == SellingInterface.SHOPGUI) {
@@ -320,14 +320,14 @@ public class PlayerListener implements Listener {
 
 					if (StickConfig.instance.debug) {
 						if (price > 0)
-							System.out.println("-Price: " + price);
-						System.out.println(contents[i].getType() + " x " + contents[i].getAmount());
+							SellStick.log.warning("-Price: " + price);
+						SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
 					}
 
 				}
 
 				if (StickConfig.instance.debug) {
-					System.out.println("--Price of (" + contents[i].getType() + "): " + price);
+					SellStick.log.warning("--Price of (" + contents[i].getType() + "): " + price);
 				}
 
 				int amount;
@@ -348,18 +348,18 @@ public class PlayerListener implements Listener {
 			
 				if (StickConfig.instance.debug) {
 					if (!(ex instanceof NullPointerException))
-						System.out.println(ex);
+						SellStick.log.warning(ex.toString());
 				}
 				
 				if (ex instanceof PlayerDataNotLoadedException) {
-					System.out.println("Player should relog to fix this.");
+					SellStick.log.severe("Player should relog to fix this.");
 					e.getPlayer().sendMessage(ChatColor.DARK_RED + "Please re-log to use SellStick.");
 					return 0;
 				}
 			}
 			if (StickConfig.instance.debug && slotPrice > 0) {
-				System.out.println("---slotPrice=" + slotPrice);
-				System.out.println("---total=" + total);
+				SellStick.log.warning("---slotPrice=" + slotPrice);
+				SellStick.log.warning("---total=" + total);
 			}
 			total += slotPrice;
 			slotPrice = 0;
@@ -435,7 +435,7 @@ public class PlayerListener implements Listener {
 						.replace("%price%", plugin.getEcon().format(r.amount)));
 			}
 
-			System.out.println(p.getName() + " sold items via sellstick for " + r.amount + " and now has " + r.balance);
+			SellStick.log.info(p.getName() + " sold items via sellstick for " + r.amount + " and now has " + r.balance);
 		} else {
 			plugin.msg(p, String.format("An error occured: %s", r.errorMessage));
 		}
@@ -496,7 +496,7 @@ public class PlayerListener implements Listener {
 				double total = calculateWorth(c, e);
 
 				if (total > 0) {
-					if (postSale(lores, uses, p, total, im, is)) {
+					if (postSale(lores, uses, p, total, im, is) && StickConfig.instance.sound) {
 						p.playSound(e.getClickedBlock().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 0.5f);
 					}
 				} else {

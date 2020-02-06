@@ -36,12 +36,9 @@ public class PriceConfig {
 			config.set("prices.LEATHER", 2.13);
 			config.set("prices.COOKED_BEEF", 0.01);
 			config.set("prices.BONE", 5.00);
-			config.set("prices.1", 0.42);
+			config.set("prices.stOnE", 0.234);
 			config.set("prices.STONE:2", 0.22);
 			config.set("prices.STONE:3", 0.02);
-			config.set("prices.1:4", 0.01);
-			config.set("prices.1:5", 0.07);
-			config.set("prices.46", 1.08);
 
 			try {
 				config.save(this.conf);

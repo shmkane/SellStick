@@ -7,6 +7,8 @@ import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.shmkane.sellstick.SellStick;
+
 import net.md_5.bungee.api.ChatColor;
 
 /**
@@ -153,32 +155,32 @@ public class StickConfig {
 
 	private void handleInterface() {
 		if(useEssentialsWorth && useShopGUI) {
-			System.out.println("Server has EssentialsWorth AND ShopGUI Selected.");
-			System.out.println("Defaulting to ShopGUI");
-			System.out.println("Edit the config to remove this error.");
+			SellStick.log.warning("Server has EssentialsWorth AND ShopGUI Selected.");
+			SellStick.log.warning("Defaulting to ShopGUI");
+			SellStick.log.warning("Edit the config to remove this error.");
 			sellInterface = SellingInterface.SHOPGUI;
 			
 		}else if(!useEssentialsWorth && useShopGUI) {
 			
-			System.out.println("Using ShopGUI worth for prices");
+			SellStick.log.info("Using ShopGUI worth for prices");
 			sellInterface = SellingInterface.SHOPGUI;
 
 			
 		}else if(useEssentialsWorth && !useShopGUI){
 			
-			System.out.println("Using essentials for prices");
+			SellStick.log.info("Using essentials for prices");
 			sellInterface = SellingInterface.ESSWORTH;
 
 			
 		}else if(!useEssentialsWorth && !useShopGUI){
 			
-			System.out.println("Using prices.yml for prices");
+			SellStick.log.info("Using prices.yml for prices");
 			sellInterface = SellingInterface.PRICESYML;
 
 		}else {
-			System.out.println("Couldn't determine what to use.");
-			System.out.println("Defaulting to PricesYML");
-			System.out.println("Edit the config to remove this error.");
+			SellStick.log.severe("Couldn't determine what to use.");
+			SellStick.log.severe("Defaulting to PricesYML");
+			SellStick.log.severe("Edit the config to remove this error.");
 			sellInterface = SellingInterface.PRICESYML;
 		}
 		

@@ -22,6 +22,7 @@ import com.shmkane.sellstick.Configs.StickConfig;
 import com.shmkane.sellstick.Configs.StickConfig.SellingInterface;
 
 import net.brcdev.shopgui.ShopGuiPlusApi;
+import net.brcdev.shopgui.exception.player.PlayerDataNotLoadedException;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 /**
@@ -264,7 +265,7 @@ public class PlayerListener implements Listener {
 
 		if (StickConfig.instance.debug) {
 			System.out.println("1-Getting prices from " + si);
-			System.out.println("2-Chest Contents(size=" + c.getInventory().getSize() + "):");
+			System.out.println("2-Clicked Chest(size=" + c.getInventory().getSize() + "):");
 		}
 
 		for (int i = 0; i < c.getInventory().getSize(); i++) {
@@ -292,9 +293,22 @@ public class PlayerListener implements Listener {
 							price = Double.parseDouble(PriceConfig.instance.getConfig().getString("prices." + key));
 
 						}
+
+						if (StickConfig.instance.debug) {
+							if (price > 0) {
+								System.out.println(contents[i].getType() + " x " + contents[i].getAmount());
+								System.out.println("-Price: " + price);
+							}
+						}
+
 					}
 				} else if (si == SellingInterface.ESSWORTH) {
 					price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
+					if (StickConfig.instance.debug) {
+						if (price > 0)
+							System.out.println("-Price: " + price);
+						System.out.println(contents[i].getType() + " x " + contents[i].getAmount());
+					}
 
 				} else if (si == SellingInterface.SHOPGUI) {
 
@@ -306,19 +320,20 @@ public class PlayerListener implements Listener {
 
 					if (StickConfig.instance.debug) {
 						if (price > 0)
-							System.out.println("3-Price: " + price);
-						System.out.println(contents[i].getType() + " and " + contents[i].getAmount());
+							System.out.println("-Price: " + price);
+						System.out.println(contents[i].getType() + " x " + contents[i].getAmount());
 					}
 
 				}
+
 				if (StickConfig.instance.debug) {
-					System.out.println("4--Price of (" + contents[i].getType() + "): " + price);
+					System.out.println("--Price of (" + contents[i].getType() + "): " + price);
 				}
 
 				int amount;
-				if( si != SellingInterface.SHOPGUI) {
+				if (si != SellingInterface.SHOPGUI) {
 					amount = (int) contents[i].getAmount();
-				}else {
+				} else {
 					amount = 1;
 				}
 				slotPrice = price * amount;
@@ -330,6 +345,17 @@ public class PlayerListener implements Listener {
 				}
 
 			} catch (Exception ex) {
+			
+				if (StickConfig.instance.debug) {
+					if (!(ex instanceof NullPointerException))
+						System.out.println(ex);
+				}
+				
+				if (ex instanceof PlayerDataNotLoadedException) {
+					System.out.println("Player should relog to fix this.");
+					e.getPlayer().sendMessage(ChatColor.DARK_RED + "Please re-log to use SellStick.");
+					return 0;
+				}
 			}
 			if (StickConfig.instance.debug && slotPrice > 0) {
 				System.out.println("---slotPrice=" + slotPrice);
@@ -408,7 +434,7 @@ public class PlayerListener implements Listener {
 				plugin.msg(p, StickConfig.instance.sellMessage.replace("%balance%", plugin.getEcon().format(r.balance))
 						.replace("%price%", plugin.getEcon().format(r.amount)));
 			}
-			
+
 			System.out.println(p.getName() + " sold items via sellstick for " + r.amount + " and now has " + r.balance);
 		} else {
 			plugin.msg(p, String.format("An error occured: %s", r.errorMessage));
@@ -419,7 +445,7 @@ public class PlayerListener implements Listener {
 			p.updateInventory();
 			plugin.msg(p, StickConfig.instance.brokenStick);
 		}
-		
+
 		return success;
 
 	}
@@ -470,7 +496,7 @@ public class PlayerListener implements Listener {
 				double total = calculateWorth(c, e);
 
 				if (total > 0) {
-					if(postSale(lores, uses, p, total, im, is)) {
+					if (postSale(lores, uses, p, total, im, is)) {
 						p.playSound(e.getClickedBlock().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 0.5f);
 					}
 				} else {

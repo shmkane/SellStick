@@ -3,7 +3,7 @@
 #### Keep your existing **ShopGUI+** or **Essentials Worth** configs!
 
 # Downloads
-### 1.15
+### [1.15](https://github.com/shmkane/SellStick/releases/tag/1.15.2v1)
 ### 1.14
 ### 1.13
 ### 1.12

@@ -7,7 +7,8 @@
 ### [1.14](https://github.com/shmkane/SellStick/releases/tag/1.14.4)
 ### [1.13](https://github.com/shmkane/SellStick/releases/tag/1.13.2)
 ### [1.12](https://github.com/shmkane/SellStick/releases/tag/1.12.2)
-### 1.8.9
+### [1.9](https://github.com/shmkane/SellStick/releases/tag/1.9.4)
+### [1.8](https://github.com/shmkane/SellStick/releases/tag/1.8.8)
 ### Need a version not supported? [Create a ticket here](https://github.com/shmkane/SellStick/issues)
 
 

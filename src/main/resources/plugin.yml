@@ -1,0 +1,11 @@
+name: SellStick
+main: com.shmkane.sellstick.SellStick
+version: 1.15.2v1
+api-version: 1.15
+author: shmkane
+website: https://github.com/shmkane/SellStick
+depend: [Vault]
+softdepend: [Essentials, ShopGuiPlus]
+commands:
+  sellstick:
+    description: Sell all items in a chest easily!

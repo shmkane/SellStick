@@ -1,7 +1,7 @@
 name: SellStick
 main: com.shmkane.sellstick.SellStick
-version: 1.15.2v1
-api-version: 1.15
+version: 1.14.4
+api-version: 1.14
 author: shmkane
 website: https://github.com/shmkane/SellStick
 depend: [Vault]

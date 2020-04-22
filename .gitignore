@@ -1,0 +1,6 @@
+/.idea/.gitignore
+/.idea/compiler.xml
+/.idea/
+/.idea/*
+/target/
+/target/*

@@ -67,7 +67,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
         if (args.length == 0) {
             PluginDescriptionFile pdf = plugin.getDescription();
             plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
-                    + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
+                    + pdf.getVersion() + ") by " + pdf.getAuthors().get(0));
             if (sender.hasPermission("sellstick.give")) {
                 plugin.msg(sender, ChatColor.GREEN + "/SellStick give <player> <amount> (<uses>/infinite)");
             }
@@ -88,7 +88,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
             } else {
                 PluginDescriptionFile pdf = plugin.getDescription();
                 plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
-                        + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
+                        + pdf.getVersion() + ") by " + pdf.getAuthors().get(0));
                 return true;
             }
         } else if (args.length == 4) {
@@ -104,7 +104,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
                         } catch (Exception ex) {
                             PluginDescriptionFile pdf = plugin.getDescription();
                             plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
-                                    + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
+                                    + pdf.getVersion() + ") by " + pdf.getAuthors().get(0));
                             if (sender.hasPermission("sellstick.give")) {
                                 plugin.msg(sender,
                                         ChatColor.GREEN + "/SellStick give <player> <amount> (<uses>/infinite)");
@@ -168,7 +168,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
                                     // They typed something stupid here...
                                     PluginDescriptionFile pdf = plugin.getDescription();
                                     plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName()
-                                            + " (MC " + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
+                                            + " (MC " + pdf.getVersion() + ") by " + pdf.getAuthors().get(0));
                                     if (sender.hasPermission("sellstick.give")) {
                                         plugin.msg(sender, ChatColor.GREEN
                                                 + "/SellStick give <player> <amount> (<uses>/infinite)");

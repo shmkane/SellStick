@@ -1,16 +1,20 @@
-# Sell Stick [(Download Here)](https://github.com/shmkane/SellStick/releases)
-##### [Lookup By Version Here](https://github.com/shmkane/SellStick/tags)
-### SellStick can hook into pre-configured **ShopGUIPlus** or **Essentials Worth** configs!
-### Tested: Factions UUID, Savage Factions, MCore Factions, ASkyBlock, BSkyBlock, FabledSkyblock, Lockette, and many more!
+# Sell Stick
+#### SellStick works with Factions UUID, Savage Factions, MCore Factions, ASkyBlock, BSkyBlock, FabledSkyblock, Lockette, and many more!
+#### Keep your existing **ShopGUI+** or **Essentials Worth** configs!
 
-# Need Help?
+# Downloads
+### 1.15
+### 1.14
+### 1.13
+### 1.12
+### 1.8.9
+### Need a version not supported? [Create a ticket here](https://github.com/shmkane/SellStick/issues)
 
-### 1. [Create an 'issue' here](https://github.com/shmkane/SellStick/issues)
-### 2. [Join the DISCORD server](https://discord.gg/Q4CMsKC)
 
-# "Watch" this thread! 
-## Updates *always* come to [GitHub](https://github.com/shmkane/SellStick) before [Spigot](https://www.spigotmc.org/resources/sell-stick-sell-wand.38119/)
-### ![How To Watch](https://i.imgur.com/sFfO7Vo.png)
+# Support
+### 1. [Join the DISCORD server](https://discord.gg/Q4CMsKC)
+
+
 
 # Commands
 ## /*sellstick reload* - Loads new config changes onto server

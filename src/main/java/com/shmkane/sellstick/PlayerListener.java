@@ -493,7 +493,7 @@ public class PlayerListener implements Listener {
 
                 if (total > 0) {
                     if (postSale(lores, uses, p, total, im, is) && StickConfig.instance.sound) {
-                        p.playSound(e.getClickedBlock().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 0.5f);
+                        p.playSound(e.getClickedBlock().getLocation(), Sound.LEVEL_UP, 1.0f, 0.5f);
                     }
                 } else {
                     plugin.msg(p, StickConfig.instance.nothingWorth);

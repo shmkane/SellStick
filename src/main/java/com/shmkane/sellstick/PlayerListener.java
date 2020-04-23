@@ -1,8 +1,11 @@
 package com.shmkane.sellstick;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.shmkane.sellstick.Configs.PriceConfig;
+import com.shmkane.sellstick.Configs.StickConfig;
+import com.shmkane.sellstick.Configs.StickConfig.SellingInterface;
+import net.brcdev.shopgui.ShopGuiPlusApi;
+import net.brcdev.shopgui.exception.player.PlayerDataNotLoadedException;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -17,13 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import com.shmkane.sellstick.Configs.PriceConfig;
-import com.shmkane.sellstick.Configs.StickConfig;
-import com.shmkane.sellstick.Configs.StickConfig.SellingInterface;
-
-import net.brcdev.shopgui.ShopGuiPlusApi;
-import net.brcdev.shopgui.exception.player.PlayerDataNotLoadedException;
-import net.milkbowl.vault.economy.EconomyResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The PlayerListener class will handle all of the events from the player.
@@ -347,7 +345,7 @@ public class PlayerListener implements Listener {
                         SellStick.log.warning(ex.toString());
                 }
 
-                if (ex instanceof PlayerDataNotLoadedException) {
+                if (si == SellingInterface.SHOPGUI && ex instanceof PlayerDataNotLoadedException) {
                     SellStick.log.severe("Player should relog to fix this.");
                     e.getPlayer().sendMessage(ChatColor.DARK_RED + "Please re-log to use SellStick.");
                     return 0;
@@ -463,7 +461,7 @@ public class PlayerListener implements Listener {
 
         // When they left click with that item, and that item has the same name
         // as a sellstick
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && !p.isSneaking()) {
             if (didClickChestWithSellStick(p, e)) {
 
                 // Other plugin overriden.

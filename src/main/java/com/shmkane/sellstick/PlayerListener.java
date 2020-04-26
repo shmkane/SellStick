@@ -351,8 +351,8 @@ public class PlayerListener implements Listener {
                         return 0;
                     }
                 } catch (NoClassDefFoundError err) {
-                    SellStick.log.warning(err.toString());
-                    SellStick.log.warning("You can ignore this error. It just means you don't have ShopGUI OR that you have a newer version. Either way, there's no action required from you. I'm just putting this instead of an ugly looking message that wont make sense to you ");
+                    //SellStick.log.warning(err.toString());
+                    //SellStick.log.warning("You can ignore this error. It just means you don't have ShopGUI OR that you have a newer version. Either way, there's no action required from you. I'm just putting this instead of an ugly looking message that wont make sense to you ");
 
                 }
             }

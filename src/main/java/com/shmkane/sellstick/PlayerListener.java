@@ -350,11 +350,7 @@ public class PlayerListener implements Listener {
                         e.getPlayer().sendMessage(ChatColor.DARK_RED + "Please re-log to use SellStick.");
                         return 0;
                     }
-                } catch (NoClassDefFoundError err) {
-                    //SellStick.log.warning(err.toString());
-                    //SellStick.log.warning("You can ignore this error. It just means you don't have ShopGUI OR that you have a newer version. Either way, there's no action required from you. I'm just putting this instead of an ugly looking message that wont make sense to you ");
-
-                }
+                } catch (NoClassDefFoundError err) { /*For some older versions of shopgui*/ }
             }
             if (StickConfig.instance.debug && slotPrice > 0) {
                 SellStick.log.warning("---slotPrice=" + slotPrice);

@@ -1,6 +1,9 @@
 theme: jekyll-theme-cayman
 show_downloads: true
 github:
-  fifteen_url: http://google.com
-  another_url: http://yahoo.ca
-  test_url: http://gmail.com 
+  fifteen_url: https://github.com/shmkane/SellStick/releases/tag/1.15.2
+  fourteen_url: https://github.com/shmkane/SellStick/releases/tag/1.14.4
+  thirteen_url: https://github.com/shmkane/SellStick/releases/tag/1.13.2
+  twelve_url: https://github.com/shmkane/SellStick/releases/tag/1.12.2
+  nine_url: https://github.com/shmkane/SellStick/releases/tag/1.9.4
+  eight_url: https://github.com/shmkane/SellStick/releases/tag/1.8.8

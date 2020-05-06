@@ -31,3 +31,4 @@
 
 ## Examples:
 ### sellstick.multiplier.1.1 - Sells for 1.1x reular price
+

@@ -1,9 +1,9 @@
 theme: jekyll-theme-cayman
 show_downloads: true
 github:
-  version.115: https://github.com/shmkane/SellStick/releases/tag/1.15.2
-  version.114: https://github.com/shmkane/SellStick/releases/tag/1.14.4
-  version.113: https://github.com/shmkane/SellStick/releases/tag/1.13.2
-  version.112: https://github.com/shmkane/SellStick/releases/tag/1.12.2
-  version.19: https://github.com/shmkane/SellStick/releases/tag/1.9.4
-  version.18: https://github.com/shmkane/SellStick/releases/tag/1.8.8
+  115: https://github.com/shmkane/SellStick/releases/tag/1.15.2
+  114: https://github.com/shmkane/SellStick/releases/tag/1.14.4
+  113: https://github.com/shmkane/SellStick/releases/tag/1.13.2
+  112: https://github.com/shmkane/SellStick/releases/tag/1.12.2
+  19: https://github.com/shmkane/SellStick/releases/tag/1.9.4
+  18: https://github.com/shmkane/SellStick/releases/tag/1.8.8

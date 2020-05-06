@@ -34,7 +34,7 @@ public class PlayerListener implements Listener {
     /**
      * Instance of the plugin
      **/
-    private SellStick plugin;
+    private final SellStick plugin;
 
     /**
      * Construct object, pass instance of SellStick
@@ -297,11 +297,19 @@ public class PlayerListener implements Listener {
 
                     }
                 } else if (si == SellingInterface.ESSWORTH) {
-                    price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
-                    if (StickConfig.instance.debug) {
-                        if (price > 0)
-                            SellStick.log.warning("-Price: " + price);
-                        SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
+                    try {
+                        if (plugin.ess == null) {
+                            SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
+                            return 0;
+                        }
+                        price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
+                        if (StickConfig.instance.debug) {
+                            if (price > 0)
+                                SellStick.log.warning("-Price: " + price);
+                            SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
+                        }
+                    } catch (Exception exception) {
+                        SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
                     }
 
                 } else if (si == SellingInterface.SHOPGUI) {

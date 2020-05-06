@@ -1,17 +1,15 @@
 package com.shmkane.sellstick;
 
-import java.util.logging.Logger;
-
+import com.earth2me.essentials.Essentials;
+import com.shmkane.sellstick.Configs.PriceConfig;
+import com.shmkane.sellstick.Configs.StickConfig;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.earth2me.essentials.Essentials;
-import com.shmkane.sellstick.Configs.PriceConfig;
-import com.shmkane.sellstick.Configs.StickConfig;
-
-import net.milkbowl.vault.economy.Economy;
+import java.util.logging.Logger;
 
 /**
  * SellStick is a MC plugin that allows customizable selling of
@@ -29,10 +27,9 @@ public class SellStick extends JavaPlugin {
      * Instance of Vault Economy
      **/
     private static Economy econ;
-    /**
-     * Holds instance of Essentials
-     **/
-    public Essentials ess;
+
+    Essentials ess;
+
 
     /**
      * Initial plugin setup. Creation and loading of YML files.
@@ -75,7 +72,6 @@ public class SellStick extends JavaPlugin {
     public void onDisable() {
         log.warning(String.format("[%s] - Attempting to disabling...", getDescription().getName()));
         try {
-            ess = null;
             econ = null;
         } catch (Exception ex) {
             log.severe(String.format("[%s] - Was not disabled correctly!", getDescription().getName()));
@@ -88,20 +84,26 @@ public class SellStick extends JavaPlugin {
      * Checks if Essentials is available to be hooked into.
      */
     public void setupEssentials() {
-        if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
-            log.info(String.format("[%s] Essentals was found", getDescription().getName()));
-            ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
-        }
 
-        if (StickConfig.instance.useEssentialsWorth) {
-            if (ess == null || !ess.isEnabled()) {
-                log.warning(String.format("[%s] Trying to use essentials worth but essentials not found!",
-                        getDescription().getName()));
-            } else {
-                log.info(String.format("[%s] Using essentials worth!", getDescription().getName()));
+        try {
+            if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
+                log.info(String.format("[%s] Essentials was found", getDescription().getName()));
+                ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+
+                if (StickConfig.instance.useEssentialsWorth) {
+                    if (ess == null || !ess.isEnabled()) {
+                        log.warning(String.format("[%s] Trying to use essentials worth but essentials not found!",
+                                getDescription().getName()));
+                    } else {
+                        log.info(String.format("[%s] Using essentials worth!", getDescription().getName()));
+                    }
+                }
             }
+        } catch (Exception ex) {
+            log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message:");
+            log.warning(ex.getMessage());
+            ess = null;
         }
-
     }
 
     /**

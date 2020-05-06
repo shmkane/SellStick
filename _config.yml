@@ -1,9 +1,5 @@
 theme: jekyll-theme-cayman
 show_downloads: true
 github:
-  zip_url: https://github.com/shmkane/SellStick/releases/tag/1.15.2
-  114: https://github.com/shmkane/SellStick/releases/tag/1.14.4
-  113: https://github.com/shmkane/SellStick/releases/tag/1.13.2
-  112: https://github.com/shmkane/SellStick/releases/tag/1.12.2
-  19: https://github.com/shmkane/SellStick/releases/tag/1.9.4
-  18: https://github.com/shmkane/SellStick/releases/tag/1.8.8
+  zip_url: http://google.com
+  another_url: another value

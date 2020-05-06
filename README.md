@@ -1,6 +1,8 @@
 # Commands
 /sellstick reload - Loads new config changes onto server
+
 /sellstick give <uses/infinite> - Give player sellsticks
+
 ### Examples:
 /sellstick give shmkane 1 20 - Gives shmkane 1 sellstick with 20 uses
 

@@ -1,5 +1,9 @@
 theme: jekyll-theme-cayman
 show_downloads: true
 github:
-  zip_url: http://google.com
-  another_url: another value
+  version.115: http://google.com/5
+  version.114: http://google.com/4
+  version.113: http://google.com/3
+  version.112: http://google.com/2
+  version.19: http://google.com/1
+  version.18: http://google.com/8

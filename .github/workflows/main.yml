@@ -31,6 +31,6 @@ jobs:
     - name: Create GitHub release
       uses: Roang-zero1/github-upload-release-artifacts-action@master
       with:
-        args: dist/shell/compiled.sh
+        args: /home/runner/work/SellStick/SellStick/target/sellstick-1.0-SNAPSHOT.jar
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -31,7 +31,7 @@ jobs:
         release_name: Release ${{ github.ref }}
         body: |
           Changes in this Release
-        draft: false
+        draft: true
         prerelease: false
     - name: Upload Release Asset
       id: upload-release-asset 

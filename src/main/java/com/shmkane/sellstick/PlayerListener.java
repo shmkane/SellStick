@@ -34,7 +34,7 @@ public class PlayerListener implements Listener {
     /**
      * Instance of the plugin
      **/
-    private SellStick plugin;
+    private final SellStick plugin;
 
     /**
      * Construct object, pass instance of SellStick
@@ -297,11 +297,19 @@ public class PlayerListener implements Listener {
 
                     }
                 } else if (si == SellingInterface.ESSWORTH) {
-                    price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
-                    if (StickConfig.instance.debug) {
-                        if (price > 0)
-                            SellStick.log.warning("-Price: " + price);
-                        SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
+                    try {
+                        if (plugin.ess == null) {
+                            SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
+                            return 0;
+                        }
+                        price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
+                        if (StickConfig.instance.debug) {
+                            if (price > 0)
+                                SellStick.log.warning("-Price: " + price);
+                            SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
+                        }
+                    } catch (Exception exception) {
+                        SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
                     }
 
                 } else if (si == SellingInterface.SHOPGUI) {
@@ -344,13 +352,12 @@ public class PlayerListener implements Listener {
                     if (!(ex instanceof NullPointerException))
                         SellStick.log.warning(ex.toString());
                 }
-                try {
-                    if (ex instanceof PlayerDataNotLoadedException) {
-                        SellStick.log.severe("Player should relog to fix this.");
-                        e.getPlayer().sendMessage(ChatColor.DARK_RED + "Please re-log to use SellStick.");
-                        return 0;
-                    }
-                } catch (NoClassDefFoundError err) { /*For some older versions of shopgui*/ }
+
+                if (si == SellingInterface.SHOPGUI && ex instanceof PlayerDataNotLoadedException) {
+                    SellStick.log.severe("Player should relog to fix this.");
+                    e.getPlayer().sendMessage(ChatColor.DARK_RED + "Please re-log to use SellStick.");
+                    return 0;
+                }
             }
             if (StickConfig.instance.debug && slotPrice > 0) {
                 SellStick.log.warning("---slotPrice=" + slotPrice);
@@ -462,7 +469,7 @@ public class PlayerListener implements Listener {
 
         // When they left click with that item, and that item has the same name
         // as a sellstick
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && !p.isSneaking()) {
             if (didClickChestWithSellStick(p, e)) {
 
                 // Other plugin overriden.

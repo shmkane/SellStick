@@ -3,6 +3,7 @@
 #### Keep your existing **ShopGUI+** or **Essentials Worth** configs!
 
 # Downloads
+## What Spigot/Paper version is your server?
 ### [1.15](https://github.com/shmkane/SellStick/releases/tag/1.15)
 ### [1.14](https://github.com/shmkane/SellStick/releases/tag/1.14.4)
 ### [1.13](https://github.com/shmkane/SellStick/releases/tag/1.13.2)

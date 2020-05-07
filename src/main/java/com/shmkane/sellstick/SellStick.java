@@ -26,10 +26,7 @@ public class SellStick extends JavaPlugin {
     /**
      * Instance of Vault Economy
      **/
-    private static Economy econ;
-
-    Essentials ess;
-
+    private static Economy econ = null;
 
     /**
      * Initial plugin setup. Creation and loading of YML files.
@@ -48,6 +45,7 @@ public class SellStick extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
         setupEssentials();
 
         if (Bukkit.getPluginManager().isPluginEnabled("ShopGuiPlus")) {
@@ -62,7 +60,11 @@ public class SellStick extends JavaPlugin {
         PriceConfig.instance.setup(getDataFolder());
 
         this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
-        this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        try {
+            this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        }catch(Exception ex) {
+            System.out.println("DEBUG: REmove -- ClassNotFOund");
+        }
     }
 
     /**
@@ -88,21 +90,22 @@ public class SellStick extends JavaPlugin {
         try {
             if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
                 log.info(String.format("[%s] Essentials was found", getDescription().getName()));
-                ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+                Essentials ess = Essentials.getPlugin(Essentials.class);
 
                 if (StickConfig.instance.useEssentialsWorth) {
-                    if (ess == null || !ess.isEnabled()) {
+                    if (ess == null) {
                         log.warning(String.format("[%s] Trying to use essentials worth but essentials not found!",
                                 getDescription().getName()));
                     } else {
                         log.info(String.format("[%s] Using essentials worth!", getDescription().getName()));
                     }
                 }
+            }else{
+                log.warning(String.format("[%s] Essentials not found", getDescription().getName()));
             }
         } catch (Exception ex) {
             log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message:");
             log.warning(ex.getMessage());
-            ess = null;
         }
     }
 
@@ -146,4 +149,5 @@ public class SellStick extends JavaPlugin {
 
         sender.sendMessage(StickConfig.instance.prefix + msg);
     }
+
 }

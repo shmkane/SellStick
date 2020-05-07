@@ -1,5 +1,6 @@
 package com.shmkane.sellstick;
 
+import com.earth2me.essentials.IEssentials;
 import com.shmkane.sellstick.Configs.PriceConfig;
 import com.shmkane.sellstick.Configs.StickConfig;
 import com.shmkane.sellstick.Configs.StickConfig.SellingInterface;
@@ -9,6 +10,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,6 +21,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -265,8 +268,7 @@ public class PlayerListener implements Listener {
         for (int i = 0; i < c.getInventory().getSize(); i++) {
 
             try {
-                if (si == SellingInterface.PRICESYML) { // Not essW, not
-                    // shopgui
+                if (si == SellingInterface.PRICESYML) { // Not essW, not shop
 
                     for (String key : PriceConfig.instance.getPrices()) {
 
@@ -298,18 +300,20 @@ public class PlayerListener implements Listener {
                     }
                 } else if (si == SellingInterface.ESSWORTH) {
                     try {
-                        if (plugin.ess == null) {
-                            SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
-                            return 0;
-                        }
-                        price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
+                        Object ess = plugin.getServer().getPluginManager().getPlugin("Essentials");
+
+                        price = ((IEssentials) ess).getWorth().getPrice((IEssentials) ess, contents[i]).doubleValue();
+
                         if (StickConfig.instance.debug) {
                             if (price > 0)
                                 SellStick.log.warning("-Price: " + price);
                             SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
                         }
+
+
                     } catch (Exception exception) {
                         SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
+                        return 0;
                     }
 
                 } else if (si == SellingInterface.SHOPGUI) {

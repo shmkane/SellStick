@@ -60,15 +60,11 @@ public class SellStick extends JavaPlugin {
         PriceConfig.instance.setup(getDataFolder());
 
         this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
-        try {
-            this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
-        }catch(Exception ex) {
-            System.out.println("DEBUG: REmove -- ClassNotFOund");
-        }
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
     }
 
     /**
-     * Attempt to disable plugin. Reset the values of some instance varibles.
+     * Attempt to disable plugin. Reset the values of some instance variables.
      */
     @Override
     public void onDisable() {

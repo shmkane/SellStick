@@ -20,17 +20,24 @@
 DisplayName: '&cSellStick'
 #
 #For any Materials, use
+#If you use 1.8, use this link
+#https://helpch.at/docs/1.8/org/bukkit/Material.html
+#For 1.9, use this
+#https://helpch.at/docs/1.9/org/bukkit/Material.html
+#in general, replace the version in the link with the version you're using
+#https://helpch.at/docs/YOUR_VERION_HERE/org/bukkit/Material.html
+#If you're using latest version, use this
 #https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html as a reference
 #You can also use Item IDs (See examples in prices.yml)
 #
 #---------------------------#
 #YES IT MATTERS HOW YOU TYPE#
-###PLEASE GO TO THAT LINK####
+###REVIEW THE LINKS ABOVE####
 #---------------------------#
 #
-#Use the above link to change this item from a stick to anything else
+#Use the ABOVE LINKS to change this item
 ItemType: STICK #ONCE AGAIN, USE THE LINK ABOVE FOR ITEM NAMES
-#
+#I REALLY HOPE YOU LOOKED AT THE LINKS ABOVE
 #
 #The lore on the stick
 #When they hover over it, what do they see

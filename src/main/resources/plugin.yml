@@ -1,6 +1,6 @@
 name: SellStick
 main: com.shmkane.sellstick.SellStick
-version: 1.8.8
+version: 1.8.8v2
 #api-version: DNE for below 1.13
 author: shmkane
 website: https://github.com/shmkane/SellStick

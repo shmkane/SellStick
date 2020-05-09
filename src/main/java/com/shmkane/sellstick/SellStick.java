@@ -28,9 +28,6 @@ public class SellStick extends JavaPlugin {
      **/
     private static Economy econ;
 
-    Essentials ess;
-
-
     /**
      * Initial plugin setup. Creation and loading of YML files.
      * <p>
@@ -93,8 +90,7 @@ public class SellStick extends JavaPlugin {
         try {
             if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
                 log.info(String.format("[%s] Essentials was found", getDescription().getName()));
-                ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
-
+                Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
                 if (StickConfig.instance.useEssentialsWorth) {
                     if (ess == null || !ess.isEnabled()) {
                         log.warning(String.format("[%s] Trying to use essentials worth but essentials not found!",
@@ -107,7 +103,6 @@ public class SellStick extends JavaPlugin {
         } catch (Exception ex) {
             log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message:");
             log.warning(ex.getMessage());
-            ess = null;
         }
     }
 

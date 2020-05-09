@@ -48,12 +48,17 @@ public class SellStick extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        setupEssentials();
 
-        if (Bukkit.getPluginManager().isPluginEnabled("ShopGuiPlus")) {
-            if (!StickConfig.instance.useShopGUI) {
-                log.warning(String.format("[%s] ShopGUI+ was found but not enabled in the config!", getDescription().getName()));
+        setupEssentials();
+        try {
+            if (Bukkit.getPluginManager().isPluginEnabled("ShopGuiPlus")) {
+                if (!StickConfig.instance.useShopGUI) {
+                    log.warning(String.format("[%s] ShopGUI+ was found but not enabled in the config!", getDescription().getName()));
+                }
             }
+        } catch (Exception ex) {
+            log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message:");
+            log.warning(ex.getMessage());
         }
 
         this.saveDefaultConfig();

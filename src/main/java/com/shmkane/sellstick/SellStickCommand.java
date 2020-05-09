@@ -118,8 +118,13 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
                              */
                             RandomString random = new RandomString(5);
                             String UUID = random.nextString();
-
-                            ItemStack is = new ItemStack(Material.getMaterial(StickConfig.instance.item));
+                            ItemStack is;
+                            try {
+                                is = new ItemStack(Material.getMaterial(StickConfig.instance.item));
+                            }catch(NullPointerException ex) {
+                                SellStick.log.severe(String.format("[%s] - Invalid item set in config. Please read the links I put in the config to fix this.", plugin.getDescription().getName()));
+                                return false;
+                            }
                             ItemMeta im = is.getItemMeta();
 
                             List<String> lores = new ArrayList<String>();
@@ -148,7 +153,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
                             } catch (Exception ex) {
                                 plugin.msg(sender, ChatColor.RED
                                         + "Something went wrong. Please check the console for an error message.");
-                                System.out.println(ex);
+                                SellStick.log.severe(ex.getMessage());
                                 return false;
                             }
 

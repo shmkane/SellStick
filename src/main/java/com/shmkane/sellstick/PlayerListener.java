@@ -1,11 +1,13 @@
 package com.shmkane.sellstick;
 
+import com.earth2me.essentials.Essentials;
 import com.shmkane.sellstick.Configs.PriceConfig;
 import com.shmkane.sellstick.Configs.StickConfig;
 import com.shmkane.sellstick.Configs.StickConfig.SellingInterface;
 import net.brcdev.shopgui.ShopGuiPlusApi;
 import net.brcdev.shopgui.exception.player.PlayerDataNotLoadedException;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -298,18 +300,20 @@ public class PlayerListener implements Listener {
                     }
                 } else if (si == SellingInterface.ESSWORTH) {
                     try {
-                        if (plugin.ess == null) {
+                        Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+
+                        if (ess == null) {
                             SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
                             return 0;
                         }
-                        price = plugin.ess.getWorth().getPrice(plugin.ess, contents[i]).doubleValue();
+                        price = ess.getWorth().getPrice(ess, contents[i]).doubleValue();
                         if (StickConfig.instance.debug) {
                             if (price > 0)
                                 SellStick.log.warning("-Price: " + price);
                             SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
                         }
                     } catch (Exception exception) {
-                        SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
+                        //SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
                     }
 
                 } else if (si == SellingInterface.SHOPGUI) {
@@ -359,10 +363,12 @@ public class PlayerListener implements Listener {
                     return 0;
                 }
             }
+
             if (StickConfig.instance.debug && slotPrice > 0) {
                 SellStick.log.warning("---slotPrice=" + slotPrice);
                 SellStick.log.warning("---total=" + total);
             }
+
             total += slotPrice;
             slotPrice = 0;
             price = 0;

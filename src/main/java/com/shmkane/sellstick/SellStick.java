@@ -26,7 +26,7 @@ public class SellStick extends JavaPlugin {
     /**
      * Instance of Vault Economy
      **/
-    private static Economy econ = null;
+    private static Economy econ;
 
     /**
      * Initial plugin setup. Creation and loading of YML files.
@@ -48,23 +48,28 @@ public class SellStick extends JavaPlugin {
 
         setupEssentials();
 
-        if (Bukkit.getPluginManager().isPluginEnabled("ShopGuiPlus")) {
-            if (!StickConfig.instance.useShopGUI) {
-                log.warning(String.format("[%s] ShopGUI+ was found but not enabled in the config!", getDescription().getName()));
-            }
-        }
-
         this.saveDefaultConfig();
 
         StickConfig.instance.setup(getDataFolder());
         PriceConfig.instance.setup(getDataFolder());
+
+        try {
+            if (Bukkit.getPluginManager().isPluginEnabled("ShopGuiPlus")) {
+                if (!StickConfig.instance.useShopGUI) {
+                    log.warning(String.format("[%s] ShopGUI+ was found but not enabled in the config!", getDescription().getName()));
+                }
+            }
+        } catch (Exception ex) {
+            log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message:");
+            log.warning(ex.getMessage());
+        }
 
         this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
     }
 
     /**
-     * Attempt to disable plugin. Reset the values of some instance variables.
+     * Attempt to disable plugin. Reset the values of some instance varibles.
      */
     @Override
     public void onDisable() {
@@ -86,18 +91,15 @@ public class SellStick extends JavaPlugin {
         try {
             if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
                 log.info(String.format("[%s] Essentials was found", getDescription().getName()));
-                Essentials ess = Essentials.getPlugin(Essentials.class);
-
+                Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
                 if (StickConfig.instance.useEssentialsWorth) {
-                    if (ess == null) {
+                    if (ess == null || !ess.isEnabled()) {
                         log.warning(String.format("[%s] Trying to use essentials worth but essentials not found!",
                                 getDescription().getName()));
                     } else {
                         log.info(String.format("[%s] Using essentials worth!", getDescription().getName()));
                     }
                 }
-            }else{
-                log.warning(String.format("[%s] Essentials not found", getDescription().getName()));
             }
         } catch (Exception ex) {
             log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message:");
@@ -145,5 +147,4 @@ public class SellStick extends JavaPlugin {
 
         sender.sendMessage(StickConfig.instance.prefix + msg);
     }
-
 }

@@ -20,4 +20,4 @@ sellstick.use - Allows the player with this permission to use a sell stick!
 sellstick.multiplier.x - Allows players to sell by a factor.
 
 ### Examples:
-sellstick.multiplier.1.1 - Sells for 1.1x reular price
+sellstick.multiplier.1.1 - Sells for 1.1x regular price

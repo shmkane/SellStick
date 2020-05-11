@@ -1,8 +1,8 @@
 package com.shmkane.sellstick;
 
-import java.util.Random;
+import org.bukkit.ChatColor;
 
-import net.md_5.bungee.api.ChatColor;
+import java.util.Random;
 
 public class RandomString {
 

@@ -6,6 +6,8 @@ import com.shmkane.sellstick.Configs.StickConfig;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,6 +29,8 @@ public class SellStick extends JavaPlugin {
      * Instance of Vault Economy
      **/
     private static Economy econ = null;
+
+    private CancellationDetector<PlayerInteractEvent> detector = new CancellationDetector<>(PlayerInteractEvent.class);
 
     /**
      * Initial plugin setup. Creation and loading of YML files.
@@ -61,6 +65,14 @@ public class SellStick extends JavaPlugin {
 
         this.getCommand("sellstick").setExecutor(new SellStickCommand(this));
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+
+        detector.addListener(new CancellationDetector.CancelListener<PlayerInteractEvent>() {
+            @Override
+            public void onCancelled(Plugin plugin, PlayerInteractEvent event) {
+                log.severe("[SellStick - Debug] " + event + " cancelled by " + plugin);
+                System.out.println();
+                }
+        });
     }
 
     /**
@@ -68,6 +80,7 @@ public class SellStick extends JavaPlugin {
      */
     @Override
     public void onDisable() {
+        detector.close();
         log.warning(String.format("[%s] - Attempting to disabling...", getDescription().getName()));
         try {
             econ = null;

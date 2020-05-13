@@ -1,3 +1,4 @@
+# http://sellstick.shmkane.com
 # Commands
 /sellstick reload - Loads new config changes onto server
 

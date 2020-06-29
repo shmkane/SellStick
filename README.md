@@ -1,7 +1,7 @@
 # http://sellstick.shmkane.com
-SellStick is a free and open source Java Minecraft plugins run on ~5,000 servers used to give players the ability to sell chest contents quickly. With an active discord and developers, you always have support if issues arrise, and updates when new versions come.
+SellStick is a **free and open source** Java Minecraft plugins run on ~5,000 servers used to give players the ability to sell chest contents quickly. With an **active discord** and developers, you always have support if issues arrise, and updates when new versions come.
 
-With prices you can import from ShopGuiPlus, Essentials Worth, or the prices.yml file, SellStick offers quick and easy setup.
+With prices you can import from **ShopGuiPlus, Essentials Worth**, or the prices.yml file, SellStick offers quick and easy setup.
 
 SellStick respects protections offered by many other plugins, such as:
  * Factions,

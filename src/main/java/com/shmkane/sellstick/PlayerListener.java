@@ -143,7 +143,9 @@ public class PlayerListener implements Listener {
      * the char before it (i-1). if (i-1) is the color_char(�).
      * <p>
      * It will make a string that looks something like "----a--b-4--" where dashes
-     * represent something, and everything remaining represents color codes.
+     * represent something, and everything that remaining represents color codes and integer values.
+     * In short, everything that's not a color code is turned into a dash.
+     * Then we go figure out which one was a color code and which one was an actual int (for the dura)
      * <p>
      * It's not worth understanding how this method works if I'm being honest. Just
      * don't break it.
@@ -186,6 +188,20 @@ public class PlayerListener implements Listener {
         return found;
     }
 
+    public boolean isSellStick(Player p, PlayerInteractEvent e) {
+        Material sellItem;
+        try {
+            sellItem = Material.getMaterial(StickConfig.instance.item.toUpperCase());
+        } catch (Exception ex) {
+            SellStick.log.severe("Invalid SellStick item set in config.");
+            return false;
+        }
+
+        return p.getItemInHand().getType() == sellItem && p.getItemInHand().getItemMeta().getDisplayName() != null
+                && p.getItemInHand().getItemMeta().getDisplayName().startsWith(StickConfig.instance.name);
+
+    }
+
     /**
      * Method for checking if a player just clicked a chest with a sellstick
      *
@@ -195,7 +211,13 @@ public class PlayerListener implements Listener {
      */
     @SuppressWarnings("deprecation")
     public boolean didClickChestWithSellStick(Player p, PlayerInteractEvent e) {
-        Material sellItem = Material.getMaterial(StickConfig.instance.item.toUpperCase());
+        Material sellItem;
+        try {
+            sellItem = Material.getMaterial(StickConfig.instance.item.toUpperCase());
+        } catch (Exception ex) {
+            SellStick.log.severe("Invalid SellStick item set in config.");
+            return false;
+        }
 
         if (p.getItemInHand().getType() == sellItem) {
             if (p.getItemInHand().getItemMeta().getDisplayName() != null
@@ -313,7 +335,6 @@ public class PlayerListener implements Listener {
 
                     } catch (Exception exception) {
                         SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
-                        return 0;
                     }
 
                 } else if (si == SellingInterface.SHOPGUI) {
@@ -427,7 +448,9 @@ public class PlayerListener implements Listener {
         } else {
             r = plugin.getEcon().depositPlayer(p, total * multiplier);
         }
+
         boolean success = false;
+
         if (r.transactionSuccess()) {
             success = true;
             if (StickConfig.instance.sellMessage.contains("\\n")) {
@@ -508,6 +531,11 @@ public class PlayerListener implements Listener {
                 } else {
                     plugin.msg(p, StickConfig.instance.nothingWorth);
                 }
+                e.setCancelled(true);
+            }
+        }else{
+            if(isSellStick(p, e)) {
+                plugin.msg(p, StickConfig.instance.nonSellingRelated);
                 e.setCancelled(true);
             }
         }

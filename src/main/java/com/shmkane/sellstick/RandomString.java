@@ -12,7 +12,7 @@ public class RandomString {
      * Just generates random color code combinations Only symbols 0-9 and a-f (for
      * color codes)
      *
-     * This is used so I can make an invisible message Purpose being items don't
+     * This is used so I can make an invisible message. Purpose being, items don't
      * stack unless their metadata is the same. By having random(invisible) codes
      * SellSticks will never stack
      */

@@ -1,6 +1,6 @@
 #############################
 ####Sell Stick by shmkane####
-###Plugin Version: 1.15.2v1##
+###Plugin Version: 1.15.2v5##
 #############################
 #
 #############################
@@ -19,38 +19,45 @@
 #The name of the item - displayname
 DisplayName: '&cSellStick'
 #
+# READ THE WARNING ABOVE! (line 10)
+#
 #For any Materials, use
 #If you use 1.8, use this link
 #https://helpch.at/docs/1.8/org/bukkit/Material.html
 #For 1.9, use this
 #https://helpch.at/docs/1.9/org/bukkit/Material.html
 #in general, replace the version in the link with the version you're using
+#
 #https://helpch.at/docs/YOUR_VERION_HERE/org/bukkit/Material.html
+#
 #If you're using latest version, use this
+#
 #https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html as a reference
-#You can also use Item IDs (See examples in prices.yml)
 #
 #---------------------------#
 #YES IT MATTERS HOW YOU TYPE#
 ###REVIEW THE LINKS ABOVE####
 #---------------------------#
 #
+#
 #Use the ABOVE LINKS to change this item
-ItemType: STICK #ONCE AGAIN, USE THE LINK ABOVE FOR ITEM NAMES
-#I REALLY HOPE YOU LOOKED AT THE LINKS ABOVE
+ItemType: STICK #ONCE AGAIN, USE THE LINKS ABOVE FOR ITEM NAMES. Don't just guess. Otherwise you'll get errors.
+# READ THE WARNING ABOVE! (line 10)
+# I REALLY HOPE YOU LOOKED AT THE LINKS ABOVE
 #
 #The lore on the stick
 #When they hover over it, what do they see
 #Line 2 will always be the Finite or Infinite Lore
 #
+#
 StickLore:
   - '&a&lRight click &con a chest to sell items inside!' #line 1
-  #The Finite or Infinite lore will always go on line 2
-  - '&bSellStick by &oshmkane' #line 3
-  - '&cCustomize this in the CONFIG!' #line 4
-#- '&cadd more lines' #line 5
-#- '&aLike this' #line 6
+  - '&bSellStick by &oshmkane' #line 2
+  - '&cCustomize this in the CONFIG!' #line 3
+  - '&cadd more lines' #line 4
+  - '&aLike this' #line 5
 #
+# READ THE WARNING ABOVE! (line 10)
 #
 #Do you want the stick to glow
 #As if it has an enchantment?
@@ -78,10 +85,10 @@ InfiniteLore: '&4Infinite &cuses!'
 #If you have a finite stick, the Finite lore set above will be here
 #Be VERY CAREFUL if you plan on changing this number
 #Especially after players have sellsticks!
-DurabilityLine: 4
+DurabilityLine: 2
+# Again, if you change this, previous sellsticks may break!
 #
-#
-#Messages sent to the palyer will be prefixed with this
+#Messages sent to the player will be prefixed with this
 MessagePrefix: '&6[&eSellStick&6] '
 #
 #
@@ -110,7 +117,11 @@ NotWorthMessage: '&cNothing worth selling inside'
 BrokenStick: '&cYour sellstick broke!(Ran out of uses)'
 #
 #
-#Do you want to use shopgui for prices
+#If they try to do something other than selling with the sellstick...
+NonSellingRelated: '&cOak''s words echoed...&7There''s a time and place for everything but not now!'
+#
+#
+#Do you want to use shopgui+ for prices
 #instead of my prices.yml?
 #if so, enable this
 UseShopGUI: false
@@ -123,18 +134,26 @@ UseEssentialsWorth: false
 #
 #
 #The message to send to the Admin who gave the sticks
+# Placeholders:
+#   %player - person who will get the sellstick
+#   %amount - amount of sellsticks that %player% will receive
 GiveMessage: '&aYou gave &e%player% &e&l%amount% &asell sticks!'
 #
 #
 #Message to send to the player who received the sticks
+# Placehlders:
+#   %amount% - money that the seller receives.
 ReceiveMessage: '&aYou''ve received &e&l%amount% &asell sticks!'
 #
 #Do you want a little noise to play when players sell something?
 UseSound: true
 #
 #
-#That's it! If you have questions, ask on GitHub.
-#https://github.com/shmkane/SellStick/issues
+#That's it!
+#If you have questions, ask on Discord.
+#
+#
+#https://discord.com/invite/st9aMnF
 #Don't leave a negative review then expect me to help you with an issue
 debug: false
 #Suggested: leave this false unless you want your console spammed with info.

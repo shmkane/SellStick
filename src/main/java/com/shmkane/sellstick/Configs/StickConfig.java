@@ -4,12 +4,11 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.shmkane.sellstick.SellStick;
-
-import net.md_5.bungee.api.ChatColor;
 
 /**
  * Handles the operations of the config.yml
@@ -78,6 +77,10 @@ public class StickConfig {
      **/
     public String brokenStick;
     /**
+     * If they try to do something other than selling with the sellstick...
+     */
+    public String nonSellingRelated;
+    /**
      * Message sent when giving someone a sellstick
      **/
     public String giveMessage;
@@ -85,6 +88,7 @@ public class StickConfig {
      * Message received if you get a sellstick
      **/
     public String receiveMessage;
+
     /**
      * Whether or not to make sellstick glow (enchant effect)
      **/
@@ -129,6 +133,7 @@ public class StickConfig {
         this.territoryMessage = ChatColor.translateAlternateColorCodes('&', config.getString("InvalidTerritoryMessage"));
         this.nothingWorth = ChatColor.translateAlternateColorCodes('&', config.getString("NotWorthMessage"));
         this.brokenStick = ChatColor.translateAlternateColorCodes('&', config.getString("BrokenStick"));
+        this.nonSellingRelated = ChatColor.translateAlternateColorCodes('&', config.getString("NonSellingRelated"));
         this.giveMessage = ChatColor.translateAlternateColorCodes('&', config.getString("GiveMessage"));
         this.receiveMessage = ChatColor.translateAlternateColorCodes('&', config.getString("ReceiveMessage"));
         this.useEssentialsWorth = config.getBoolean("UseEssentialsWorth");
@@ -168,6 +173,7 @@ public class StickConfig {
             config.set("InvalidTerritoryMessage", "&cYou can't use sell stick here!");
             config.set("NotWorthMessage", "&cNothing worth selling inside");
             config.set("BrokenStick", "&cYour sellstick broke!(Ran out of uses)");
+            config.set("NonSellingRelated", "&cOak's words echoed...&7There's a time and place for everything but not now!");
             config.set("GiveMessage", "&aYou gave &e%player%& &e&l%amount% &asell sticks!");
             config.set("ReceiveMessage", "&aYou've received &e&l%amount% &asell sticks!");
             config.set("UseEssentialsWorth", false);

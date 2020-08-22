@@ -1,6 +1,7 @@
 theme: jekyll-theme-cayman
 show_downloads: true
 github:
+  sixteen_url: https://github.com/shmkane/SellStick/releases/tag/1.16.1
   fifteen_url: https://github.com/shmkane/SellStick/releases/tag/1.15.2
   fourteen_url: https://github.com/shmkane/SellStick/releases/tag/1.14.4
   thirteen_url: https://github.com/shmkane/SellStick/releases/tag/1.13.2

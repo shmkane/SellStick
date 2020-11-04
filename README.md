@@ -7,7 +7,8 @@ SellStick respects protections offered by many other plugins, such as:
  * Factions,
  * SkyBlock,
  * Lockette, LWC, GriefProtection,
- * and many more...
+ * Towny
+ * and almost all other protection plugins!
 
 # Commands
 /sellstick reload - Loads new config changes onto server

@@ -2,6 +2,7 @@ package com.shmkane.sellstick;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -55,6 +56,11 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
             commands.add("1");
         } else if (args.length == 4) {
             commands.add("i");
+            commands.add("1");
+            commands.add("2");
+            commands.add("3");
+            commands.add("5");
+            commands.add("10");
         }
         return commands;
     }
@@ -64,13 +70,10 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        PluginDescriptionFile pdf = plugin.getDescription();
+
         if (args.length == 0) {
-            PluginDescriptionFile pdf = plugin.getDescription();
-            plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
-                    + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
-            if (sender.hasPermission("sellstick.give")) {
-                plugin.msg(sender, ChatColor.GREEN + "/SellStick give <player> <amount> (<uses>/infinite)");
-            }
+            sendCommandNotProperMessage(sender, pdf);
             return true;
 
         } else if (args.length == 1) {
@@ -84,13 +87,11 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
                     plugin.msg(sender, "Something went wrong! Check console for error");
                     System.out.println(ex.getMessage());
                 }
-                return true;
             } else {
-                PluginDescriptionFile pdf = plugin.getDescription();
                 plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
-                        + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
-                return true;
+                        + this.plugin.getServer().getVersion() + ") by " + pdf.getAuthors().get(0));
             }
+            return true;
         } else if (args.length == 4) {
             if (args[0].equalsIgnoreCase("give")) {
                 if (sender.hasPermission("sellstick.give")) {
@@ -102,13 +103,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
                         try {
                             numSticks = Integer.parseInt(args[2]);
                         } catch (Exception ex) {
-                            PluginDescriptionFile pdf = plugin.getDescription();
-                            plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName() + " (MC "
-                                    + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
-                            if (sender.hasPermission("sellstick.give")) {
-                                plugin.msg(sender,
-                                        ChatColor.GREEN + "/SellStick give <player> <amount> (<uses>/infinite)");
-                            }
+                            sendCommandNotProperMessage(sender, pdf);
                             return false;
                         }
 
@@ -121,7 +116,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
                             String UUID = random.nextString();
                             ItemStack is;
                             try {
-                                is = new ItemStack(Material.getMaterial(StickConfig.instance.item));
+                                is = new ItemStack(Objects.requireNonNull(Material.getMaterial(StickConfig.instance.item)));
                             }catch(NullPointerException ex) {
                                 SellStick.log.severe(String.format("[%s] - Invalid item set in config. Please read the links I put in the config to fix this.", plugin.getDescription().getName()));
                                 return false;
@@ -171,13 +166,7 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
                                                     StickConfig.instance.finiteLore.replace("%remaining%", uses + "")));
                                 } catch (Exception ex) {
                                     // They typed something stupid here...
-                                    PluginDescriptionFile pdf = plugin.getDescription();
-                                    plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName()
-                                            + " (MC " + pdf.getAPIVersion() + ") by " + pdf.getAuthors().get(0));
-                                    if (sender.hasPermission("sellstick.give")) {
-                                        plugin.msg(sender, ChatColor.GREEN
-                                                + "/SellStick give <player> <amount> (<uses>/infinite)");
-                                    }
+                                    sendCommandNotProperMessage(sender, pdf);
                                     return false;
                                 }
                             }
@@ -212,6 +201,22 @@ public class SellStickCommand implements CommandExecutor, TabExecutor {
             plugin.msg(sender, "" + ChatColor.RED + "Invalid command. Type /Sellstick for help");
         }
         return false;
+    }
+
+    /**
+     * Sent to 'sender' if their command was invalid.
+     * @param sender Sender of the command
+     * @param pdf PluginDescriptionFile object
+     */
+    void sendCommandNotProperMessage(CommandSender sender, PluginDescriptionFile pdf) {
+        // They typed something stupid here...
+        plugin.msg(sender, ChatColor.GRAY + "" + ChatColor.ITALIC + pdf.getFullName()
+                + " (MC " + this.plugin.getServer().getVersion() + ") by " + pdf.getAuthors().get(0));
+        if (sender.hasPermission("sellstick.give")) {
+            plugin.msg(sender, ChatColor.GREEN
+                    + "/SellStick give <player> <amount> (<uses>/infinite)");
+        }
+
     }
 
     /**

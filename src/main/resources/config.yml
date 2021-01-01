@@ -118,7 +118,7 @@ BrokenStick: '&cYour sellstick broke!(Ran out of uses)'
 #
 #
 #If they try to do something other than selling with the sellstick...
-NonSellingRelated: '&cOak''s words echoed...&7There''s a time and place for everything but not now!'
+NonSellingRelated: '&cOak''s words echoed...&7There''s a time and place for everything but not now! (Right click a chest!)'
 #
 #
 #Do you want to use shopgui+ for prices

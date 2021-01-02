@@ -1,16 +1,13 @@
 package com.shmkane.sellstick;
 
 import com.earth2me.essentials.IEssentials;
-import com.shmkane.sellstick.Configs.PriceConfig;
-import com.shmkane.sellstick.Configs.StickConfig;
-import com.shmkane.sellstick.Configs.StickConfig.SellingInterface;
+import com.shmkane.sellstick.configs.StickConfig.SellingInterface;
 import net.brcdev.shopgui.ShopGuiPlusApi;
 import net.brcdev.shopgui.exception.player.PlayerDataNotLoadedException;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,7 +18,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +29,11 @@ import java.util.List;
  *
  * @author shmkane
  */
-public class PlayerListener implements Listener {
+public final class PlayerListener implements Listener {
+
     /**
      * Instance of the plugin
-     **/
+     */
     private final SellStick plugin;
 
     /**
@@ -75,7 +72,7 @@ public class PlayerListener implements Listener {
      * @return True if infinite stick
      */
     public boolean isInfinite(List<String> lores) {
-        return lores.get(StickConfig.instance.durabilityLine - 1).equalsIgnoreCase(StickConfig.instance.infiniteLore);
+        return lores.get(plugin.getStickConfig().durabilityLine - 1).equalsIgnoreCase(plugin.getStickConfig().infiniteLore);
     }
 
     /**
@@ -122,14 +119,14 @@ public class PlayerListener implements Listener {
         try {
             min = hold.get(0);
         } catch (Exception ex) {
-            SellStick.log.severe(StickConfig.instance.durabilityLine + "");
-            SellStick.log.severe("The problem seems to be that your sellstick useline number has changed.");
-            SellStick.log.severe(ex.toString());
+            plugin.getLogger().severe(plugin.getStickConfig().durabilityLine + "");
+            plugin.getLogger().severe("The problem seems to be that your sellstick useline number has changed.");
+            plugin.getLogger().severe(ex.toString());
         }
 
-        for (int i = 0; i < hold.size(); i++) {
-            if (hold.get(i) < min) {
-                min = hold.get(i);
+        for (int i : hold) {
+            if (i < min) {
+                min = i;
             }
         }
         return min;
@@ -159,8 +156,8 @@ public class PlayerListener implements Listener {
      * further methods.
      */
     public String parseDurabilityLine(List<String> lores) {
-        String found = "";
-        int duraLine = StickConfig.instance.durabilityLine;
+        StringBuilder found = new StringBuilder();
+        int duraLine = plugin.getStickConfig().durabilityLine;
 
         for (int i = 0; i < lores.get(duraLine - 1).length(); i++) {
             if (Character.isDigit(lores.get(duraLine - 1).charAt(i))) {
@@ -169,36 +166,36 @@ public class PlayerListener implements Listener {
                     // Check to see if the index before is the & sign (If its a color code)
                     if (lores.get(duraLine - 1).charAt(i - 1) != ChatColor.COLOR_CHAR) {
                         // And if it isnt, keep track of it
-                        found += lores.get(duraLine - 1).charAt(i);
+                        found.append(lores.get(duraLine - 1).charAt(i));
                     } else {
                         // If it IS a color code, simply ignore it
-                        found += "-";
+                        found.append("-");
                     }
                     // But if it's index == 0
                 } else {
                     // There can't be a & before it, so keep track of it
-                    found += lores.get(duraLine - 1).charAt(i);
+                    found.append(lores.get(duraLine - 1).charAt(i));
                 }
             } else {
                 // Otherwise we insert a "-"
-                found += "-";
+                found.append("-");
             }
         }
 
-        return found;
+        return found.toString();
     }
 
     public boolean isSellStick(Player p, PlayerInteractEvent e) {
         Material sellItem;
         try {
-            sellItem = Material.getMaterial(StickConfig.instance.item.toUpperCase());
+            sellItem = Material.getMaterial(plugin.getStickConfig().item.toUpperCase());
         } catch (Exception ex) {
-            SellStick.log.severe("Invalid SellStick item set in config.");
+            plugin.getLogger().severe("Invalid SellStick item set in config.");
             return false;
         }
 
         return p.getItemInHand().getType() == sellItem && p.getItemInHand().getItemMeta().getDisplayName() != null
-                && p.getItemInHand().getItemMeta().getDisplayName().startsWith(StickConfig.instance.name);
+                && p.getItemInHand().getItemMeta().getDisplayName().startsWith(plugin.getStickConfig().name);
 
     }
 
@@ -207,21 +204,21 @@ public class PlayerListener implements Listener {
      *
      * @param p Player that clicked the chest
      * @param e On a player interact event
-     * @return True if the item in hand was a sellstick && player clicked a chest
+     * @return True if the item in hand was a sellstick &amp player clicked a chest
      */
     @SuppressWarnings("deprecation")
     public boolean didClickChestWithSellStick(Player p, PlayerInteractEvent e) {
         Material sellItem;
         try {
-            sellItem = Material.getMaterial(StickConfig.instance.item.toUpperCase());
+            sellItem = Material.getMaterial(plugin.getStickConfig().item.toUpperCase());
         } catch (Exception ex) {
-            SellStick.log.severe("Invalid SellStick item set in config.");
+            plugin.getLogger().severe("Invalid SellStick item set in config.");
             return false;
         }
 
         if (p.getItemInHand().getType() == sellItem) {
             if (p.getItemInHand().getItemMeta().getDisplayName() != null
-                    && p.getItemInHand().getItemMeta().getDisplayName().startsWith(StickConfig.instance.name)) {
+                    && p.getItemInHand().getItemMeta().getDisplayName().startsWith(plugin.getStickConfig().name)) {
                 return e.getClickedBlock().getType() == Material.CHEST
                         || e.getClickedBlock().getType() == Material.TRAPPED_CHEST;
             }
@@ -280,19 +277,19 @@ public class PlayerListener implements Listener {
         double slotPrice = 0;
         double price = 0;
 
-        SellingInterface si = StickConfig.instance.getSellInterface();
+        SellingInterface sellingInterface = plugin.getStickConfig().getSellInterface();
 
-        if (StickConfig.instance.debug) {
-            SellStick.log.warning("1-Getting prices from " + si);
-            SellStick.log.warning("2-Clicked Chest(size=" + c.getInventory().getSize() + "):");
+        if (plugin.getStickConfig().debug) {
+            plugin.getLogger().warning("1-Getting prices from " + sellingInterface);
+            plugin.getLogger().warning("2-Clicked Chest(size=" + c.getInventory().getSize() + "):");
         }
 
         for (int i = 0; i < c.getInventory().getSize(); i++) {
 
             try {
-                if (si == SellingInterface.PRICESYML) { // Not essW, not shop
+                if (sellingInterface == SellingInterface.BUILTIN) { // Not Essentials worth, not ShopGUI+
 
-                    for (String key : PriceConfig.instance.getPrices()) {
+                    for (String key : plugin.getPriceConfig().getPrices().getKeys(false)) {
 
                         int data;
                         String name;
@@ -308,36 +305,36 @@ public class PlayerListener implements Listener {
                         if ((contents[i].getType().toString().equalsIgnoreCase(name)
                                 || (isNumeric(name) && contents[i].getType().getId() == Integer.parseInt(name)))
                                 && contents[i].getDurability() == data) {
-                            price = Double.parseDouble(PriceConfig.instance.getConfig().getString("prices." + key));
+                            price = Double.parseDouble(plugin.getPriceConfig().getPrices().getString(key));
 
                         }
 
-                        if (StickConfig.instance.debug) {
+                        if (plugin.getStickConfig().debug) {
                             if (price > 0) {
-                                SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
-                                SellStick.log.warning("-Price: " + price);
+                                plugin.getLogger().warning(contents[i].getType() + " x " + contents[i].getAmount());
+                                plugin.getLogger().warning("-Price: " + price);
                             }
                         }
 
                     }
-                } else if (si == SellingInterface.ESSWORTH) {
+                } else if (sellingInterface == SellingInterface.ESSENTIALS) {
                     try {
-                        Object ess = plugin.getServer().getPluginManager().getPlugin("Essentials");
+                        IEssentials essentials = (IEssentials) plugin.getServer().getPluginManager().getPlugin("Essentials");
 
-                        price = ((IEssentials) ess).getWorth().getPrice((IEssentials) ess, contents[i]).doubleValue();
+                        price = essentials.getWorth().getPrice(essentials, contents[i]).doubleValue();
 
-                        if (StickConfig.instance.debug) {
+                        if (plugin.getStickConfig().debug) {
                             if (price > 0)
-                                SellStick.log.warning("-Price: " + price);
-                            SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
+                                plugin.getLogger().warning("-Price: " + price);
+                            plugin.getLogger().warning(contents[i].getType() + " x " + contents[i].getAmount());
                         }
 
 
                     } catch (Exception exception) {
-                        SellStick.log.warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
+                        plugin.getLogger().warning("Something went wrong enabling Essentials. If you don't use it, you can ignore this message.");
                     }
 
-                } else if (si == SellingInterface.SHOPGUI) {
+                } else if (sellingInterface == SellingInterface.SHOPGUI) {
 
                     price = ShopGuiPlusApi.getItemStackPriceSell(e.getPlayer(), contents[i]);
 
@@ -345,20 +342,20 @@ public class PlayerListener implements Listener {
                         price = 0;
                     }
 
-                    if (StickConfig.instance.debug) {
+                    if (plugin.getStickConfig().debug) {
                         if (price > 0)
-                            SellStick.log.warning("-Price: " + price);
-                        SellStick.log.warning(contents[i].getType() + " x " + contents[i].getAmount());
+                            plugin.getLogger().warning("-Price: " + price);
+                        plugin.getLogger().warning(contents[i].getType() + " x " + contents[i].getAmount());
                     }
 
                 }
 
-                if (StickConfig.instance.debug) {
-                    SellStick.log.warning("--Price of (" + contents[i].getType() + "): " + price);
+                if (plugin.getStickConfig().debug) {
+                    plugin.getLogger().warning("--Price of (" + contents[i].getType() + "): " + price);
                 }
 
                 int amount;
-                if (si != SellingInterface.SHOPGUI) {
+                if (sellingInterface != SellingInterface.SHOPGUI) {
                     amount = contents[i].getAmount();
                 } else {
                     amount = 1;
@@ -371,28 +368,28 @@ public class PlayerListener implements Listener {
                     e.getClickedBlock().getState().update();
                 }
 
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
 
-                if (StickConfig.instance.debug) {
+                if (plugin.getStickConfig().debug) {
                     if (!(ex instanceof NullPointerException))
-                        SellStick.log.warning(ex.toString());
+                        plugin.getLogger().warning(ex.toString());
                 }
 
-                if (si == SellingInterface.SHOPGUI && ex instanceof PlayerDataNotLoadedException) {
-                    SellStick.log.severe("Player should relog to fix this.");
+                if (sellingInterface == SellingInterface.SHOPGUI && ex instanceof PlayerDataNotLoadedException) {
+                    plugin.getLogger().severe("Player should relog to fix this.");
                     e.getPlayer().sendMessage(ChatColor.DARK_RED + "Please re-log to use SellStick.");
                     return 0;
                 }
             }
-            if (StickConfig.instance.debug && slotPrice > 0) {
-                SellStick.log.warning("---slotPrice=" + slotPrice);
-                SellStick.log.warning("---total=" + total);
+            if (plugin.getStickConfig().debug && slotPrice > 0) {
+                plugin.getLogger().warning("---slotPrice=" + slotPrice);
+                plugin.getLogger().warning("---total=" + total);
             }
             total += slotPrice;
             slotPrice = 0;
             price = 0;
         }
-        if (StickConfig.instance.debug)
+        if (plugin.getStickConfig().debug)
             System.out.println();
 
         return total;
@@ -407,6 +404,8 @@ public class PlayerListener implements Listener {
      * @param total how much was sold
      * @param im    Item meta of the stick
      * @param is    Item stack object of the stick
+     * @return if the transaction was successful
+     *
      * @author MrGhetto
      */
     @SuppressWarnings("deprecation")
@@ -414,8 +413,8 @@ public class PlayerListener implements Listener {
 
         if (!isInfinite(lores)) {
 
-            lores.set(StickConfig.instance.durabilityLine - 1,
-                    lores.get(StickConfig.instance.durabilityLine - 1).replaceAll(uses + "", (uses - 1) + ""));
+            lores.set(plugin.getStickConfig().durabilityLine - 1,
+                    lores.get(plugin.getStickConfig().durabilityLine - 1).replaceAll(uses + "", (uses - 1) + ""));
             im.setLore(lores);
             is.setItemMeta(im);
         }
@@ -444,27 +443,27 @@ public class PlayerListener implements Listener {
         EconomyResponse r;
 
         if (multiplier == Double.NEGATIVE_INFINITY) {
-            r = plugin.getEcon().depositPlayer(p, total);
+            r = plugin.getEconomy().depositPlayer(p, total);
         } else {
-            r = plugin.getEcon().depositPlayer(p, total * multiplier);
+            r = plugin.getEconomy().depositPlayer(p, total * multiplier);
         }
 
         boolean success = false;
 
         if (r.transactionSuccess()) {
             success = true;
-            if (StickConfig.instance.sellMessage.contains("\\n")) {
-                String[] send = StickConfig.instance.sellMessage.split("\\\\n");
+            if (plugin.getStickConfig().sellMessage.contains("\\n")) {
+                String[] send = plugin.getStickConfig().sellMessage.split("\\\\n");
                 for (String msg : send) {
-                    plugin.msg(p, msg.replace("%balance%", plugin.getEcon().format(r.balance)).replace("%price%",
-                            plugin.getEcon().format(r.amount)));
+                    plugin.msg(p, msg.replace("%balance%", plugin.getEconomy().format(r.balance)).replace("%price%",
+                            plugin.getEconomy().format(r.amount)));
                 }
             } else {
-                plugin.msg(p, StickConfig.instance.sellMessage.replace("%balance%", plugin.getEcon().format(r.balance))
-                        .replace("%price%", plugin.getEcon().format(r.amount)));
+                plugin.msg(p, plugin.getStickConfig().sellMessage.replace("%balance%", plugin.getEconomy().format(r.balance))
+                        .replace("%price%", plugin.getEconomy().format(r.amount)));
             }
 
-            SellStick.log.info(p.getName() + " sold items via sellstick for " + r.amount + " and now has " + r.balance);
+            plugin.getLogger().info(p.getName() + " sold items via sellstick for " + r.amount + " and now has " + r.balance);
         } else {
             plugin.msg(p, String.format("An error occured: %s", r.errorMessage));
         }
@@ -472,7 +471,7 @@ public class PlayerListener implements Listener {
         if (uses - 1 == 0) {
             p.getInventory().remove(p.getItemInHand());
             p.updateInventory();
-            plugin.msg(p, StickConfig.instance.brokenStick);
+            plugin.msg(p, plugin.getStickConfig().brokenStick);
         }
 
         return success;
@@ -501,14 +500,14 @@ public class PlayerListener implements Listener {
 
                 // Other plugin overriden.
                 if (e.isCancelled()) {
-                    plugin.msg(p, StickConfig.instance.territoryMessage);
+                    plugin.msg(p, plugin.getStickConfig().territoryMessage);
                     e.setCancelled(true);
                     return;
                 }
 
                 // Didn't have permission :(
                 if (!p.hasPermission("sellstick.use")) {
-                    plugin.msg(p, StickConfig.instance.noPerm);
+                    plugin.msg(p, plugin.getStickConfig().noPerm);
                     e.setCancelled(true);
                     return;
                 }
@@ -525,17 +524,17 @@ public class PlayerListener implements Listener {
                 double total = calculateWorth(c, e);
 
                 if (total > 0) {
-                    if (postSale(lores, uses, p, total, im, is) && StickConfig.instance.sound) {
+                    if (postSale(lores, uses, p, total, im, is) && plugin.getStickConfig().sound) {
                         p.playSound(e.getClickedBlock().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 0.5f);
                     }
                 } else {
-                    plugin.msg(p, StickConfig.instance.nothingWorth);
+                    plugin.msg(p, plugin.getStickConfig().nothingWorth);
                 }
                 e.setCancelled(true);
             }
         }else{
             if(isSellStick(p, e)) {
-                plugin.msg(p, StickConfig.instance.nonSellingRelated);
+                plugin.msg(p, plugin.getStickConfig().nonSellingRelated);
                 e.setCancelled(true);
             }
         }

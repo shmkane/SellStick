@@ -1,9 +1,5 @@
-/.idea/.gitignore
-/.idea/compiler.xml
-/.idea/
-/.idea/*
-/target/
-/target/*
+/.idea
+/target
 /sellstick.iml
 /patch.diff
-/sellstick.iml
+/server

@@ -4,11 +4,11 @@ import java.util.Random;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class RandomString {
+public final class RandomString {
 
     private static final char[] symbols;
 
-    /**
+    /*
      * Just generates random color code combinations Only symbols 0-9 and a-f (for
      * color codes)
      *
@@ -28,12 +28,12 @@ public class RandomString {
 
     /**
      * Random num generator
-     **/
+     */
     private final Random random = new Random();
 
     /**
      * Buffer
-     **/
+     */
     private final char[] buf;
 
     /**
@@ -60,14 +60,17 @@ public class RandomString {
 
     /**
      * Makes invisible by putting a charcode infront of it.
+     *
+     * @param original the original text
+     * @return the invisible text
      */
     public String makeInvis(String original) {
         char[] letters = original.toCharArray();
-        String newLetters = "";
+        StringBuilder newLetters = new StringBuilder();
         for (int i = 0; i < original.length(); i++) {
-            newLetters += ChatColor.getByChar(letters[i]);
+            newLetters.append(ChatColor.getByChar(letters[i]));
 
         }
-        return newLetters;
+        return newLetters.toString();
     }
 }
